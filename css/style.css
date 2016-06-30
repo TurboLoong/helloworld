@@ -1,0 +1,80 @@
+fieldset{
+	width: 216px;
+	border: none;
+	background: #ddd;
+}
+fieldset legend{
+	background-color: #ddd;
+	padding: 0 64px 0 2px;
+}
+fieldset>ol{
+	list-style: none;
+	padding: 0;
+	margin: 2px;
+}
+fieldset>ol>li{
+	margin: 0 0 9px 0;
+	padding: 0;
+}
+fieldset input{
+	display: block;
+}
+input{
+	width: 200px;
+	background-color: #fff;
+	border: 1px solid #bbb;
+}
+input[type="submit"]{
+	width: 202px;
+	padding: 0;
+	background-color: #bbb;
+}
+input, fieldset, legend{
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+#conference{
+	background-color: #000;
+	width: 960px;
+	float: left;
+	background-image: url('image/gallery1.jpg');
+	background-position: center;
+	height: 240px;
+}
+
+#badge{
+	text-align: center;
+	width: 200px;
+	border: 2px solid blue;
+	background-image: -moz-linear-gradient(top, #fff, #efefef);
+	background-image: -webkit-gradient(linear, left top, left bottom,
+		color-stop(0, #fff),
+		color-stop(1, #efefef)
+	);
+}
+
+#info{
+	margin: 20px;
+	padding: 20px;
+	width: 660px;
+	height: 160px;
+}
+
+#badge, #info{
+	float: left;
+	background-color: #fff;
+}
+
+#badge h2{
+	margin: 0;
+	color: red;
+	font-size: 40px;
+}
+
+#badge h3{
+	margin: 0;
+	background-color: blue;
+	color: #fff;
+}
