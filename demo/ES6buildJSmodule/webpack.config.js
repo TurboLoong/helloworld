@@ -1,10 +1,10 @@
 module.exports = {
-    entry: "./src.index.js",
     output: {
         library: "legoQuotes",
         libraryTarget: "umd",
-        fileName: "lib/legoQuotes.js"
+        filename: "legoQuotes.js"
     },
+    devtool: "#inline-source-map",
     externals: [
         {
             lodash: {

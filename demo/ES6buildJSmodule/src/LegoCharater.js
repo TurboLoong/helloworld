@@ -1,4 +1,4 @@
-import { getRandom } from './utils'
+import { getRandom } from './util'
 
 export default class LegoCharater {
     constructor( { character, actor } ) {
