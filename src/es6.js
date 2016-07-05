@@ -1,6 +1,5 @@
 /**
  * scoping
- * @type {Array}
  */
 //block-scoped variables
 let a = [];
@@ -52,6 +51,37 @@ this.nums.forEach((v) => {
         this.fives.push(v);
     }
 });
+
+/**
+ * extends parameter handling
+ */
+//Default parameter values
+function f(x, y = 7, z = 42) {
+    return x + y + z;
+}
+f(1) === 50;
+
+//rest parameter
+function f (x, y, ...a) {
+    return (x + y) * a.length;
+}
+f(1, 2 , "hello", true, 7) === 9;
+
+/**
+ * template literals
+ */
+var customer = {name: "Foo"};
+var card = {amount: 7, product: "Bar", unitprice: 42};
+message = 'Hello ${customer.name}, want to buy $(card.amount) $(card.product) for a total of $(card.amount * card.unitprice) bucks?';
+
+/**
+ * enhanced object properties
+ */
+//computed proerty names
+let obj = {
+    foo: "bar",
+    ["baz" + quux()]: 42
+}
 //Method Properties
 obj = {
     foo(a, b) {
@@ -64,7 +94,9 @@ obj = {
 
     }
 }
-
+/**
+ * destructuring assignment
+ */
 //Array Matching
 var list = [1,2,3];
 var [a, , b] = list;
@@ -88,6 +120,13 @@ f(["bar", 42]);
 g({name: "foo", val: 7});
 h({name: "bar", val: 42});
 
+//fail-soft destructuring
+var list = [7, 42];
+var [a = 1, b = 2, c = 3, d] = list;
+a === 7;
+b === 42;
+c === 3;
+d === undefined;
 //value Export/Import
 /*
  lib/math.js
