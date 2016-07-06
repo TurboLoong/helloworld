@@ -52,6 +52,8 @@ this.nums.forEach((v) => {
     }
 });
 
+//Array Element finding
+[1, 2, 3, 4].find(x => x > 3);
 /**
  * extends parameter handling
  */
@@ -67,6 +69,11 @@ function f (x, y, ...a) {
 }
 f(1, 2 , "hello", true, 7) === 9;
 
+//spread operator
+var params = ["hello", true, 7];
+var ohter = [1,2,...params]; //[1,2,"hello", true, 7]
+var str = "foo";
+var chars = [...str]; //["f","o","o"];
 /**
  * template literals
  */
@@ -127,6 +134,10 @@ a === 7;
 b === 42;
 c === 3;
 d === undefined;
+
+/**
+ * Modules
+ */
 //value Export/Import
 /*
  lib/math.js
