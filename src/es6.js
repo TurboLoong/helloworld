@@ -52,8 +52,45 @@ this.nums.forEach((v) => {
     }
 });
 
-//Array Element finding
-[1, 2, 3, 4].find(x => x > 3);
+//Array Element finding, 找出第一个符合条件的成员
+[1, 2, 3, 4].find(x => x > 3);//4
+
+//Array.from(),将类数组转换为数组对象
+let arrayLike = {
+    '0': 'a',
+    '1': 'b',
+    '2': 'c',
+    length: 3
+}
+let arr = Array.from(arrayLike);
+//NodeList对象
+let ps = document.querySelectorAll('p');
+Array.from(ps).forEach((p) => {
+    console.log(p);
+})
+Array.from('hello'); //['h', 'e', 'l', 'l', 'o']
+let nameSet = new Set(['a', 'b']);
+Array.from(nameSet);
+function foo() {
+    var args = [...arguments];
+}
+[...document.querySelectorAll('div')]
+Array.from(arrayLike, x => x*x); //第二个参数是对每个元素进行处理
+Array.from([1, , 2, , 3],(n) => n || 0);
+function typeOf() {
+    return Array.from(arguments, value => typeof value);
+}
+
+//Array.of(),将一组值转换为数组
+Array.of(3, 11, 8);
+
+//arr.entries(), arr.keys(), arr.velues()
+for(let index of ['a', 'b'].keys()) {
+    console.log(index);
+}
+for(let [index, elem] of ['a', 'b'].entries()) {
+    console.log(index);
+}
 /**
  * extends parameter handling
  */
@@ -158,7 +195,7 @@ console.log(sum(pi, pi));
 //ES6 set
 let s = new Set();
 s.add('hello').add('goodbye').add('hello');
-s.size() === 2;
+s.size === 2;
 s.has("hello") === true;
 for(let key of s.values()) {
     console.log(key);
@@ -232,3 +269,7 @@ class Rectangle {
 };
 var r = new Rectangle(50, 20);
 r.area === 1000;
+
+/**
+ * new
+ */
