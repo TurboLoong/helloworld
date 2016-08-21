@@ -1,25 +1,100 @@
 <!DOCTYPE html>
-<html >
- <head>
- <meta charset="utf-8"/>
-  <title> new document </title>
-  <style type="text/css">
-	@media (max-width: 600px) {
-	
-	}
-  </style>
-  <link rel="stylesheet" media="(max-width: 800)" href="example.css"/>
- </head>
- <body>
-	
-	<script type="text/javascript">
-		function hasBorderRadius(){
-			var element = document.documentElement;
-			var style = element.style;
-			if(style) {
-				return typeof style.borderRadius == "string" || typeof style.MozBorderRadius == "string" || typeof style.WebkitBorderRadius 
-			}
-		}
-  </script>
- </body>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title> new document </title>
+    <link rel="stylesheet" href="../css/bootstrap.css"/>
+    <style type="text/css">
+        /*#main {
+            float: left;
+            width: 100%;
+        }
+        #mainContainer {
+            margin: 0 230px;
+            height: 200px;
+            background: green;
+        }
+        #left {
+            float: left;
+            margin-left: -100%;
+            width: 230px
+        }
+
+        #right {
+            float: left;
+            margin-left: -230px;
+            width: 230px;
+        }
+
+        #left .inner,
+        #right .inner {
+            background: orange;
+            margin: 0 10px;
+            height: 200px;
+        }
+        #demo{
+        height:100px;
+        text-align:center;
+    }
+    #demo:after{
+        display:inline-block;
+        width:0;
+        height:100%;
+        vertical-align:middle;
+        content:'';
+    }
+    #demo p{
+        display:inline-block;
+        vertical-align:middle;
+    }*/
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            Level 1: .col-md-9
+            <div class="row">
+                <div class="col-md-6">Level 2: .col-md-6</div>
+                <div class="col-md-6">Level 2: .col-md-6 </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            dsafsaf
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5 col-md-6">.col-sm-5 .col-md-6</div>
+        <div class="col-sm-5 col-sm-offset-2 col-md-6 col-md-offset-0">…</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-md-5 col-lg-6">.col-sm-6 .col-md-5 .col-lg-
+            6</div>
+        <div class="col-sm-6 col-md-5 col-md-offset-2 col-lg-6 col-lg-offset-0">…
+        </div>
+    </div>
+</div>
+<!--<div id="demo">
+   <p>水平垂直居中的随意内容</p>
+</div>-->
+<!--三栏布局，中间栏自适应-->
+<!--<div id="main">
+    <div id="mainContainer">main content</div>
+</div>
+<div id="left">
+    <div id="leftContainer" class="inner">left content</div>
+</div>
+<div id="right">
+    <div id="rightContainer" class="inner">right</div>
+</div>-->
+<script type="text/javascript">
+    function hasBorderRadius() {
+        var element = document.documentElement;
+        var style = element.style;
+        if (style) {
+            return typeof style.borderRadius == "string" || typeof style.MozBorderRadius == "string" || typeof style.WebkitBorderRadius
+        }
+    }
+</script>
+</body>
 </html>
