@@ -270,6 +270,42 @@ class Rectangle {
 var r = new Rectangle(50, 20);
 r.area === 1000;
 
+
 /**
- * new
+ *Promise
  */
+function msgAfterTimeout(msg, who, timeout) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => resolve('$(msg) Hello ${who}', timeout))
+    })
+}
+msgAfterTimeout("", "Foo", 100).then((msg) => {
+    msgAfterTimeout(msg, "Bar", 200)
+}).then((msg) => {
+    console.log('done after 300ms:${msg}');
+});
+
+var fs = require('fs');
+function readFile(file) {
+    return new Promise(function(resolve, reject) {
+        fs.readFile(file, function(err, result) {
+            if(err) {
+                reject(err);
+            }else{
+                resolve(result);
+            }
+        });
+    });
+}
+readFile('./a.txt').then((result)=> {
+    //显示第一个文件的读取结果
+    console.log(result.toString());
+    //返回另一个Promise对象实例
+    return readFile('./b.txt');
+}).then((result)=> {
+    //显示第二个文件的读取结果
+    console.log(result.toString());
+}).catch((error)=> {
+    //读取失败
+    console.log(error);
+});
