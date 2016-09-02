@@ -5,96 +5,27 @@
     <title> new document </title>
     <link rel="stylesheet" href="../css/bootstrap.css"/>
     <style type="text/css">
-        /*#main {
-            float: left;
-            width: 100%;
-        }
-        #mainContainer {
-            margin: 0 230px;
-            height: 200px;
-            background: green;
-        }
-        #left {
-            float: left;
-            margin-left: -100%;
-            width: 230px
-        }
 
-        #right {
-            float: left;
-            margin-left: -230px;
-            width: 230px;
-        }
-
-        #left .inner,
-        #right .inner {
-            background: orange;
-            margin: 0 10px;
-            height: 200px;
-        }
-        #demo{
-        height:100px;
-        text-align:center;
-    }
-    #demo:after{
-        display:inline-block;
-        width:0;
-        height:100%;
-        vertical-align:middle;
-        content:'';
-    }
-    #demo p{
-        display:inline-block;
-        vertical-align:middle;
-    }*/
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="row">
-        <div class="col-md-9">
-            Level 1: .col-md-9
-            <div class="row">
-                <div class="col-md-6">Level 2: .col-md-6</div>
-                <div class="col-md-6">Level 2: .col-md-6 </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            dsafsaf
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-5 col-md-6">.col-sm-5 .col-md-6</div>
-        <div class="col-sm-5 col-sm-offset-2 col-md-6 col-md-offset-0">…</div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6 col-md-5 col-lg-6">.col-sm-6 .col-md-5 .col-lg-
-            6</div>
-        <div class="col-sm-6 col-md-5 col-md-offset-2 col-lg-6 col-lg-offset-0">…
-        </div>
-    </div>
+    <input type="text" id="input-1"/>
 </div>
-<!--<div id="demo">
-   <p>水平垂直居中的随意内容</p>
-</div>-->
-<!--三栏布局，中间栏自适应-->
-<!--<div id="main">
-    <div id="mainContainer">main content</div>
+<!-- 页面拥有ID的元素会创建全局变量 -->
+<div id="sample" style="background: orange; position: relative; padding-bottom: 20%">
+	<div style="position: relative; top: 50%; transform: translateY(-50%);margin: 0 auto;text-align: center">fafdfafdfdadfdfdsfdffdafdsfadfadf</div>
 </div>
-<div id="left">
-    <div id="leftContainer" class="inner">left content</div>
-</div>
-<div id="right">
-    <div id="rightContainer" class="inner">right</div>
-</div>-->
+<script type="text/javascript" src="../lib/jquery.js"></script>
 <script type="text/javascript">
-    function hasBorderRadius() {
-        var element = document.documentElement;
-        var style = element.style;
-        if (style) {
-            return typeof style.borderRadius == "string" || typeof style.MozBorderRadius == "string" || typeof style.WebkitBorderRadius
-        }
-    }
+console.log(sample);
+    $(function () {
+        var e = $.Event("keydown", {name: 65});
+        $("#input-1").on("keydown", function(event) {
+            console.log(event.name);
+        })
+        $("#input-1").trigger(e);
+    })
 </script>
 </body>
 </html>
