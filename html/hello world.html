@@ -1,78 +1,31 @@
 <!DOCTYPE html>
-<html >
- <head>
- <meta charset="utf-8"/>
-  <title> new document </title>
-  <style type="text/css">
-    .divClass{
-        float: left;
-        width: 195px;
-    }
-  </style>
- </head>
- <body>
-    <div class="myClass" style="width: 500px;height: 50px">
-        <div class="divClass">
-            <canvas id="myCanvas0" width="200" height="45">
-                Your browser does not support the HTML5 canvas tag.
-            </canvas>
-        </div>
-        <div class="divClass">
-            <canvas id="myCanvas1" width="200" height="45">
-                Your browser does not support the HTML5 canvas tag.
-            </canvas>
-        </div>
-    </div>
-    <script type="text/javascript" src="../lib/jquery.min.js"></script>
-     <script type="text/javascript">
-         function PI(deg)
-         {
-             return deg/180*Math.PI;
-         }
-         //获取Canvas对象(画布)
-         var canvas0 = document.getElementById("myCanvas0");
-         var canvas1 = document.getElementById("myCanvas1");
-         draw(canvas0);
-         draw(canvas1);
-         var canvas1 = document.getElementById("myCanvas1");
-         function draw(canvas) {
-             //简单地检测当前浏览器是否支持Canvas对象，以免在一些不支持html5的浏览器中提示语法错误
-             if(canvas.getContext){
-                 //获取对应的CanvasRenderingContext2D对象(画笔)
-                 var ctx = canvas.getContext("2d");
-                 ctx.beginPath();
-                 ctx.strokeStyle = "#93a0ba";
-                 ctx.moveTo(0, 0);
-                 ctx.lineTo(0, 8);
-                 ctx.arc(8, 8, 8, PI(180), PI(270), false);
-                 ctx.closePath();
-                 ctx.stroke();
-                 ctx.fillStyle = "#93a0ba";
-                 ctx.fill();
-                 /*//开始一个新的绘制路径
-                 ctx.beginPath();
-                 //设置线条颜色为蓝色
-                 ctx.strokeStyle = "blue";
-                 //设置路径起点坐标
-                 ctx.moveTo(0, 45);
-                 ctx.lineTo(0, 8);
-                 ctx.arc(8, 8, 8, PI(180), PI(270), false);
-                 ctx.lineTo(168, 0);
-                 ctx.arc(168, 18, 18, PI(270), PI(330), false);
-                 ctx.quadraticCurveTo(190, 45, 200, 45)
-                 //先关闭绘制路径。注意，此时将会使用直线连接当前端点和起始端点。
-                 ctx.closePath();
-                 //最后，按照绘制路径画出直线
-                 ctx.stroke();
-                 ctx.fillStyle="#0000ff";
-                 ctx.fillStyle = "#3e4666";
-                 ctx.shadowColor = "#000000";
-                 ctx.shadowOffsetX = 2;
-                 ctx.shadowBlur = 10;
-                 ctx.fill();*/
-             }
-         }
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title> new document </title>
+    <link rel="stylesheet" href="../css/bootstrap.css"/>
+    <style type="text/css">
 
-     </script>
- </body>
+    </style>
+</head>
+<body>
+<div class="container">
+    <input type="text" id="input-1"/>
+</div>
+<!-- 页面拥有ID的元素会创建全局变量 -->
+<div id="sample" style="background: orange; position: relative; padding-bottom: 20%">
+	<div style="position: relative; top: 50%; transform: translateY(-50%);margin: 0 auto;text-align: center">fafdfafdfdadfdfdsfdffdafdsfadfadf</div>
+</div>
+<script type="text/javascript" src="../lib/jquery.js"></script>
+<script type="text/javascript">
+console.log(sample);
+    $(function () {
+        var e = $.Event("keydown", {name: 65});
+        $("#input-1").on("keydown", function(event) {
+            console.log(event.name);
+        })
+        $("#input-1").trigger(e);
+    })
+</script>
+</body>
 </html>
