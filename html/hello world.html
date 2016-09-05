@@ -4,22 +4,75 @@
  <meta charset="utf-8"/>
   <title> new document </title>
   <style type="text/css">
-	@media (max-width: 600px) {
-	
-	}
+    .divClass{
+        float: left;
+        width: 195px;
+    }
   </style>
-  <link rel="stylesheet" media="(max-width: 800)" href="example.css"/>
  </head>
  <body>
-	
-	<script type="text/javascript">
-		function hasBorderRadius(){
-			var element = document.documentElement;
-			var style = element.style;
-			if(style) {
-				return typeof style.borderRadius == "string" || typeof style.MozBorderRadius == "string" || typeof style.WebkitBorderRadius 
-			}
-		}
-  </script>
+    <div class="myClass" style="width: 500px;height: 50px">
+        <div class="divClass">
+            <canvas id="myCanvas0" width="200" height="45">
+                Your browser does not support the HTML5 canvas tag.
+            </canvas>
+        </div>
+        <div class="divClass">
+            <canvas id="myCanvas1" width="200" height="45">
+                Your browser does not support the HTML5 canvas tag.
+            </canvas>
+        </div>
+    </div>
+    <script type="text/javascript" src="../lib/jquery.min.js"></script>
+     <script type="text/javascript">
+         function PI(deg)
+         {
+             return deg/180*Math.PI;
+         }
+         //获取Canvas对象(画布)
+         var canvas0 = document.getElementById("myCanvas0");
+         var canvas1 = document.getElementById("myCanvas1");
+         draw(canvas0);
+         draw(canvas1);
+         var canvas1 = document.getElementById("myCanvas1");
+         function draw(canvas) {
+             //简单地检测当前浏览器是否支持Canvas对象，以免在一些不支持html5的浏览器中提示语法错误
+             if(canvas.getContext){
+                 //获取对应的CanvasRenderingContext2D对象(画笔)
+                 var ctx = canvas.getContext("2d");
+                 ctx.beginPath();
+                 ctx.strokeStyle = "#93a0ba";
+                 ctx.moveTo(0, 0);
+                 ctx.lineTo(0, 8);
+                 ctx.arc(8, 8, 8, PI(180), PI(270), false);
+                 ctx.closePath();
+                 ctx.stroke();
+                 ctx.fillStyle = "#93a0ba";
+                 ctx.fill();
+                 /*//开始一个新的绘制路径
+                 ctx.beginPath();
+                 //设置线条颜色为蓝色
+                 ctx.strokeStyle = "blue";
+                 //设置路径起点坐标
+                 ctx.moveTo(0, 45);
+                 ctx.lineTo(0, 8);
+                 ctx.arc(8, 8, 8, PI(180), PI(270), false);
+                 ctx.lineTo(168, 0);
+                 ctx.arc(168, 18, 18, PI(270), PI(330), false);
+                 ctx.quadraticCurveTo(190, 45, 200, 45)
+                 //先关闭绘制路径。注意，此时将会使用直线连接当前端点和起始端点。
+                 ctx.closePath();
+                 //最后，按照绘制路径画出直线
+                 ctx.stroke();
+                 ctx.fillStyle="#0000ff";
+                 ctx.fillStyle = "#3e4666";
+                 ctx.shadowColor = "#000000";
+                 ctx.shadowOffsetX = 2;
+                 ctx.shadowBlur = 10;
+                 ctx.fill();*/
+             }
+         }
+
+     </script>
  </body>
 </html>
