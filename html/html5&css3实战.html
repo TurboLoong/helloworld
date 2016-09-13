@@ -1,60 +1,62 @@
 <!DOCTYPE html>
 <html lang="en-US">
- <head>
-  <title> AwesomeGo Blog </title>
-  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-  <link type="text/css" href="css/style.css" rel="stylesheet"/>
- </head>
-<style type="text/css"> 
-	
+<head>
+    <title> AwesomeGo Blog </title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link type="text/css" href="css/style.css" rel="stylesheet"/>
+</head>
+<style type="text/css">
+
 </style>
- <body>
-	<div id="conference">
-		<section id="badge">
-			<h3>Hi, My Name Is</h3>
-			<h2>Barney</h2>
-		</section>
-		<section id="info">
-			
-		</section>
-	</div>
-	<form>
-		<fieldset id="login">
-			<legend>Log in</legend>
-			<ol>
-				<li>
-					<label for="email">Email</label>
-					<input id="email" type="email" name="email">
-				</li>
-				<li>
-					<label for="password">Password</label>
-					<input id="password" type="password" name="password" value=""
-					autocomplete="off">
-				</li>
-				<li><input type="submit" value="Log in"></li>
-			</ol>
-		</fieldset>
-	</form>
-	<script src="lib/jquery.min.js" charset="utf-8" type="text/javascript"></script>
-	<script src="lib/jquery.corner.js" charset="utf-8" type="text/javascript"></script>
-	<script src="lib/corner.js" charset="utf-8" type="text/javascript"></script>
-	<script>
-		function hasBorderRadius(){
-			var element = document.documentElement;
-			var style = element.style;
-			if(style) {
-				return typeof style.borderRadius == "string" || typeof style.MozBorderRadius == "string" 
-			}
-			return null;
-		}
-		$(function() {
-			if(!hasBorderRadius()) {
-				$("input").formCorner();
-				$("fieldset").corner("round 5px");
-				$("legend").corner("round to 5px cc:#fff");
-			}
-		});
-	</script>
-	
- </body>
+<body>
+<div id="conference">
+    <section id="badge">
+        <h3>Hi, My Name Is</h3>
+
+        <h2>Barney</h2>
+    </section>
+    <section id="info">
+
+    </section>
+</div>
+<form>
+    <fieldset id="login">
+        <legend>Log in</legend>
+        <ol>
+            <li>
+                <label for="email">Email</label>
+                <input id="email" type="email" name="email">
+            </li>
+            <li>
+                <label for="password">Password</label>
+                <input id="password" type="password" name="password" value=""
+                       autocomplete="off">
+            </li>
+            <li><input type="submit" value="Log in"></li>
+        </ol>
+    </fieldset>
+</form>
+<script src="lib/jquery.min.js" charset="utf-8" type="text/javascript"></script>
+<script src="lib/jquery.corner.js" charset="utf-8" type="text/javascript"></script>
+<script src="lib/corner.js" charset="utf-8" type="text/javascript"></script>
+<script>
+    function hasBorderRadius() {
+        var element = document.documentElement;
+        var style = element.style;
+        if (style) {
+            return typeof style.borderRadius == "string" || typeof style.MozBorderRadius == "string"
+        }
+        return null;
+    }
+    $(function () {
+        if (!hasBorderRadius()) {
+            $("input").formCorner();
+            $("fieldset").corner("round 5px");
+            $("legend").corner("round to 5px cc:#fff");
+        }
+    });
+</script>
+
+</body>
 </html>

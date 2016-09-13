@@ -3,29 +3,23 @@
 <head>
     <meta charset="utf-8"/>
     <title> new document </title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="../css/bootstrap.css"/>
     <style type="text/css">
-
+    body{
+        overflow: hidden;
+        background-color: red;
+    }
     </style>
 </head>
 <body>
-<div class="container">
-    <input type="text" id="input-1"/>
-</div>
-<!-- 页面拥有ID的元素会创建全局变量 -->
-<div id="sample" style="background: orange; position: relative; padding-bottom: 20%">
-	<div style="position: relative; top: 50%; transform: translateY(-50%);margin: 0 auto;text-align: center">fafdfafdfdadfdfdsfdffdafdsfadfadf</div>
+<div class="content">
+
 </div>
 <script type="text/javascript" src="../lib/jquery.js"></script>
 <script type="text/javascript">
-console.log(sample);
-    $(function () {
-        var e = $.Event("keydown", {name: 65});
-        $("#input-1").on("keydown", function(event) {
-            console.log(event.name);
-        })
-        $("#input-1").trigger(e);
-    })
+
 </script>
 </body>
 </html>
