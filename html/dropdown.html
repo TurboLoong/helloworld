@@ -2,44 +2,35 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>collapse</title>
+    <title>dropdown</title>
     <link rel="stylesheet" href="../css/bootstrap.css"/>
 </head>
 <body>
 <div class="container">
-    <ul class="nav nav-pills" id="according">
-        <!--<li class="active"><a href="#">Regular link</a></li>-->
-        <li class="dropdown panel">
-            <a data-toggle="collapse" data-target="#menu1" data-parent="#according" class="dropdown-toggle"
-               role="button">Dropdown <b class="caret"></b></a>
-            <ul role="menu" class="dropdown-menu" id="menu1">
-                <li role="presentation"><a href="#" tabindex="-1"
-                                           role="menuitem">
-                    Action</a>
-                </li>
-                …
-            </ul>
-        </li>
-        <li class="dropdown panel">
-            <a data-toggle="collapse" class="dropdown-toggle" data-target="#menu2" data-parent="#according">Dropdown 2 <b class="caret"></b></a>
-            <ul class="dropdown-menu" id="menu2">
-                <li role="presentation"><a href="#" tabindex="-1"
-                                           role="menuitem">
-                    Action</a></li>
-                …
-            </ul>
-        </li>
-        <li class="dropdown panel">
-            <a data-toggle="collapse" class="dropdown-toggle" data-target="#menu3" data-parent="#according">Dropdown 3 <b class="caret"></b></a>
-            <ul class="dropdown-menu" id="menu3">
-                <li role="presentation"><a href="#" tabindex="-1" role="menuitem"
-                        >Action</a></li>
-                …
-            </ul>
-        </li>
-    </ul>
+    <div class="dropdown">
+        <button type="button" class="btn dropdown-toggle" id="dropdownMenu1"
+                data-toggle="dropdown">
+            主题
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+            <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="#">Java</a>
+            </li>
+            <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="#">数据挖掘</a>
+            </li>
+            <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="#">数据通信/网络</a>
+            </li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="#">分离的链接</a>
+            </li>
+        </ul>
+    </div>
 </div>
 <script type="text/javascript" src="../lib/jquery.js"></script>
-<script type="text/javascript" src="../lib/bootstrap/collapse.js"></script>
+<script type="text/javascript" src="../lib/bootstrap/dropdown.js"></script>
 </body>
 </html>
