@@ -8,7 +8,9 @@
   },
   "author": "hunger@jirengu.com",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "backbone": "^1.3.3"
+  },
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
