@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title> new document </title>
+    <link rel="stylesheet" href="../css/bootstrap.css"/>
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+<div class="container">
+
+</div>
+<script type="text/javascript" src="../lib/jquery.js"></script>
+<script type="text/javascript" src="../lib/underscore.js"></script>
+<script type="text/javascript" src="../lib/backbone.js"></script>
+<script>
+    (function ($) {
+        var Man = Backbone.Model.extend({
+            initialize: function(){
+                alert('Hey, you create me!');
+                this.bind('change:name', function() {
+                    var name =  this.get('name');
+                    alert('你改变了name属性为：' + name);
+                });
+                this.bind("invalid",function(model,error){
+                    alert(error);
+                });
+            },
+            defaults: {
+                name: '张三',
+                'age': '38'
+            },
+            validate:function(attributes){
+                if(attributes.name == '') {
+                    return "name不能为空！";
+                }
+            },
+            aboutMe: function(){
+                return '我叫' + this.get('name') + ',今年' + this.get('age') + '岁';
+            }
+        });
+        var man = new Man;
+        man.set({name: ''});
+        man.save();
+    })(jQuery);
+
+</script>
+</body>
+</html>
