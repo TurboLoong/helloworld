@@ -13,8 +13,13 @@
 
 </div>
 <script type="text/javascript" src="../lib/jquery.js"></script>
+<script type="text/javascript" src="../lib/underscore.js"></script>
 <script type="text/javascript">
+    function print() {
+        console.log('hello world');
+    }
 
+    window.onclick = _.debounce(print, 5000);
 </script>
 </body>
 </html>
