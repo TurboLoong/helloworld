@@ -5,6 +5,9 @@ var superagent = require('superagent');
 var cheerio = require('cheerio');
 var async = require('async');
 console.log('爬虫程序开始运行......');
+
+var fs = require('fs');
+var request = require("request");
 // 第一步，发起getData请求，获取所有4星角色的列表
 superagent
     .post('http://wcatproject.com/charSearch/function/getData.php')
