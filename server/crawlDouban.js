@@ -36,7 +36,7 @@ function spiderMovie(index) {
                 if(movie){
                     movies.push(movie);
                 }
-                downloadImg('../client/img/', picUrl);
+                downloadImg('../client/image/', picUrl);
             });
             saveData('./data' + (index/pageSize) + '.json', movies);
         });
