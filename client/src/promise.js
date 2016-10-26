@@ -18,7 +18,7 @@ function animate(ball, distance, cb) {
 animate(ball1, 100, function() {
 	animate(ball2, 200, function() {
 		animate(ball3, 300, function() {
-			.....
+			
 		});
 	});
 });

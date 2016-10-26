@@ -309,3 +309,4 @@ readFile('./a.txt').then((result)=> {
     //读取失败
     console.log(error);
 });
+
