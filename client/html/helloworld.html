@@ -23,17 +23,52 @@
             0%{ transform:rotate(-360deg); }
             100%{ transform:rotate(0deg); }
         }
+        .tempload {
+            display: block;
+            position: absolute;
+            top: 11px;
+            left: 14px;
+            height: 20px;
+            width: 60px;
+            border-radius: 10px;
+            background: #111;
+        }
+        .checkboxTwo label {
+            display: block;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+
+            -webkit-transition: all .5s ease;
+            -moz-transition: all .5s ease;
+            -o-transition: all .5s ease;
+            -ms-transition: all .5s ease;
+            transition: all .5s ease;
+            cursor: pointer;
+            position: absolute;
+            top: 9px;
+            z-index: 1;
+            left: 12px;
+            background: #ddd;
+        }
+        .checkboxTwo input[type=checkbox]:checked + label {
+            left: 84px;
+            background: #26ca28;
+        }
+        .checkboxTwo input[type=checkbox]:checked ~ .tempload {
+            background: #26ca28;
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <div style="width: 100px;height: 100px;background-color: orange">
-        <div class="box-monitor-center_panel_state_icon">
-            <div class="box-monitor-center_panel_state_icon-circleRotate">
-
-            </div>
+    <section>
+        <div class="checkboxTwo">
+            <input type="checkbox" value="1" id="checkboxTwoInput" name="" style="visibility: hidden" />
+            <label for="checkboxTwoInput"></label>
+            <i class="tempload"></i>
         </div>
-    </div>
+    </section>
 </div>
 <script type="text/javascript" src="../lib/jquery.js"></script>
 <script type="text/javascript" src="../lib/underscore.js"></script>

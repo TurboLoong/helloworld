@@ -53,4 +53,4 @@ promiseAnimate(ball1, 100)
 	})
 	.then(function() {
 		return promiseAnimate(ball3, 300);
-	})
+	});
