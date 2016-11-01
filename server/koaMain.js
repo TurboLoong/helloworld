@@ -16,7 +16,6 @@ app.use(function *(next){
 });
 
 // logger
-
 app.use(function *(next){
     var start = new Date;
     console.log('logger:start:---' + start.getTime());
