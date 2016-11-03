@@ -4,6 +4,7 @@
  * descriptioin:
  */
 var app = require('express')(),
+    path = require('path'),
     server = require('http').createServer(app),
     io = require('socket.io').listen(server);
 

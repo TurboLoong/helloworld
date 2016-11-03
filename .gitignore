@@ -1,3 +1,5 @@
 /.idea
 /node_modules
 /bower_components
+/demo/websocket/node_modules/
+/demo/ES6buildJSmodule/node_modules/
