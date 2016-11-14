@@ -36,7 +36,7 @@ io.on('connection', function (socket) {
             obj['type'] = 'welcome';
             console.log(client.name + ' login');
 
-            //返回欢迎语
+            //返回欢迎语，系统消息
             socket.emit('system', obj);
             //广播新用户已登录
             socket.broadcast.emit('system', obj);
@@ -47,7 +47,7 @@ io.on('connection', function (socket) {
             obj['type'] = 'message';
             console.log(client.name + 'say: ' + msg);
 
-            //返回消息（）
+            //返回消息（），正常聊天
             socket.broadcast.emit('message', obj);
         }
     });

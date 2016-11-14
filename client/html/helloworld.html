@@ -5,74 +5,16 @@
     <title> new document </title>
     <link rel="stylesheet" href="../css/bootstrap.css"/>
     <style type="text/css">
-        .box-monitor-center_panel_state_icon{
-            width: 77px;
-            height: 77px;
-            border-radius: 50%;
-            border: 1px solid #586ccf;
-            background-color: #586ccf;
-            margin: auto;
-        }
-        .box-monitor-center_panel_state_icon-circleRotate{
-            background: url("../image/state_circleRotate.png") no-repeat 6px -2px;
-            width: 79px;
-            height: 79px;
-            animation:circle 1s infinite linear;
-        }
-        @keyframes circle{
-            0%{ transform:rotate(-360deg); }
-            100%{ transform:rotate(0deg); }
-        }
-        .tempload {
-            display: block;
-            position: absolute;
-            top: 11px;
-            left: 14px;
-            height: 20px;
-            width: 60px;
-            border-radius: 10px;
-            background: #111;
-        }
-        .checkboxTwo label {
-            display: block;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
 
-            -webkit-transition: all .5s ease;
-            -moz-transition: all .5s ease;
-            -o-transition: all .5s ease;
-            -ms-transition: all .5s ease;
-            transition: all .5s ease;
-            cursor: pointer;
-            position: absolute;
-            top: 9px;
-            z-index: 1;
-            left: 12px;
-            background: #ddd;
-        }
-        .checkboxTwo input[type=checkbox]:checked + label {
-            left: 84px;
-            background: #26ca28;
-        }
-        .checkboxTwo input[type=checkbox]:checked ~ .tempload {
-            background: #26ca28;
-        }
     </style>
 </head>
 <body>
 <div class="container">
-    <section>
-        <div class="checkboxTwo">
-            <input type="checkbox" value="1" id="checkboxTwoInput" name="" style="visibility: hidden" />
-            <label for="checkboxTwoInput"></label>
-            <i class="tempload"></i>
-        </div>
-    </section>
+
 </div>
-<script type="text/javascript" src="../lib/jquery.js"></script>
+<script type="text/javascript" src="../lib/jquery.min.js"></script>
 <script type="text/javascript" src="../lib/underscore.js"></script>
-<script type="text/javascript" src="../src/algorithm/sort.js"></script>
+<script type="text/javascript" src="../src/algorithm/enumeration.js"></script>
 <script type="text/javascript">
 
 </script>

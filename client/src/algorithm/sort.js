@@ -4,8 +4,13 @@
 
 //bubbleSort();
 //var arr = [{a: 12}, {b: 35}, {c: 99}, {d: 18}, {e: 76}];
-
-function bubbleSort(a) {
+/**
+ *@author: TurboLoong
+ *@date: 2016/11/6
+ *@param:
+ *@des:冒泡排序，如果前一个数大于后一个数，交换位置
+ */
+function bubbleSort(arr) {
     var length = arr.length;
    for(var i = 0; i < length-1; i++){
        for(var j = 0; j < length-1-i; j++){
@@ -22,7 +27,7 @@ function bubbleSort(a) {
  *@date: 2016/10/23
  *@param: left 左边基准
  *@param: right 右边基准
- *@des: 快速排序
+ *@des: 快速排序，以一个基准数，先从右往左找到比基准数小的，再从左往右找到比基准数大的，交换着两个数
  */
 /*var arr = [6, 1, 2, 7, 9, 3, 4, 5, 10, 8];
 quickSort(0, arr.length-1);
@@ -48,7 +53,7 @@ function quickSort(left, right) {
             arr[j] = [arr[i], arr[i] = arr[j]][0];
         }
     }
-    //最终将基准数归为
+    //最终将基准数归位
     arr[left] = arr[i];
     arr[i] = temp;
     quickSort(left, i - 1);
