@@ -19,3 +19,4 @@ process.on('message', function (msg) {
 worker.send('---');
 
 process.emit('message', '------');
+
