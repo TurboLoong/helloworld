@@ -95,25 +95,25 @@ function playMatch(m) {
 }
 //playMatch(18);
 
-//深度优先搜索
+//深度优先搜索,关键在于解决“当下该如何做”
 var total = 0;
 var a= new Array(9);
 var book = {};
 //当前桌面上的牌出现的次数，0表示没出现过，1表示已经出现
-for(var i = 0; i < 9; i++){
+for(var i = 1; i <= 9; i++){
     book[i] = 0;
 }
 
 //全排列
-var n = 3;
-function dfs(step){
+/*var n = 3;
+function dfs(step){ //当你在第step个盒子的时候是把每一种可能都去尝试一遍。
     "use strict";
     if(step == n){ //如果站在第n+1个盒子面前，则表示前n个盒子已经放好扑克牌
         //输出一种排列
         total++;
-       /* for(var i = 0; i < n; i++){
+       /!* for(var i = 0; i < n; i++){
             console.log(a[i]);
-        }*/
+        }*!/
         return;//返回之前的一步（最近一次调用dfs函数的地方）
     }
     //此时站在第step个盒子面前，应该放哪张牌呢？
@@ -130,13 +130,13 @@ function dfs(step){
         }
     }
     return;
-}
+}*/
 
-/*function dfs(step) {
-    if(step == 10){//判断边界条件
-        if(a[0]*100 + a[2]*10 + a[3] + a[4]*100 + a[5]*10 + a[6] == a[7]*100 + a[8]*10 + a[9]){
+function dfs(step) {
+    if(step == 9){//判断边界条件
+        if(a[0]*100 + a[1]*10 + a[2] + a[3]*100 + a[4]*10 + a[5] == a[6]*100 + a[7]*10 + a[8]){
             total++;
-            console.log(a[0] + '----' + a[1] + '----'+ a[2] + '----'+ a[3] + '----'+ a[4] + '----'+ a[5] + '----'+ a[6] + '----'+ a[7] + '----'+ a[8] + '----'+ a[9] + '----')
+            console.log(a[0] + '----' + a[1] + '----'+ a[2] + '----'+ a[3] + '----'+ a[4] + '----'+ a[5] + '----'+ a[6] + '----'+ a[7] + '----'+ a[8] + '----');
         }
         return;
     }
@@ -149,7 +149,7 @@ function dfs(step){
         }
     }
     return;
-}*/
+}
 dfs(0);
-console.log(total);
+console.log(total/2);
 
