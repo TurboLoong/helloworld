@@ -18,7 +18,7 @@ if(cluster.isMaster){
             console.log(message.from + ': ' + message.type + ' ' + message.data.number + ' = ' + message.data.result);
         });
     }
-    //监听在线的进程
+    //监听进程创建成功事件
     cluster.on('online', function (worker) {
         console.log('Worker ' + worker.process.pid + ' is online');
     });
@@ -46,7 +46,7 @@ if(cluster.isMaster){
 }else {
     process.on('message', function (message) {
        if(message.type === 'factorial'){
-           process.send({
+           process.send({ //注意子进程向master发消息要用process.send(message)
                type: 'factorial',
                from: 'Worker ' + process.pid,
                data: {
