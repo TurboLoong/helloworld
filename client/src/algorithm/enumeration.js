@@ -96,13 +96,23 @@ function playMatch(m) {
 //playMatch(18);
 
 //深度优先搜索,关键在于解决“当下该如何做”
-var total = 0;
+/*var total = 0;
 var a= new Array(9);
 var book = {};
 //当前桌面上的牌出现的次数，0表示没出现过，1表示已经出现
 for(var i = 1; i <= 9; i++){
     book[i] = 0;
-}
+}*/
+//模型
+/*function dfs(step) {
+    //判断边界
+    //尝试每一种可能
+    for(var i = 0; i < n; i++){
+        //继续下一步
+        dfs(step + 1);
+    }
+    //返回
+}*/
 
 //全排列
 /*var n = 3;
@@ -132,7 +142,7 @@ function dfs(step){ //当你在第step个盒子的时候是把每一种可能都
     return;
 }*/
 
-function dfs(step) {
+/*function dfs(step) {
     if(step == 9){//判断边界条件
         if(a[0]*100 + a[1]*10 + a[2] + a[3]*100 + a[4]*10 + a[5] == a[6]*100 + a[7]*10 + a[8]){
             total++;
@@ -149,7 +159,121 @@ function dfs(step) {
         }
     }
     return;
-}
-dfs(0);
-console.log(total/2);
+}*/
 
+//迷宫寻宝
+/*var next = [[0, 1], [1, 0], [0, -1], [-1, 0]]; //向四个方向走一步
+var p = 4, q = 3, min = 20;//p, q即宝藏的坐标
+var n = 5, m = 4;
+book[0][0] =1;
+function dfs(x, y, step) {
+    var tx, ty, k;
+    //判断是否到达宝藏的位置
+    if(x == p && y == q){
+        if(step < min)
+            min = step;
+        return;
+    }
+    //枚举四种走法
+    for(var i = 0; i < 4; i++){
+        //计算下一个点的坐标
+        tx = x + next[i][0];
+        ty = y + next[i][1];
+        //判断是否越界
+        if(tx < 1 || tx > n || ty < 1 || ty > m)
+            continue;
+        //判断改点是否为障碍物或者已经在路径中
+        if(a[tx][ty] == 0 && book[tx][ty] == 0){
+            book[tx][ty] = 1; //标记这个点已经走过
+            dfs(tx, ty, step + 1);//尝试下一个点
+            book[tx][ty] = 0; //尝试结束，取消这个点的标记
+        }
+    }
+    return;
+}*/
+
+//dfs(0);
+//console.log(total/2);
+
+/**
+ *@author: TurboLoong
+ *@date: 2016/11/16
+ *@param:
+ *@des:广度优先搜索
+ */
+//顺时针走的四个方向
+var next = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+
+var p = 3, q = 2;
+//初始化所有的点，0-表示没有走过，1-表示已经走过
+var book = [];
+for(var i = 0;  i < 5; i++){
+    book.push([]);
+}
+book.forEach(function (value, index) {
+    for(var i = 0; i < 4; i++){
+        value.push(0);
+    }
+});
+book[0][0] = 1;
+
+//初始化地图
+var a = [];
+for(var i = 0;  i < 5; i++){
+    a.push([]);
+}
+a.forEach(function (value, index) {
+    for(var i = 0; i < 4; i++){
+        value.push(0);
+    }
+});
+a[0][2] = 1;
+a[2][2] = 1;
+a[3][1] = 1;
+a[4][3] = 1;
+
+//队列初始化
+var head = 0, tail = 0;
+var que = [];
+for(var i = 0; i < 2500; i++){
+    que.push({x: '', y: '', s: 0});
+}
+que[tail].x = 0;
+que[tail].y = 0;
+que[tail].s = 0;
+tail++;
+
+var flag = 0; //用来标记是否到达目标点，
+function bfs() {
+    var tx, ty;
+    while (head < tail){
+        //枚举四个方向
+        for(var k = 0; k < 4; k++){
+            //计算下一个点的坐标
+            tx = que[head].x + next[k][0];
+            ty = que[head].y + next[k][1];
+            //判断是否越界
+            if(tx < 1 || tx > 4 || ty < 1 || ty > 3){
+                continue;
+            }
+            //判断是否是障碍物或者已经在路径中
+            if(a[tx][ty] == 0 && book[tx][ty] == 0){
+                //把这个点标记为已经走过
+                book[tx][ty] = 1;
+                //插入新的点到队列中
+                que[tail].x = tx;
+                que[tail].y = ty;
+                que[tail].s = que[head].s + 1;
+                tail++;
+            }
+            if(tx == p && ty == q){
+                flag = 1;
+                break;
+            }
+        }
+        if(flag == 1){
+            break;
+            head++; //当一个点扩展结束后，head++才能对后面的点再进行扩展
+        }
+    }
+}
