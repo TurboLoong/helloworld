@@ -1,3 +1,9 @@
+/**
+ *@author: TurboLoong
+ *@date: 2016/11/17
+ *@param: 双向数据绑定-脏检查
+ *@des:
+ */
 var Scope = function() {
 	this.$$watchers = [];
 

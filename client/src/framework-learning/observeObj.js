@@ -1,5 +1,5 @@
-/*
- *  Object 原型
+/**
+ *  mvvm里面的数据绑定
  */
 const OP = Object.prototype;
 /*

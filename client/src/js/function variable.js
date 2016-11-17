@@ -5,7 +5,7 @@ function factorial(num){
 	if(num <=1 ) {
 		return 1;
 	}else{
-		rturn num * arguments.callee(num -1);
+		return num * arguments.callee(num -1);
 	}
 }
 //使用命名函数表达式

@@ -1,3 +1,4 @@
+var btn;
 //DOM0级事件处理程序
 btn.onclick = function() {
 	alert(this.id)
@@ -51,7 +52,7 @@ var EventUtil = {
 		}else if(element.detachEvent) {
 			element.detachEvent("on" + type, handler, false);
 		}else{
-			element.["on" + type] = null;
+			element["on" + type] = null;
 		}
 	}
 }
@@ -123,7 +124,6 @@ btn.onclick = function() {
 	window.event.cancelBubble = true;
 }
 
-vat btn;
 btn.onclick = function(event) {
 	event = EventUtil.getEvent(event);
 	EventUtil.stopPropagation(event);

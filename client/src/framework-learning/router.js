@@ -1,3 +1,9 @@
+/**
+ *@author: TurboLoong
+ *@date: 2016/11/17
+ *@param: content
+ *@des:前端路由实现原理
+ */
 (function() {
 	function Router() {}
 	Router.prototype.route = function(path, callback) {

@@ -177,7 +177,7 @@ function SuperType(name) {
 	this.name = name;
 	this.colors = ["red", "blue"];
 }
-SuperType.prototype.sayName = functioin() {
+SuperType.prototype.sayName = function() {
 	alert(this.name);
 }
 function SubType(name, age) {
