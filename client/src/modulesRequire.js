@@ -1,7 +1,7 @@
 /**
  * author: TurboLoong
  * date: 2016/11/17
- * descriptioin:
+ * descriptioin: 模块加载的实现原理
  */
 var r = /require\(\s*"(.*)"\s*\)/g;
 var cache = {};    // 文件缓存
