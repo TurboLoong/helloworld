@@ -182,7 +182,7 @@ function dfs(x, y, step) {
         //判断是否越界
         if(tx < 1 || tx > n || ty < 1 || ty > m)
             continue;
-        //判断改点是否为障碍物或者已经在路径中
+        //判断该点是否为障碍物或者已经在路径中
         if(a[tx][ty] == 0 && book[tx][ty] == 0){
             book[tx][ty] = 1; //标记这个点已经走过
             dfs(tx, ty, step + 1);//尝试下一个点
@@ -235,7 +235,7 @@ a[4][3] = 1;
 //队列初始化
 var head = 0, tail = 0;
 var que = [];
-for(var i = 0; i < 2500; i++){
+for(var i = 0; i < 50; i++){
     que.push({x: '', y: '', s: 0});
 }
 que[tail].x = 0;
@@ -253,7 +253,7 @@ function bfs() {
             tx = que[head].x + next[k][0];
             ty = que[head].y + next[k][1];
             //判断是否越界
-            if(tx < 1 || tx > 4 || ty < 1 || ty > 3){
+            if(tx < 0 || tx > 4 || ty < 0 || ty > 3){
                 continue;
             }
             //判断是否是障碍物或者已经在路径中
@@ -266,6 +266,7 @@ function bfs() {
                 que[tail].s = que[head].s + 1;
                 tail++;
             }
+            //已经到达目的地
             if(tx == p && ty == q){
                 flag = 1;
                 break;
@@ -273,7 +274,9 @@ function bfs() {
         }
         if(flag == 1){
             break;
-            head++; //当一个点扩展结束后，head++才能对后面的点再进行扩展
         }
+        head++; //当一个点扩展结束后，head++才能对后面的点再进行扩展
     }
+    console.log(que[tail-1].s);
 }
+bfs();
