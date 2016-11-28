@@ -12,6 +12,7 @@ var concat = require('gulp-concat');
 var stripDebug = require('gulp-strip-debug');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
+var minify = require('gulp-json-minify');
 
 //JS hint task
 gulp.task('jsint', function() {
@@ -26,4 +27,9 @@ gulp.task('scripts', function() {
         .pipe(uglify())
         .pipe(concat('all.min.js'))
         .pipe(gulp.dest('./dist/js/'));
+});
+gulp.task('concatJson', function () {
+    return gulp.src('./server/region/cities.json')
+        .pipe(minify())
+        .pipe(gulp.dest('dist/'));
 });

@@ -22,5 +22,15 @@
     "underscore": "^1.8.3",
     "vue": "^2.0.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-jshint": "^2.0.4",
+    "gulp-json-minify": "^1.0.5",
+    "gulp-minify": "0.0.14",
+    "gulp-sourcemaps": "^1.9.1",
+    "gulp-strip-debug": "^1.1.0",
+    "gulp-uglify": "^2.0.0",
+    "jshint": "^2.9.4"
+  }
 }

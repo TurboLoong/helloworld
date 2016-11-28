@@ -280,3 +280,11 @@ function bfs() {
     console.log(que[tail-1].s);
 }
 bfs();
+
+/**
+ *@author: TurboLoong
+ *@date: 2016/11/27
+ *@param: q
+ *@des:再解炸弹人
+ */
+
