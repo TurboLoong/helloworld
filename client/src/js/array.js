@@ -56,4 +56,3 @@ function getNewArr() {
 		return item;
 	});
 }
-

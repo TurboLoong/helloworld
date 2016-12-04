@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
 <head>
     <meta charset="utf-8"/>
     <title> new document </title>
@@ -10,13 +10,22 @@
 </head>
 <body>
 <div class="container">
+    <div ng-controller="AppController">
+        <input type="file" nv-file-select uploader="uploader"/><br/>
 
+    </div>
+    <div>
+        &#23433;
+    </div>
 </div>
 <script type="text/javascript" src="../lib/jquery.min.js"></script>
 <script type="text/javascript" src="../lib/underscore.js"></script>
-<script type="text/javascript" src="../src/algorithm/enumeration.js"></script>
+<script type="text/javascript" src="../lib/angular.js"></script>
+<script type="text/javascript" src="../src/helloworld.js"></script>
 <script type="text/javascript">
-
+console.log('\u5b89');
+    var unicode = '\\u' + '安'.charCodeAt().toString(16);
+    console.log(unicode);
 </script>
 </body>
 </html>
