@@ -5,7 +5,22 @@
  */
 "use strict"
 angular
-    .module('app', ['angularFileUpload'])
-    .controller('AppController', function($scope, FileUploader) {
-        $scope.uploader = new FileUploader();
+    .module('app', [])
+    .controller('AppController', function($scope) {
+        $scope.inputValue = '';
     });
+var obj = {};
+function setupModuleLoader(obj) {
+    function ensure(obj, name, factory) {
+        return obj[name] || (obj[name] = factory());
+    }
+    var angular = ensure(obj, 'angular', Object);
+    return ensure(angular, 'module', function () {
+        var modules = {};
+        return function module(name, requires, configFn) {
+            return ensure(modules, name, function () {
+
+            })
+        }
+    })
+}
