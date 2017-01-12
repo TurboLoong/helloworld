@@ -428,27 +428,27 @@ function int(str) {
 }
 
 
-function inherit(parent, extra) {
-  return extend(Object.create(parent), extra);
-}
-
-/**
- * @ngdoc function
- * @name angular.noop
- * @module ng
- * @kind function
- *
- * @description
- * A function that performs no operations. This function can be useful when writing code in the
- * functional style.
+  /**
+   * @ngdoc function
+   * @name angular.noop
+   * @module ng
+   * @kind function
+   *
+   * @description
+   * A function that performs no operations. This function can be useful when writing code in the
+   * functional style.
    ```js
-     function foo(callback) {
+   function foo(callback) {
        var result = calculateResult();
        (callback || angular.noop)(result);
      }
    ```
- */
-function noop() {}
+   */
+  function noop() {}
+
+function inherit(parent, extra) {
+  return extend(Object.create(parent), extra);
+}
 noop.$inject = [];
 
 

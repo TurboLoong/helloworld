@@ -8,6 +8,10 @@ angular
     .module('app', [])
     .controller('AppController', function($scope) {
         $scope.inputValue = '';
+        $scope.oldInputValue = '';
+        $scope.$watch('inputValue', function (newValue,oldValue) {
+            $scope.oldInputValue = oldValue;
+        })
     });
 var obj = {};
 function setupModuleLoader(obj) {

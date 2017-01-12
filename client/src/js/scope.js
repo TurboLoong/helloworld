@@ -43,7 +43,7 @@ Scope.prototype.$$areEqual = function(newValue, oldValue, valueEq) {
 /**
  *@author: TurboLoong
  *@date: 2016/12/17
- *@des: 需要建立当前值的深拷贝，再赋值给last.否则同一个值得两个引用始终为真
+ *@des: 需要建立当前值的深拷贝，再赋值给last.否则同一个值的两个引用始终为真
  */
 Scope.prototype.$$digestOnce = function() {
     var self  = this;
