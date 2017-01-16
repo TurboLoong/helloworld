@@ -165,4 +165,17 @@ Validator.prototype.start = function () {
         }
     }
 };
+
+function beforeFunction() {
+    return function (fn, beforeFnArr) {
+        return function () {
+            for(var i=0,beforeFn;beforeFn = beforeFnArr[i++];){
+                if(beforeFn.apply(this, arguments)===false){
+                    return;
+                }
+            }
+            return fn.apply(this,arguments);
+        };
+    };
+}
  
