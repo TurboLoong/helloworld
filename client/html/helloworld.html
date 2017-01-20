@@ -25,15 +25,20 @@
             <div class="form-group">{{oldInputValue}}</div>
         </form>
     </div>
+    <div class="input-append date" id="datetimepicker" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+        <input size="16" type="text" value="12-02-2012" readonly>
+        <span class="add-on"><i class="icon-th"></i></span>
+    </div>
 </div>
 <script type="text/javascript" src="../lib/jquery.min.js"></script>
 <script type="text/javascript" src="../lib/underscore.js"></script>
 <script type="text/javascript" src="../lib/angular.js"></script>
+<script type="text/javascript" src="../lib/bootstrap/bootstrap-datetimepicker.js"></script>
 <script type="text/javascript" src="../src/helloworld.js"></script>
 <script type="text/javascript">
 
     var SocketCreated,ws;
-    ToggleConnectionClicked();
+    //ToggleConnectionClicked();
     function ToggleConnectionClicked() {
         if (SocketCreated && (ws.readyState == 0 || ws.readyState == 1)) {
             ws.close();

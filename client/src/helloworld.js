@@ -28,3 +28,4 @@ function setupModuleLoader(obj) {
         }
     })
 }
+$('#datetimepicker').datetimepicker();
