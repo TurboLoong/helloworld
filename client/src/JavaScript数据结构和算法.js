@@ -51,6 +51,7 @@ function PriorityQueue() {
   }
 }
 
+//环形队列
 function hotPotato(nameList, num) {
   var queue = new Queue();
   for(var i = 0; i<nameList.length; i++){
@@ -339,11 +340,57 @@ function BinarySearchTree() {
 function Graph() {
   var vertices = [];
   var adjList = new Dictionary();
+  var initializeColor = function () {
+    var color = {};
+    for(var i=0; i<vertices.length;i++){
+      color[vertices[i]] = 'white';
+    }
+    return color;
+}
   this.addVertex = function (v) {
     vertices.push(v);
     adjList.set(v, []);
   }
   this.addEdge = function (v, w) {
     adjList.get(v).push(w);
+  }
+  /**
+   *@author: Turbo Loong
+   *@date: 2017/1/20
+   *@disc: 广度优先搜索
+   * (1)创建一个队列
+   * (2)将v标注为被发现的,并将v如队列Q
+   * (3)如果Q非空，则运行以下步骤：
+   *  (a)将u从Q中出队列
+   *  (b)将标注u为被发现的
+   *  (c)将u所有未被访问过的邻点入队列
+   *  (d)将u标注为已被探索的
+   */
+  this.bfs = function (v, callback) {
+    //初始化
+    var color = initializeColor(),
+      queue = new Queue();
+    //定点入队
+    queue.enqueue(v);
+    //如果队列不为空
+    while(!queue.isEmpty()){
+      //出队，获取邻居
+      var u = queue.dequeue(),
+        neighbors = adjList.get(u);
+      color[u] = 'grey';
+      //遍历邻居
+      for(var i = 0; i < neighbors.length; i++){
+        var w = neighbors[i];
+        //设为灰色，入队
+        if(color[w] == 'white'){
+          color[w] = 'grey';
+          queue.enqueue(w);
+        }
+      }
+      color[u] = 'black';
+      if(callback){
+        callback(u);
+      }
+    }
   }
 }
