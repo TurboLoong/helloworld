@@ -205,7 +205,7 @@ function HashTable() {
   }
 }
 
-//树
+//二叉搜索树
 function BinarySearchTree() {
   var Node = function (key) {
     this.key = key;
@@ -362,7 +362,7 @@ function Graph() {
   //添加顶点之间的边（无向图）
   this.addEdge = function (v, w) {
     adjList.get(v).push(w);
-    adjList.get(w).push(v);//如果是有向图，只需要添加一个顶点的边，及此行不要
+    adjList.get(w).push(v);//如果是有向图，只需要添加一个顶点的边，即有一行不要
   }
   //图的遍历，广度优先，深度优先
   //图遍历算法的思想是必须追踪每个第一次访问的节点，并且追踪有哪些节点还没有被完全探索
@@ -387,6 +387,7 @@ function Graph() {
     }
     return color;
   }
+  //广度优先遍历
   this.bfs = function (v, callback) {
     //初始化
     var color = initializeColor(),
