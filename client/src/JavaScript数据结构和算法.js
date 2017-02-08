@@ -283,24 +283,37 @@ function BinarySearchTree() {
     if(node === null){
       return null;
     }
-    if(key < node.key){
+    if(key < node.key){ //向左边找
       node.left = removeNode(node.left, key);
       return node;
-    }else if(key > node.key){
+    }else if(key > node.key){ //向右边找
       node.right = removeNode(node.right, key);
-    }else{
-      if(node.left === null && node.right === null){
+    }else{ //找到删除的节点
+      if(node.left === null && node.right === null){ // 第一种情况——如果是一个叶子节点
         node == null;
         return node;
       }
-      if(node.left === null){
+      if(node.left === null){ //第二种情况——如果只有一个子节点的节点
         node = node.right;
         return node;
       }else if(node.right === null){
         node = node.left;
         return node;
       }
-
+      //第三种情况——一个有两个子节点的节点
+      var aux = findMinNode(node.right);
+      node.key = aux.key;
+      node.right = removeNode(node.right, aux.key);
+      return node;
+      function findMinNode(node) {
+        if(node){
+          while(node&&node.left !== null){
+            node = node.left;
+          }
+          return node;
+        }
+        return null;
+      }
     }
   }
   this.insert = function (key) {
@@ -429,6 +442,31 @@ function Graph() {
       color[u] = 'black';
     }
   }
+  //深度优先
+  function dfsVisit(u, color, callback) {
+    color[u] = 'grey';
+    if(callback){
+      callback(u);
+    }
+    var neighbors = adjList.get(u);
+
+    for(var i=0; i<neighbors.length; i++){
+      var w = neighbors[i];
+      if(color[w] === 'white'){
+        dfsVisit(w, color, callback); //添加顶点入栈
+      }
+    }
+    color[u] = 'black';
+  }
+  this.dfs = function (callback) {
+    var color = initializeColor();
+    for(var i=0; i<vertices.length; i++){
+      if(color[vertices[i]] === 'white'){
+        dfsVisit(vertices[i], color, callback);
+      }
+    }
+  }
+
 }
 var graph = new Graph();
 var myVertices = ['A','B','C','D','E','F','G','H','I'];
@@ -445,4 +483,6 @@ graph.addEdge('D', 'H');
 graph.addEdge('B', 'E');
 graph.addEdge('B', 'F');
 graph.addEdge('E', 'I');
+
+var fromVertex = myVertices[0];
 
