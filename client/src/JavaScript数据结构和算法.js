@@ -39,12 +39,12 @@ function PriorityQueue() {
       var added = false;
       for(var i = 0; i<items.length; i++){
         if(queueElement.priority<items[i].priority){
-          items.splice(i, 0, queueElement);
+          items.splice(i, 0, queueElement); //插入
           added = true;
           break;
         }
       }
-      if(!added){
+      if(!added){ //如果优先级最高
         items.push(queueElement);
       }
     }
@@ -60,9 +60,9 @@ function hotPotato(nameList, num) {
   var eliminated = ''
   while (queue.size()>1){
     for(var i = 0; i < num; i++){
-      queue.enqueue(queue.dequeue());
+      queue.enqueue(queue.dequeue()); //队首出队后从队尾入队
     }
-    eliminated = queue.dequeue();
+    eliminated = queue.dequeue(); //到达淘汰的位置
     console.log(eliminated + '已被淘汰');
   }
   return queue.dequeue();
