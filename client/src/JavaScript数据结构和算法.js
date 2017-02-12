@@ -17,7 +17,7 @@ function Queue() {
     return items.length == 0;
   }
   this.clear = function () {
-    items.length == 0;
+    items.length = 0;
   }
   this.size = function () {
     return items.length;
@@ -205,6 +205,7 @@ function HashTable() {
   }
 }
 
+//树
 //二叉搜索树
 function BinarySearchTree() {
   var Node = function (key) {
@@ -214,11 +215,11 @@ function BinarySearchTree() {
   };
   var root = null;
   var insertNode = function (node, newNode) {
-    if(newNode.key<node.key){
-      if(node.left === null){
+    if(newNode.key<node.key){ //如果新节点的键小于当前节点的键，需要检查左侧节点
+      if(node.left === null){ //如果没有左侧节点，就插入新节点
         node.left = newNode;
       }else{
-        insertNode(node.left, newNode);
+        insertNode(node.left, newNode); //如果有，递归继续找到下一层
       }
     }else{
       if(node.right === null){
@@ -228,6 +229,15 @@ function BinarySearchTree() {
       }
     }
   }
+  this.insert = function (key) {
+    var newNode = new Node(key); //(1)创建Node类实例
+    if(root === null){ //（2）如果是根节点
+      root = newNode;
+    }else{
+      insertNode(root, newNode);
+    }
+  }
+  //中序遍历
   var inOrderTraverseNode = function (node, callback) {
     if(node !== null){
       inOrderTraverseNode(node.left, callback);
@@ -235,6 +245,11 @@ function BinarySearchTree() {
       inOrderTraverseNode(node.right, callback);
     }
   }
+  this.inOrderTraverse = function (callback) {
+    inOrderTraverseNode(root, callback);
+  }
+
+  //先序遍历
   var preOrderTraverseNode = function (node, callback) {
     if(node !== null){
       callback(node,key);
@@ -242,6 +257,11 @@ function BinarySearchTree() {
       preOrderTraverseNode(node.right, callback);
     }
   }
+  this.preOrderTraverse = function (callback) {
+    preOrderTraverseNode(root, callback);
+  }
+
+  //后序遍历
   var postOrderTraverseNode = function (node, callback) {
     if(node.key !== null){
       postOrderTraverseNode(node.left, callback);
@@ -249,35 +269,51 @@ function BinarySearchTree() {
       callback(node, key);
     }
   }
+  this.postOrderTraverse = function (callback) {
+    postOrderTraverseNode(root, callback);
+  }
+
   var minNode = function (node) {
-    if(node){
-      while(node&&node.left !== null){
-        node = node.left;
+      if(node){
+          while(node&&node.left !== null){
+              node = node.left;
+          }
+          return node.key;
       }
-      return node.key;
-    }
-    return null;
+      return null;
   }
+  this.minNode = function () {
+    return minNode(root);
+  }
+
   var maxNode = function (node) {
-    if(node){
-      while(node&&node.right){
-        node = node.right;
+      if(node){
+          while(node&&node.right){
+              node = node.right;
+          }
+          return node.key;
       }
-      return node.key;
-    }
-    return null;
+      return null;
   }
+  this.maxNode = function () {
+    return maxNode(root);
+  }
+
   var searchNode = function (node, key) {
-    if(node === null){
-      return false;
-    }
-    if(key<node.key){
-      searchNode(node.left, key);
-    }else if(key > node.key){
-      searchNode(node.right, key);
-    }else{
-      return true;
-    }
+      if(node === null){
+          return false;
+      }
+      if(key<node.key){
+          searchNode(node.left, key);
+      }else if(key > node.key){
+          searchNode(node.right, key);
+      }else{
+          return true;
+      }
+  }
+
+  this.search = function (key) {
+    return searchNode(root, key);
   }
   var removeNode = function (node, key) {
     if(node === null){
@@ -316,35 +352,6 @@ function BinarySearchTree() {
       }
     }
   }
-  this.insert = function (key) {
-    var newNode = new Node(key);
-    if(root === null){
-      root = newNode;
-    }else{
-      insertNode(root, newNode);
-    }
-  }
-  //中序遍历
-  this.inOrderTraverse = function (callback) {
-    inOrderTraverseNode(root, callback);
-  }
-  //先序遍历
-  this.preOrderTraverse = function (callback) {
-    preOrderTraverseNode(root, callback);
-  }
-  //后序遍历
-  this.postOrderTraverse = function (callback) {
-    postOrderTraverseNode(root, callback);
-  }
-  this.minNode = function () {
-    return minNode(root);
-  }
-  this.maxNode = function () {
-    return maxNode(root);
-  }
-  this.search = function (key) {
-    return searchNode(root, key);
-  }
   this.removeNode = function (key) {
     root = removeNode(root, key);
   }
@@ -352,9 +359,15 @@ function BinarySearchTree() {
 //图的表示
 //邻接矩阵，邻接表，关联矩阵
 function Graph() {
-  var vertices = []; //顶点
-  var adjList = new Dictionary(); //用字典来存储邻接表
-  //添加定点
+  var vertices = [];
+  var adjList = new Dictionary();
+  var initializeColor = function () {
+    var color = {};
+    for(var i=0; i<vertices.length;i++){
+      color[vertices[i]] = 'white';
+    }
+    return color;
+}
   this.addVertex = function (v) {
     vertices.push(v);
     adjList.set(v, []);
@@ -380,14 +393,6 @@ function Graph() {
    *  (d)将u标注为已被探索的
    * 总结：入队，出队，置为黑
    */
-  var initializeColor = function () {
-    var color = {};
-    for(var i=0; i<vertices.length;i++){
-      color[vertices[i]] = 'white';
-    }
-    return color;
-  }
-  //广度优先遍历
   this.bfs = function (v, callback) {
     //初始化
     var color = initializeColor(),
@@ -414,7 +419,8 @@ function Graph() {
         callback(u);
       }
     }
-  }
+  };
+  
   //寻找最短路径
   this.BFS = function (v) {
     var color = initializeColor(),
@@ -486,4 +492,42 @@ graph.addEdge('B', 'F');
 graph.addEdge('E', 'I');
 
 var fromVertex = myVertices[0];
+
+function riskIsland(startX, startY) {
+  var islandBooks = initialIslandBook();
+  islandBooks[startX][startY] = 1;
+  var next = [];
+  next[0] = [];
+  next[1] = [];
+  next[2] = [];
+  next[3] = [];
+  next[0][0]=0;
+  next[0][1]=1;
+  next[1][0]=1;
+  next[1][1]=0;
+  next[2][0]=1;
+  next[1][1]=0;next[1][0]=1;
+  next[1][1]=0;
+  function node(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+  var que = new Queue(),
+      startNode = new Node(startX, startY);
+  que.enqueue(startNode);
+  while (!que.isEmpty()){
+
+  }
+
+}
+function initialIslandBook() {
+  var books = [];
+  for(var i=0;i<50;i++){
+    books[i]=[];
+    for(var j=0;j<50;j++){
+      books[i][j]=0;
+    }
+  }
+  return books;
+}
 
