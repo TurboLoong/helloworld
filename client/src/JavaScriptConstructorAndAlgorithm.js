@@ -172,15 +172,24 @@ function Dictionary() {
     items[key] = value;
   }
   this.remove = function (key) {
-    if(items.has[key]){
+    if(this.has[key]){
       delete items[key];
+      return true;
     }
+    return false;
   }
   this.get = function (key) {
-    if(items.has[key]){
-      return items[key];
-    }
+    return this.has(key) ? items[key] : undefined;
   }
+  this.values = function() {
+    var values = [];
+    for (var k in items) { //{1}
+      if (this.has(k)) {
+        values.push(items[k]); //{2}
+      }
+    }
+    return values;
+  };
 }
 //散列表
 var ValuePair = function (key, value) {
@@ -427,14 +436,14 @@ function Graph() {
       queue = new Queue(),
       d = [],
       pred = [];
-    queue.enqueue(v);
+    queue.enqueue(v); //将源点入队
 
     for(var i = 0; i < vertices.length; i++){
       d[vertices[i]] = 0;
       pred[vertices[i]] = null;
     }
     while (!queue.isEmpty()){
-      var u = queue.dequeue(),
+      var u = queue.dequeue(), //访问队首
         neighbors = adjList.get(u);
       color[u] = 'grey';
       for(var i = 0; i < neighbors.length; i++){
@@ -450,29 +459,44 @@ function Graph() {
     }
   }
   //深度优先
-  function dfsVisit(u, color, callback) {
-    color[u] = 'grey';
-    if(callback){
-      callback(u);
-    }
-    var neighbors = adjList.get(u);
-
-    for(var i=0; i<neighbors.length; i++){
-      var w = neighbors[i];
-      if(color[w] === 'white'){
-        dfsVisit(w, color, callback); //添加顶点入栈
-      }
-    }
-    color[u] = 'black';
-  }
-  this.dfs = function (callback) {
+  this.dfs = function (s, callback) {
     var color = initializeColor();
+    var d = {},
+        pred = {};
     for(var i=0; i<vertices.length; i++){
+      d[vertices[i]] = 0;
+      pred[vertices[i]] = null;
+    }
+    /*for(var i=0; i<vertices.length; i++){
       if(color[vertices[i]] === 'white'){
         dfsVisit(vertices[i], color, callback);
       }
+    }*/
+    dfsVisit(s, color, callback);
+
+    return {
+      distances: d,
+      predecessors: pred
+    }
+    function dfsVisit(u, color, callback) {
+      color[u] = 'grey';
+      if(callback){
+        callback(u);
+      }
+      var neighbors = adjList.get(u);
+      for(var i=0; i<neighbors.length; i++){
+        var w = neighbors[i];
+        if(color[w] === 'white'){
+          color[w] = 'grey';
+          d[w] = d[u] + 1;
+          pred[w] = u;
+          dfsVisit(w, color, callback); //添加顶点入栈
+        }
+      }
+      color[u] = 'black';
     }
   }
+
 
 }
 var graph = new Graph();
@@ -491,6 +515,20 @@ graph.addEdge('B', 'E');
 graph.addEdge('B', 'F');
 graph.addEdge('E', 'I');
 
+var shortestPathA = graph.dfs('A', function (u) {
+  /*if(dis>min){
+    return;
+  }*/
+  if(u=='G'){
+    /*if(min>dis){
+      min = dis;
+      console.log(min);
+      return
+    }*/
+
+  }
+});
+console.log(shortestPathA);
 var fromVertex = myVertices[0];
 
 function riskIsland(startX, startY) {
