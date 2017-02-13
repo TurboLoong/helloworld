@@ -384,7 +384,7 @@ function Graph() {
   //添加顶点之间的边（无向图）
   this.addEdge = function (v, w) {
     adjList.get(v).push(w);
-    adjList.get(w).push(v);//如果是有向图，只需要添加一个顶点的边，即有一行不要
+    //adjList.get(w).push(v);//如果是有向图，只需要添加一个顶点的边，即有一行不要
   }
   //图的遍历，广度优先，深度优先
   //图遍历算法的思想是必须追踪每个第一次访问的节点，并且追踪有哪些节点还没有被完全探索
@@ -457,6 +457,10 @@ function Graph() {
       }
       color[u] = 'black';
     }
+    return {
+      distances: d,
+      predecessors: pred
+    }
   }
   //深度优先
   this.dfs = function (s, callback) {
@@ -497,9 +501,47 @@ function Graph() {
     }
   }
 
-
+  var time = 0;
+  this.DFS = function () {
+    var color = initializeColor(),
+        d = {},
+        f = {},
+        p = {};
+    time = 0;
+    for(var i=0; i<vertices.length; i++){
+      f[vertices[i]] = 0;
+      d[vertices[i]] = 0;
+      p[vertices[i]] = null;
+    }
+    for(i=0; i<vertices.length; i++){
+      if(color[vertices[i]] === 'white'){
+        DFSVisit(vertices[i], color, d, f, p);
+      }
+    }
+    return {
+      discovery: d,
+      finished: f,
+      predecessors: p
+    }
+    function DFSVisit(u, color, d, f, p) {
+      console.log('discovered ' + u);
+      color[u] = 'grey';
+      d[u] = ++time;
+      var neighbors = adjList.get(u);
+      for(var i = 0; i< neighbors.length; i++){
+        var w = neighbors[i];
+        if(color[w] === 'white'){
+          p[w] = u;
+          DFSVisit(w, color, d, f, p);
+        }
+      }
+      color[u] = 'black';
+      f[u] = ++time;
+      console.log('explored ' + u);
+    }
+  }
 }
-var graph = new Graph();
+/*var graph = new Graph();
 var myVertices = ['A','B','C','D','E','F','G','H','I'];
 for(var i = 0; i < myVertices.length; i++){
   graph.addVertex(myVertices[i]);
@@ -513,23 +555,35 @@ graph.addEdge('D', 'G');
 graph.addEdge('D', 'H');
 graph.addEdge('B', 'E');
 graph.addEdge('B', 'F');
-graph.addEdge('E', 'I');
+graph.addEdge('E', 'I');*/
 
-var shortestPathA = graph.dfs('A', function (u) {
-  /*if(dis>min){
+/*var shortestPathA = graph.dfs('A', function (u) {
+  /!*if(dis>min){
     return;
-  }*/
+  }*!/
   if(u=='G'){
-    /*if(min>dis){
+    /!*if(min>dis){
       min = dis;
       console.log(min);
       return
-    }*/
+    }*!/
 
   }
-});
-console.log(shortestPathA);
-var fromVertex = myVertices[0];
+});*/
+
+var graph = new Graph();
+var myVertices = ['A','B','C','D','E','F'];
+for (var i=0; i<myVertices.length; i++){
+  graph.addVertex(myVertices[i]);
+}
+graph.addEdge('A', 'C');
+graph.addEdge('A', 'D');
+graph.addEdge('B', 'D');
+graph.addEdge('B', 'E');
+graph.addEdge('C', 'F');
+graph.addEdge('F', 'E');
+var result = graph.DFS();
+console.log(result);
 
 function riskIsland(startX, startY) {
   var islandBooks = initialIslandBook();
