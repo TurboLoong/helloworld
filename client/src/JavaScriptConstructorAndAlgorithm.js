@@ -367,6 +367,7 @@ function BinarySearchTree() {
 }
 //图的表示
 //邻接矩阵，邻接表，关联矩阵
+var min = 100;
 function Graph() {
   var vertices = [];
   var adjList = new Dictionary();
@@ -382,8 +383,10 @@ function Graph() {
     adjList.set(v, []);
   }
   //添加顶点之间的边（无向图）
-  this.addEdge = function (v, w) {
-    adjList.get(v).push(w);
+  this.addEdge = function (v, w, dis) {
+    var item = {};
+    item[w] = dis;
+    adjList.get(v).push(item);
     //adjList.get(w).push(v);//如果是有向图，只需要添加一个顶点的边，即有一行不要
   }
   //图的遍历，广度优先，深度优先
@@ -503,7 +506,7 @@ function Graph() {
 
   var time = 0;
   this.DFS = function () {
-    var color = initializeColor(),
+    /*var color = initializeColor(),
         d = {},
         f = {},
         p = {};
@@ -518,26 +521,34 @@ function Graph() {
         DFSVisit(vertices[i], color, d, f, p);
       }
     }
+
     return {
       discovery: d,
       finished: f,
       predecessors: p
-    }
-    function DFSVisit(u, color, d, f, p) {
-      console.log('discovered ' + u);
+    }*/
+    var color = initializeColor();
+    DFSVisit('A', color, 0);
+    function DFSVisit(u, color, d) {
+      if(d>min) return;
+      if(u === 'F'){
+        if(d<min) min = d;
+        return;
+      }
       color[u] = 'grey';
-      d[u] = ++time;
+      //d[u] = ++time;
       var neighbors = adjList.get(u);
+
       for(var i = 0; i< neighbors.length; i++){
         var w = neighbors[i];
-        if(color[w] === 'white'){
-          p[w] = u;
-          DFSVisit(w, color, d, f, p);
+        var key = Object.keys(w)[0];
+        if(color[key] === 'white'){
+          //p[w] = u;
+          DFSVisit(key, color, d+w[key]);
         }
       }
       color[u] = 'black';
-      f[u] = ++time;
-      console.log('explored ' + u);
+      //f[u] = ++time;
     }
   }
 }
@@ -576,14 +587,16 @@ var myVertices = ['A','B','C','D','E','F'];
 for (var i=0; i<myVertices.length; i++){
   graph.addVertex(myVertices[i]);
 }
-graph.addEdge('A', 'C');
-graph.addEdge('A', 'D');
-graph.addEdge('B', 'D');
-graph.addEdge('B', 'E');
-graph.addEdge('C', 'F');
-graph.addEdge('F', 'E');
-var result = graph.DFS();
-console.log(result);
+graph.addEdge('A', 'B', 2);
+graph.addEdge('A', 'F', 10);
+graph.addEdge('B', 'C', 3);
+graph.addEdge('B', 'F', 7);
+graph.addEdge('C', 'A', 4);
+graph.addEdge('C', 'D', 4);
+graph.addEdge('D', 'F', 5);
+graph.addEdge('F', 'C', 3);
+graph.DFS();
+console.log('min--' + min);
 
 function riskIsland(startX, startY) {
   var islandBooks = initialIslandBook();
