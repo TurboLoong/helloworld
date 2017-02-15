@@ -1,24 +1,14 @@
-var gulp = require('gulp'),
-  connect = require('gulp-connect');
-
-gulp.task('connect', function() {
-  connect.server({
-    livereload: true
+var gulp        = require('gulp');
+var browserSync = require('browser-sync').create();
+var reload      = browserSync.reload;
+// 静态服务器
+gulp.task('browser-sync', function() {
+  browserSync.init({
+    server: {
+      baseDir: "./"
+    }
   });
+  gulp.watch("client/html/**/*.html").on('change', reload);
+  gulp.watch("client/src/**/*.js").on('change', reload);
+  gulp.watch("client/css/**/*.css").on('change', reload);
 });
-
-//定义html任务
-gulp.task('html', function () {
-  gulp.src('./client/html/*.html')
-  .pipe(connect.reload());
-});
-gulp.task('js', function () {
-  gulp.src('./client/src/**/*.js')
-    .pipe(connect.reload());
-});
-gulp.task('watch', function () {
-  gulp.watch('client/html/**/*.html', ['html']);
-  gulp.watch('client/js/**/*.js', ['js']);
-});
-
-gulp.task('default', ['html', 'js', 'watch','connect']);

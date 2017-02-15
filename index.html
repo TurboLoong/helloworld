@@ -3,10 +3,8 @@
 <head>
     <meta charset="utf-8"/>
     <title> new document </title>
-    <link rel="stylesheet" href="client/css/bootstrap.css"/>
-    <style type="text/css">
+    <link rel="stylesheet" href="client/lib/bootstrap/bootstrap.css"/>
 
-    </style>
 </head>
 <body>
 <div class="container">
@@ -26,56 +24,14 @@
         <span class="add-on"><i class="icon-th"></i></span>
     </div>
 </div>
+<!--lib -->
 <script type="text/javascript" src="client/lib/jquery.min.js"></script>
 <script type="text/javascript" src="client/lib/underscore.js"></script>
 <script type="text/javascript" src="client/lib/angular.js"></script>
-<script type="text/javascript" src="client/lib/bootstrap/bootstrap-datetimepicker.js"></script>
-<script type="text/javascript" src="client/src/helloworld.js"></script>
+<!--src-->
 <script type="text/javascript" src="client/src/JavaScriptConstructorAndAlgorithm.js"></script>
+<script type="text/javascript" src="client/src/helloworld.js"></script>
 <script type="text/javascript">
-
-    var SocketCreated,ws;
-    //ToggleConnectionClicked();
-    function ToggleConnectionClicked() {
-        if (SocketCreated && (ws.readyState == 0 || ws.readyState == 1)) {
-            ws.close();
-        } else {
-            //Log("准备连接到聊天服务器 ...");
-            try {
-                ws = new WebSocket("ws://192.168.1.105:50000/websocket");
-                SocketCreated = true;
-            } catch (ex) {
-                //Log(ex, "ERROR");
-                return;
-            }
-            //document.getElementById("ToggleConnection").innerHTML = "断开";
-            ws.onopen = WSonOpen;
-            ws.onmessage = WSonMessage;
-            ws.onclose = WSonClose;
-        }
-    };
-
-    function WSonOpen() {
-        console.log("连接已经建立。", "OK");
-    };
-
-    function WSonMessage(event) {
-        console.log(JSON.parse(event.data));
-        /*$scope.messages.push({
-         id: '3',
-         imageSrc: 'img/a2.jpg',
-         timeByNow: '30分钟前',
-         doctorName: '王立文',
-         occupation: '划价记账处',
-         detailMsg: '患者曹丽华是否需要补交一次治疗费用？',
-         lastTime: '2016-09-13 13:24'
-         });*/
-    };
-
-    function WSonClose() {
-        //Log("连接关闭。", "ERROR");
-        console.log('连接已经关闭')
-    };
 </script>
 </body>
 </html>

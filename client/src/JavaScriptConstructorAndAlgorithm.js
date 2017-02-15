@@ -367,10 +367,10 @@ function BinarySearchTree() {
 }
 //图的表示
 //邻接矩阵，邻接表，关联矩阵
-var min = 100;
 function Graph() {
   var vertices = [];
   var adjList = new Dictionary();
+  var min = 100;
   var initializeColor = function () {
     var color = {};
     for(var i=0; i<vertices.length;i++){
@@ -383,11 +383,16 @@ function Graph() {
     adjList.set(v, []);
   }
   //添加顶点之间的边（无向图）
-  this.addEdge = function (v, w, dis) {
+  this.addOneWayEdge = function (v, w, dis) {
     var item = {};
     item[w] = dis;
     adjList.get(v).push(item);
-    //adjList.get(w).push(v);//如果是有向图，只需要添加一个顶点的边，即有一行不要
+  }
+  this.addTwoWayEdge = function (v, w, dis) {
+    var item = {};
+    item[w] = dis;
+    adjList.get(v).push(item);
+    adjList.get(w).push(v);//如果是有向图，只需要添加一个顶点的边，即有一行不要
   }
   //图的遍历，广度优先，深度优先
   //图遍历算法的思想是必须追踪每个第一次访问的节点，并且追踪有哪些节点还没有被完全探索
@@ -474,11 +479,6 @@ function Graph() {
       d[vertices[i]] = 0;
       pred[vertices[i]] = null;
     }
-    /*for(var i=0; i<vertices.length; i++){
-      if(color[vertices[i]] === 'white'){
-        dfsVisit(vertices[i], color, callback);
-      }
-    }*/
     dfsVisit(s, color, callback);
 
     return {
@@ -504,135 +504,26 @@ function Graph() {
     }
   }
 
-  var time = 0;
-  this.DFS = function () {
-    /*var color = initializeColor(),
-        d = {},
-        f = {},
-        p = {};
-    time = 0;
-    for(var i=0; i<vertices.length; i++){
-      f[vertices[i]] = 0;
-      d[vertices[i]] = 0;
-      p[vertices[i]] = null;
-    }
-    for(i=0; i<vertices.length; i++){
-      if(color[vertices[i]] === 'white'){
-        DFSVisit(vertices[i], color, d, f, p);
-      }
-    }
-
-    return {
-      discovery: d,
-      finished: f,
-      predecessors: p
-    }*/
+  this.DFS = function (s, d) {
     var color = initializeColor();
-    DFSVisit('A', color, 0);
-    function DFSVisit(u, color, d) {
-      if(d>min) return;
-      if(u === 'F'){
-        if(d<min) min = d;
+    DFSVisit(s, color, 0);
+    return min;
+    function DFSVisit(u, color, dis) {
+      if(dis>min) return;
+      if(u === d){
+        if(dis<min) min = dis;
         return;
       }
       color[u] = 'grey';
-      //d[u] = ++time;
       var neighbors = adjList.get(u);
-
       for(var i = 0; i< neighbors.length; i++){
         var w = neighbors[i];
         var key = Object.keys(w)[0];
         if(color[key] === 'white'){
-          //p[w] = u;
-          DFSVisit(key, color, d+w[key]);
+          DFSVisit(key, color, dis+w[key]);
         }
       }
       color[u] = 'black';
-      //f[u] = ++time;
     }
   }
 }
-/*var graph = new Graph();
-var myVertices = ['A','B','C','D','E','F','G','H','I'];
-for(var i = 0; i < myVertices.length; i++){
-  graph.addVertex(myVertices[i]);
-}
-graph.addEdge('A', 'B');
-graph.addEdge('A', 'C');
-graph.addEdge('A', 'D');
-graph.addEdge('C', 'D');
-graph.addEdge('C', 'G');
-graph.addEdge('D', 'G');
-graph.addEdge('D', 'H');
-graph.addEdge('B', 'E');
-graph.addEdge('B', 'F');
-graph.addEdge('E', 'I');*/
-
-/*var shortestPathA = graph.dfs('A', function (u) {
-  /!*if(dis>min){
-    return;
-  }*!/
-  if(u=='G'){
-    /!*if(min>dis){
-      min = dis;
-      console.log(min);
-      return
-    }*!/
-
-  }
-});*/
-
-var graph = new Graph();
-var myVertices = ['A','B','C','D','E','F'];
-for (var i=0; i<myVertices.length; i++){
-  graph.addVertex(myVertices[i]);
-}
-graph.addEdge('A', 'B', 2);
-graph.addEdge('A', 'F', 10);
-graph.addEdge('B', 'C', 3);
-graph.addEdge('B', 'F', 7);
-graph.addEdge('C', 'A', 4);
-graph.addEdge('C', 'D', 4);
-graph.addEdge('D', 'F', 5);
-graph.addEdge('F', 'C', 3);
-graph.DFS();
-console.log('min--' + min);
-
-function riskIsland(startX, startY) {
-  var islandBooks = initialIslandBook();
-  islandBooks[startX][startY] = 1;
-  var next = [];
-  next[0] = [];
-  next[1] = [];
-  next[2] = [];
-  next[3] = [];
-  next[0][0]=0;
-  next[0][1]=1;
-  next[1][0]=1;
-  next[1][1]=0;
-  next[2][0]=1;
-  next[1][1]=0;next[1][0]=1;
-  next[1][1]=0;
-  function node(x, y) {
-    this.x = x;
-    this.y = y;
-  }
-  var que = new Queue(),
-      startNode = new Node(startX, startY);
-  que.enqueue(startNode);
-  while (!que.isEmpty()){
-
-  }
-
-}
-function initialIslandBook() {
-  var books = [];
-  for(var i=0;i<50;i++){
-    books[i]=[];
-    for(var j=0;j<50;j++){
-      books[i][j]=0;
-    }
-  }
-  return books;
-}
-
