@@ -17,7 +17,7 @@ function Queue() {
     return items.length == 0;
   }
   this.clear = function () {
-    items.length == 0;
+    items.length = 0;
   }
   this.size = function () {
     return items.length;
@@ -172,15 +172,24 @@ function Dictionary() {
     items[key] = value;
   }
   this.remove = function (key) {
-    if(items.has[key]){
+    if(this.has[key]){
       delete items[key];
+      return true;
     }
+    return false;
   }
   this.get = function (key) {
-    if(items.has[key]){
-      return items[key];
-    }
+    return this.has(key) ? items[key] : undefined;
   }
+  this.values = function() {
+    var values = [];
+    for (var k in items) { //{1}
+      if (this.has(k)) {
+        values.push(items[k]); //{2}
+      }
+    }
+    return values;
+  };
 }
 //散列表
 var ValuePair = function (key, value) {
@@ -205,6 +214,7 @@ function HashTable() {
   }
 }
 
+//树
 //二叉搜索树
 function BinarySearchTree() {
   var Node = function (key) {
@@ -214,11 +224,11 @@ function BinarySearchTree() {
   };
   var root = null;
   var insertNode = function (node, newNode) {
-    if(newNode.key<node.key){
-      if(node.left === null){
+    if(newNode.key<node.key){ //如果新节点的键小于当前节点的键，需要检查左侧节点
+      if(node.left === null){ //如果没有左侧节点，就插入新节点
         node.left = newNode;
       }else{
-        insertNode(node.left, newNode);
+        insertNode(node.left, newNode); //如果有，递归继续找到下一层
       }
     }else{
       if(node.right === null){
@@ -228,6 +238,15 @@ function BinarySearchTree() {
       }
     }
   }
+  this.insert = function (key) {
+    var newNode = new Node(key); //(1)创建Node类实例
+    if(root === null){ //（2）如果是根节点
+      root = newNode;
+    }else{
+      insertNode(root, newNode);
+    }
+  }
+  //中序遍历
   var inOrderTraverseNode = function (node, callback) {
     if(node !== null){
       inOrderTraverseNode(node.left, callback);
@@ -235,6 +254,11 @@ function BinarySearchTree() {
       inOrderTraverseNode(node.right, callback);
     }
   }
+  this.inOrderTraverse = function (callback) {
+    inOrderTraverseNode(root, callback);
+  }
+
+  //先序遍历
   var preOrderTraverseNode = function (node, callback) {
     if(node !== null){
       callback(node,key);
@@ -242,6 +266,11 @@ function BinarySearchTree() {
       preOrderTraverseNode(node.right, callback);
     }
   }
+  this.preOrderTraverse = function (callback) {
+    preOrderTraverseNode(root, callback);
+  }
+
+  //后序遍历
   var postOrderTraverseNode = function (node, callback) {
     if(node.key !== null){
       postOrderTraverseNode(node.left, callback);
@@ -249,35 +278,51 @@ function BinarySearchTree() {
       callback(node, key);
     }
   }
+  this.postOrderTraverse = function (callback) {
+    postOrderTraverseNode(root, callback);
+  }
+
   var minNode = function (node) {
-    if(node){
-      while(node&&node.left !== null){
-        node = node.left;
+      if(node){
+          while(node&&node.left !== null){
+              node = node.left;
+          }
+          return node.key;
       }
-      return node.key;
-    }
-    return null;
+      return null;
   }
+  this.minNode = function () {
+    return minNode(root);
+  }
+
   var maxNode = function (node) {
-    if(node){
-      while(node&&node.right){
-        node = node.right;
+      if(node){
+          while(node&&node.right){
+              node = node.right;
+          }
+          return node.key;
       }
-      return node.key;
-    }
-    return null;
+      return null;
   }
+  this.maxNode = function () {
+    return maxNode(root);
+  }
+
   var searchNode = function (node, key) {
-    if(node === null){
-      return false;
-    }
-    if(key<node.key){
-      searchNode(node.left, key);
-    }else if(key > node.key){
-      searchNode(node.right, key);
-    }else{
-      return true;
-    }
+      if(node === null){
+          return false;
+      }
+      if(key<node.key){
+          searchNode(node.left, key);
+      }else if(key > node.key){
+          searchNode(node.right, key);
+      }else{
+          return true;
+      }
+  }
+
+  this.search = function (key) {
+    return searchNode(root, key);
   }
   var removeNode = function (node, key) {
     if(node === null){
@@ -316,35 +361,6 @@ function BinarySearchTree() {
       }
     }
   }
-  this.insert = function (key) {
-    var newNode = new Node(key);
-    if(root === null){
-      root = newNode;
-    }else{
-      insertNode(root, newNode);
-    }
-  }
-  //中序遍历
-  this.inOrderTraverse = function (callback) {
-    inOrderTraverseNode(root, callback);
-  }
-  //先序遍历
-  this.preOrderTraverse = function (callback) {
-    preOrderTraverseNode(root, callback);
-  }
-  //后序遍历
-  this.postOrderTraverse = function (callback) {
-    postOrderTraverseNode(root, callback);
-  }
-  this.minNode = function () {
-    return minNode(root);
-  }
-  this.maxNode = function () {
-    return maxNode(root);
-  }
-  this.search = function (key) {
-    return searchNode(root, key);
-  }
   this.removeNode = function (key) {
     root = removeNode(root, key);
   }
@@ -352,16 +368,30 @@ function BinarySearchTree() {
 //图的表示
 //邻接矩阵，邻接表，关联矩阵
 function Graph() {
-  var vertices = []; //顶点
-  var adjList = new Dictionary(); //用字典来存储邻接表
-  //添加定点
+  var vertices = [];
+  var adjList = new Dictionary();
+  var min = 100;
+  var initializeColor = function () {
+    var color = {};
+    for(var i=0; i<vertices.length;i++){
+      color[vertices[i]] = 'white';
+    }
+    return color;
+}
   this.addVertex = function (v) {
     vertices.push(v);
     adjList.set(v, []);
   }
   //添加顶点之间的边（无向图）
-  this.addEdge = function (v, w) {
-    adjList.get(v).push(w);
+  this.addOneWayEdge = function (v, w, dis) {
+    var item = {};
+    item[w] = dis;
+    adjList.get(v).push(item);
+  }
+  this.addTwoWayEdge = function (v, w, dis) {
+    var item = {};
+    item[w] = dis;
+    adjList.get(v).push(item);
     adjList.get(w).push(v);//如果是有向图，只需要添加一个顶点的边，即有一行不要
   }
   //图的遍历，广度优先，深度优先
@@ -380,14 +410,6 @@ function Graph() {
    *  (d)将u标注为已被探索的
    * 总结：入队，出队，置为黑
    */
-  var initializeColor = function () {
-    var color = {};
-    for(var i=0; i<vertices.length;i++){
-      color[vertices[i]] = 'white';
-    }
-    return color;
-  }
-  //广度优先遍历
   this.bfs = function (v, callback) {
     //初始化
     var color = initializeColor(),
@@ -414,21 +436,22 @@ function Graph() {
         callback(u);
       }
     }
-  }
+  };
+  
   //寻找最短路径
   this.BFS = function (v) {
     var color = initializeColor(),
       queue = new Queue(),
       d = [],
       pred = [];
-    queue.enqueue(v);
+    queue.enqueue(v); //将源点入队
 
     for(var i = 0; i < vertices.length; i++){
       d[vertices[i]] = 0;
       pred[vertices[i]] = null;
     }
     while (!queue.isEmpty()){
-      var u = queue.dequeue(),
+      var u = queue.dequeue(), //访问队首
         neighbors = adjList.get(u);
       color[u] = 'grey';
       for(var i = 0; i < neighbors.length; i++){
@@ -442,48 +465,65 @@ function Graph() {
       }
       color[u] = 'black';
     }
+    return {
+      distances: d,
+      predecessors: pred
+    }
   }
   //深度优先
-  function dfsVisit(u, color, callback) {
-    color[u] = 'grey';
-    if(callback){
-      callback(u);
-    }
-    var neighbors = adjList.get(u);
-
-    for(var i=0; i<neighbors.length; i++){
-      var w = neighbors[i];
-      if(color[w] === 'white'){
-        dfsVisit(w, color, callback); //添加顶点入栈
-      }
-    }
-    color[u] = 'black';
-  }
-  this.dfs = function (callback) {
+  this.dfs = function (s, callback) {
     var color = initializeColor();
+    var d = {},
+        pred = {};
     for(var i=0; i<vertices.length; i++){
-      if(color[vertices[i]] === 'white'){
-        dfsVisit(vertices[i], color, callback);
+      d[vertices[i]] = 0;
+      pred[vertices[i]] = null;
+    }
+    dfsVisit(s, color, callback);
+
+    return {
+      distances: d,
+      predecessors: pred
+    }
+    function dfsVisit(u, color, callback) {
+      color[u] = 'grey';
+      if(callback){
+        callback(u);
       }
+      var neighbors = adjList.get(u);
+      for(var i=0; i<neighbors.length; i++){
+        var w = neighbors[i];
+        if(color[w] === 'white'){
+          color[w] = 'grey';
+          d[w] = d[u] + 1;
+          pred[w] = u;
+          dfsVisit(w, color, callback); //添加顶点入栈
+        }
+      }
+      color[u] = 'black';
     }
   }
 
+  this.DFS = function (s, d) {
+    var color = initializeColor();
+    DFSVisit(s, color, 0);
+    return min;
+    function DFSVisit(u, color, dis) {
+      if(dis>min) return;
+      if(u === d){
+        if(dis<min) min = dis;
+        return;
+      }
+      color[u] = 'grey';
+      var neighbors = adjList.get(u);
+      for(var i = 0; i< neighbors.length; i++){
+        var w = neighbors[i];
+        var key = Object.keys(w)[0];
+        if(color[key] === 'white'){
+          DFSVisit(key, color, dis+w[key]);
+        }
+      }
+      color[u] = 'black';
+    }
+  }
 }
-var graph = new Graph();
-var myVertices = ['A','B','C','D','E','F','G','H','I'];
-for(var i = 0; i < myVertices.length; i++){
-  graph.addVertex(myVertices[i]);
-}
-graph.addEdge('A', 'B');
-graph.addEdge('A', 'C');
-graph.addEdge('A', 'D');
-graph.addEdge('C', 'D');
-graph.addEdge('C', 'G');
-graph.addEdge('D', 'G');
-graph.addEdge('D', 'H');
-graph.addEdge('B', 'E');
-graph.addEdge('B', 'F');
-graph.addEdge('E', 'I');
-
-var fromVertex = myVertices[0];
-
