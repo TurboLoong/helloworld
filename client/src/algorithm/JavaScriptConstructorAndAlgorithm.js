@@ -370,6 +370,7 @@ function BinarySearchTree() {
 function Graph() {
   var vertices = [];
   var adjList = new Dictionary();
+  var inf = 99999999;
   var min = 100;
   var initializeColor = function () {
     var color = {};
@@ -525,5 +526,44 @@ function Graph() {
       }
       color[u] = 'black';
     }
+  }
+  this.dijkstra = function () {
+    var color = initializeColor();
+    var dis = {};
+    var u = null;
+    //初始化dis数组,不与‘A’直接相连的距离为inf
+    for(var i = 0, len = vertices.length; i < len; i++){
+      var curVertice = vertices[i];
+      if(curVertice != 'A'){
+        dis[curVertice] = inf;
+      }
+    }
+    var neighbors1 = adjList.get('A');
+    for(var i=0, len = neighbors1.length; i < len; i++){
+      var w = neighbors1[i];
+      var key = Object.keys(w)[0];
+      dis[key] = w[key];
+    }
+    color['A'] = 'grey';
+    for(var i=0,len = vertices.length-1; i<len; i++){
+      //找出除了已进行过松边的离源点最近的顶点,
+      min = inf;
+      for (var j = 0, length = vertices.length; j < length; j++){
+        var currJ = vertices[j];
+        if(color[currJ] === 'white' && dis[currJ] < min){
+          min = dis[currJ];
+          u = currJ;
+        }
+      }
+      //对u到临边的距离进行“松弛”
+      color[u] = 'grey';
+      var neighborsU = adjList.get(u);
+      for(var v = 0, length = neighborsU.length; v < length; v++){
+        var currNeigthbor = neighborsU[v];
+        var currKey = Object.keys(currNeigthbor)[0];
+        dis[currKey] = dis[u]+ currNeigthbor[currKey];
+      }
+    }
+    return dis;
   }
 }
