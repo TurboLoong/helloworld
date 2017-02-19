@@ -56,7 +56,7 @@ graph.addOneWayEdge('F', 'C', 3);
 //求最短路径
 var min = graph.DFS('A', 'F');
 console.log('min--' + min);*/
-var graph = new Graph();
+/*var graph = new Graph();
 var myVertices = ['A','B','C','D','E','F'];
 for (var i=0; i<myVertices.length; i++){
     graph.addVertex(myVertices[i]);
@@ -71,6 +71,19 @@ graph.addOneWayEdge('D', 'E', 13);
 graph.addOneWayEdge('D', 'F', 15);
 graph.addOneWayEdge('E', 'F', 4);
 var dis = graph.dijkstra();
+console.log(dis);*/
+
+var graph = new Graph();
+var myVertices = ['A','B','C','D','E'];
+for (var i=0; i<myVertices.length; i++){
+    graph.addVertex(myVertices[i]);
+}
+graph.addOneWayEdge('A', 'B', 2);
+graph.addOneWayEdge('A', 'E', 10);
+graph.addOneWayEdge('B', 'C', 3);
+graph.addOneWayEdge('B', 'E', 7);
+graph.addOneWayEdge('C', 'D', 4);
+graph.addOneWayEdge('C', 'E', 6);
+graph.addOneWayEdge('D', 'E', 5);
+var dis = graph.BellmanFord('A');
 console.log(dis);
-
-
