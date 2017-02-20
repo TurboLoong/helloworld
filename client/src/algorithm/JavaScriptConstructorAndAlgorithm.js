@@ -8,7 +8,7 @@ function Queue() {
     items.push(element);
   }
   this.dequeue = function () {
-    items.shift();
+    return items.shift();
   }
   this.front = function () {
     return items[0]
@@ -370,6 +370,7 @@ function BinarySearchTree() {
 function Graph() {
   var vertices = [];
   var adjList = new Dictionary();
+  var inf = 99999999;
   var min = 100;
   var initializeColor = function () {
     var color = {};
@@ -525,5 +526,86 @@ function Graph() {
       }
       color[u] = 'black';
     }
+  }
+  //dijkstra是一种贪心策略的方法
+  this.dijkstra = function () {
+    var color = initializeColor();
+    var dis = {};
+    var u = null;
+    //初始化dis数组,不与‘A’直接相连的距离为inf
+    for(var i = 0, len = vertices.length; i < len; i++){
+      var curVertice = vertices[i];
+      if(curVertice != 'A'){
+        dis[curVertice] = inf;
+      }
+    }
+    var neighbors1 = adjList.get('A');
+    for(var i=0, len = neighbors1.length; i < len; i++){
+      var w = neighbors1[i];
+      var key = Object.keys(w)[0];
+      dis[key] = w[key];
+    }
+    color['A'] = 'grey';
+    for(var i=0,len = vertices.length-1; i<len; i++){
+      //找出除了已进行过松边的离源点最近的顶点,
+      min = inf;
+      for (var j = 0, length = vertices.length; j < length; j++){
+        var currJ = vertices[j];
+        if(color[currJ] === 'white' && dis[currJ] < min){
+          min = dis[currJ];
+          u = currJ;
+        }
+      }
+      //对u到临边的距离进行“松弛”
+      color[u] = 'grey';
+      var neighborsU = adjList.get(u);
+      for(var v = 0, length = neighborsU.length; v < length; v++){
+        var currNeigthbor = neighborsU[v];
+        var currKey = Object.keys(currNeigthbor)[0];
+        dis[currKey] = dis[u]+ currNeigthbor[currKey];
+      }
+    }
+    return dis;
+  }
+
+  //对所有的边进行n-1次“松弛”操作
+  //Bellman-Ford核心代码
+  /*for(var i = 0; i < n-1; i++){ //进行n-1轮松弛
+    for(var j = 0; j < m; j++){ //枚举每条边
+      if(dis[v[i]] > dis[u[i]] + w[i]){ //尝试对每一条边进行松弛
+        dis[v[i]] = dis[u[i]] + w[i];
+      }
+    }
+  }*/
+  //一个图如果没有负权回路，那么最短路径所包含的边最多为n-1条，即进行n-1轮松弛之后最短路不会发生变化。
+  // 如果在n-1轮松弛之后最短路径仍然发生变化，则该图仍然存在负权回路
+  this.BellmanFord = function (s) {
+    var color = initializeColor();
+    var dis = {};
+    for(var i = 0, len = vertices.length; i < len; i++){
+      dis[vertices[i]] = inf;
+    }
+    dis[s] = 0;
+    var queue = new Queue();
+    queue.enqueue(s);
+    color[s] = 'grey';
+    while (!queue.isEmpty()){
+      var head = queue.dequeue();
+      //扫描当前顶点所有边
+      var neighbors = adjList.get(head);
+      for(var i = 0, length = neighbors.length; i < length; i++){
+        var w = neighbors[i];
+        var key = Object.keys(w)[0];
+        //dis[key] = w[key];
+        if(dis[key] > dis[head] + w[key]){
+          dis[key] = dis[head] + w[key];
+          if(color[key] == 'white'){
+            queue.enqueue(key);
+            color[key] = 'grey';
+          }
+        }
+      }
+    }
+    return dis;
   }
 }
