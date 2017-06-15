@@ -73,7 +73,7 @@ graph.addOneWayEdge('E', 'F', 4);
 var dis = graph.dijkstra();
 console.log(dis);*/
 
-var graph = new Graph();
+/*var graph = new Graph();
 var myVertices = ['A','B','C','D','E'];
 for (var i=0; i<myVertices.length; i++){
     graph.addVertex(myVertices[i]);
@@ -86,4 +86,23 @@ graph.addOneWayEdge('C', 'D', 4);
 graph.addOneWayEdge('C', 'E', 6);
 graph.addOneWayEdge('D', 'E', 5);
 var dis = graph.BellmanFord('A');
-console.log(dis);
+console.log(dis);*/
+
+var tree = new BinarySearchTree();
+tree.insert(1);
+tree.insert(2);
+tree.insert(17);
+tree.insert(5);
+tree.insert(19);
+tree.insert(28);
+tree.insert(46);
+tree.insert(12);
+tree.insert(7);
+tree.insert(22);
+tree.insert(25);
+tree.insert(99);
+tree.insert(36);
+tree.insert(92);
+tree.inOrderTraverse(function (key) {
+    console.log(key);
+});
