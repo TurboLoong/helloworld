@@ -1,35 +1,14 @@
-/**
- * @fileOverview [description]
- * @authors hunger (hunger@jirengu.com)
- * @date    2015-10-22 
- */
-
-var gulp = require('gulp');
-
-// include plugins
-var jshint = require('gulp-jshint');
-var concat = require('gulp-concat');
-var stripDebug = require('gulp-strip-debug');
-var uglify = require('gulp-uglify');
-var sourcemaps = require('gulp-sourcemaps');
-var minify = require('gulp-json-minify');
-
-//JS hint task
-gulp.task('jsint', function() {
-   gulp.src('./src/*.js')
-       .pipe(jshint())
-       .pipe(jshint.reporter('default'));
-});
-
-gulp.task('scripts', function() {
-    gulp.src(['./src/*.js'])
-        .pipe(sourcemaps.init())
-        .pipe(uglify())
-        .pipe(concat('all.min.js'))
-        .pipe(gulp.dest('./dist/js/'));
-});
-gulp.task('concatJson', function () {
-    return gulp.src('./server/region/cities.json')
-        .pipe(minify())
-        .pipe(gulp.dest('dist/'));
+var gulp        = require('gulp');
+var browserSync = require('browser-sync').create();
+var reload      = browserSync.reload;
+// 静态服务器
+gulp.task('browser-sync', function() {
+  browserSync.init({
+    server: {
+      baseDir: "./"
+    }
+  });
+  gulp.watch("client/html/**/*.html").on('change', reload);
+  gulp.watch("client/src/**/*.js").on('change', reload);
+  gulp.watch("client/css/**/*.css").on('change', reload);
 });
