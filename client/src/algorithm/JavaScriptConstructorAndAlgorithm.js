@@ -246,7 +246,7 @@ function BinarySearchTree() {
       insertNode(root, newNode);
     }
   }
-  //中序遍历
+  //中序遍历,从小到大排序
   var inOrderTraverseNode = function (node, callback) {
     if(node !== null){
       inOrderTraverseNode(node.left, callback);
@@ -258,10 +258,10 @@ function BinarySearchTree() {
     inOrderTraverseNode(root, callback);
   }
 
-  //先序遍历
+  //先序遍历，打印一个结构化的文档
   var preOrderTraverseNode = function (node, callback) {
     if(node !== null){
-      callback(node,key);
+      callback(node.key);
       preOrderTraverseNode(node.left, callback);
       preOrderTraverseNode(node.right, callback);
     }
@@ -270,12 +270,12 @@ function BinarySearchTree() {
     preOrderTraverseNode(root, callback);
   }
 
-  //后序遍历
+  //后序遍历，计算一个目录和它的子目录中所有文件所占空间的大小
   var postOrderTraverseNode = function (node, callback) {
     if(node.key !== null){
       postOrderTraverseNode(node.left, callback);
       postOrderTraverseNode(node.right, callback);
-      callback(node, key);
+      callback(node.key);
     }
   }
   this.postOrderTraverse = function (callback) {
@@ -365,6 +365,7 @@ function BinarySearchTree() {
     root = removeNode(root, key);
   }
 }
+
 //图的表示
 //邻接矩阵，邻接表，关联矩阵
 function Graph() {
@@ -596,9 +597,9 @@ function Graph() {
       for(var i = 0, length = neighbors.length; i < length; i++){
         var w = neighbors[i];
         var key = Object.keys(w)[0];
-        //dis[key] = w[key];
         if(dis[key] > dis[head] + w[key]){
           dis[key] = dis[head] + w[key];
+          //color用来判断顶点key是否在队列中
           if(color[key] == 'white'){
             queue.enqueue(key);
             color[key] = 'grey';
