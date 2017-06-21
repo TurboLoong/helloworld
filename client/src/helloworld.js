@@ -73,7 +73,7 @@ graph.addOneWayEdge('E', 'F', 4);
 var dis = graph.dijkstra();
 console.log(dis);*/
 
-var graph = new Graph();
+/*var graph = new Graph();
 var myVertices = ['A','B','C','D','E'];
 for (var i=0; i<myVertices.length; i++){
     graph.addVertex(myVertices[i]);
@@ -105,4 +105,21 @@ tree.insert(36);
 tree.insert(92);
 tree.inOrderTraverse(function (key) {
     console.log(key);
-});
+});*/
+
+var num =11118096;
+var result = 0;
+
+getResult(num, result);
+function getResult(num, result) {
+    result = formmater(num, result, 0);
+    console.log(result);
+}
+function formmater(num, index) {
+    num=parseInt(num/10000);
+    if(num){
+        index++;
+        index = formmater(num, index);
+    }
+    return index
+}
