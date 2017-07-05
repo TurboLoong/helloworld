@@ -186,15 +186,15 @@ function beforeFunction() {
 /**
  *@author: TurboLoong
  *@date: 2017/1/17
- *@des: 发布订阅模式
+ *@des: 发布订阅模式，此模式可以广泛应用于异步编程中，
  */
 var event = {
     clientList: [],
     listen: function (key, fun) {
-        if(!this.clientList[key]){
+        if(!this.clientList[key]){              //添加某类型的消息订阅
             this.clientList[key] = [];
         }
-        this.clientList[key].push(fun);
+        this.clientList[key].push(fun);         //订阅的消息放进缓存列表
     },
     trigger: function(){
         var key = Array.prototype.shift.call(arguments),
@@ -205,14 +205,64 @@ var event = {
         for(var i=0,fn; fn = fns[i++];){
             fn.apply(this, arguments);
         }
+    },
+    remove: function (key, fn) {
+        var fns = this.clientList[key];
+        if(!fns)
+            return false;
+        if(!fn)
+            fns && (fns.length=0)                   //如果没有传入具体回调函数，表示需要取消key对应消息的所有订阅
+        else{
+            for( var l = fns.length-1; l >= 0; l--){ //反向遍历订阅的回调函数列表
+                var _fn = fns[l];
+                if( _fn === fn){
+                    fns.splice(l, 1);
+                }
+            }
+        }
     }
 }
 
+//给所有对象动态安装发布-订阅功能
 var installEvent = function (obj) {
     for(var i in event){
         obj[i] = event[i];
     }
 }
+
+//登录之后其他模块需要用户信息
+/*login.succ(function (data) {
+    header.setAvatar( data.avatar);
+    nav.setAvatar( data.avatar );
+    message.refresh();
+    cart.refresh();
+    address.refresh();
+})*/
+
+$.ajax( 'http:// xxx.com?login', function(data){ // 登录成功
+    login.trigger( 'loginSucc', data); // 发布登录成功的消息
+});
+var header = (function(){ // header 模块
+    login.listen( 'loginSucc', function( data){
+        header.setAvatar( data.avatar );
+    });
+    return {
+        setAvatar: function( data ){
+            console.log( '设置 header 模块的头像' );
+        }
+    }
+})();
+var nav = (function(){ // nav 模块
+    login.listen( 'loginSucc', function( data ){
+        nav.setAvatar( data.avatar );
+    });
+    return {
+        setAvatar: function( avatar ){
+            console.log( '设置 nav 模块的头像' );
+        }
+    }
+})();
+
 
 /**
  *@author: TurboLoong
