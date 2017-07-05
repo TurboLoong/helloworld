@@ -12,3 +12,7 @@ gulp.task('browser-sync', function() {
   gulp.watch("client/src/**/*.js").on('change', reload);
   gulp.watch("client/css/**/*.css").on('change', reload);
 });
+
+gulp.task('copy', function () {
+    gulp.src('')
+})

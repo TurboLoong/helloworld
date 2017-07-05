@@ -4,12 +4,12 @@
  * descriptioin:
  */
 "use strict"
-angular
+/*angular
     .module('app', [])
     .controller('AppController', function($scope) {
       $scope.inputValue = 'fsdcscvcdda';
 
-    });
+    });*/
 /*var graph = new Graph();
  var myVertices = ['A','B','C','D','E','F','G','H','I'];
  for(var i = 0; i < myVertices.length; i++){
@@ -107,6 +107,7 @@ tree.inOrderTraverse(function (key) {
     console.log(key);
 });*/
 
+/*
 var num =11118096;
 var result = 0;
 
@@ -122,4 +123,22 @@ function formmater(num, index) {
         index = formmater(num, index);
     }
     return index
+}*/
+var x = [];
+
+function createSomeNodes() {
+    var div,
+        i = 100,
+        frag = document.createDocumentFragment();
+    for (;i > 0; i--) {
+        div = document.createElement("div");
+        div.appendChild(document.createTextNode(i + " - "+ new Date().toTimeString()));
+        frag.appendChild(div);
+    }
+    document.getElementById("nodes").appendChild(frag);
+}
+function grow() {
+    x.push(new Array(1000000).join('x'));
+    createSomeNodes();
+    setTimeout(grow,1000);
 }

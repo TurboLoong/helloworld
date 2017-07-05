@@ -115,3 +115,28 @@ input[type="checkbox"]:checked+label::before{
 	background-color: rgb(53, 183, 111);
 	border: 5px #EEEEEE solid;
 }
+
+/*移动端踩坑*/
+body{
+    display: flex;
+    flex-direction: column;
+}
+
+.header{
+    height: 44px;
+}
+
+.footer{
+    height: 44px;
+}
+
+.main{
+    flex: 1;
+    overflow: auto;
+    overflow-scrolling: touch;
+
+}
+
+.main .item{
+    height: 300px;
+}
