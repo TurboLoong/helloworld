@@ -170,6 +170,7 @@ Validator.prototype.start = function () {
     }
 };
 
+//装饰者模式
 function beforeFunction() {
     return function (fn, beforeFnArr) {
         return function () {

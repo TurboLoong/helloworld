@@ -6,7 +6,6 @@
 var fs = require('fs');
 var path = require('path');
 
-var changeProvince = [], changeCity = [];
 var provinces = [], cities = [], disctrict = [];
 fs.readFile(process.cwd()  + path.sep + 'json-array-of-province.json', function (err, data) {
     if(err){

@@ -8,62 +8,64 @@
 
 </head>
 <body>
-<div class="container">
-    <div ng-controller="AppController">
-        <table class="table" >
-            <thead>
-            <tr>
-                <th>姓名</th>
-                <th>主治医生</th>
-                <th>次数</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="(i, a) in data.not track by i">
-                <td>
-                    <i class="color" style="background-color: {{a.color}};"></i>
-                    <span class="open">{{a.name}}&nbsp;({{a.method}}, {{a.skill}})</span>
-                </td>
-                <td>{{a.doctor}}</td>
-                <td>{{a.num}}/{{a.total}}</td>
-                <td>
-                    <a class="btn btn-primary btn-sm not" data-drag="true" ng-model="list1" jqyoui-draggable="{deepCopy:true, onStart:'initialList1({{i}})'}"
-                       data-jqyoui-options="{revert: true}">拖动</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <div class="thumbnail"
-             data-drop="true"
-             data-jqyoui-options
-             ng-model="list2"
-             jqyoui-droppable='{onDrop:"watchDraggable", deepCopy: true}'
-             style='height:50px;'>
-        </div>
-        <div class="thumbnail"
-             data-drop="true"
-             data-jqyoui-options
-             ng-model="list3"
-             jqyoui-droppable='{onDrop:"watchDraggable", deepCopy: true}'
-             style='height:50px;'>
-            <div class="btn btn-success" ng-repeat="list in list3 track by $index">
-                {{list.name}}
-            </div>
-        </div>
+<div class="header">
+ header
+</div>
+<div class="main">
+main
+    <input type="text" id="tempInput">
+    <div class="item">item</div>
+    <div class="item">item</div>
+    <div class="item">item</div>
+    <div class="item">item</div>
+    <div class="item">item</div>
+    <div class="item">item</div>
+    <div class="item">item</div>
+    <div class="item">item</div>
+    <div class="item">item</div>
+    <div class="item">item</div>
+    <div class="item">item</div>
+    <div class="item">item</div>
+    <div class="item">item</div>
+</div>
 
-    </div>
+<div class="footer">
+    footer
 </div>
 <!--lib -->
-<script type="text/javascript" src="client/lib/jquery.min.js"></script>
+<!--<script type="text/javascript" src="client/lib/jquery.min.js"></script>
 <script type="text/javascript" src="client/lib/jquery-ui.min.js"></script>
-<script type="text/javascript" src="client/lib/underscore.js"></script>
-<script type="text/javascript" src="client/lib/angular.js"></script>
-<script type="text/javascript" src="client/lib/angular-dragdrop.min.js"></script>
+<script type="text/javascript" src="client/lib/underscore.js"></script>-->
 <!--src-->
 <!--<script type="text/javascript" src="client/src/algorithm/JavaScriptConstructorAndAlgorithm.js"></script>-->
 <script type="text/javascript" src="client/src/helloworld.js"></script>
 <script type="text/javascript">
+    var inputLock = false;
+    var inputElement = document.getElementById('tempInput');
+    function doSomething(inputElement) {
+        /*var regex = /[^1-9a-zA-Z]/g;
+        inputElement.value = inputElement.value.replace(regex, '');*/
+        console.log(inputElement.value)
+    }
+
+    inputElement.addEventListener('compositionstart', function () {
+        inputLock = true;
+    });
+
+
+    inputElement.addEventListener('compositionend', function (event) {
+        inputLock = false;
+        doSomething(event.target);
+    })
+
+
+    inputElement.addEventListener('input', function (event) {
+        console.log('input' + event.target.value);
+        /*if (!inputLock) {
+            doSomething(event.target);
+            event.returnValue = false;
+        }*/
+    });
 </script>
 </body>
 </html>
