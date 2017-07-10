@@ -24,14 +24,13 @@
 
     function _isShow(el) { //判断img是否出现在可视窗口
         let coords = el.getBoundingClientRect();
-        return (coords.left >= 0 && coords.left >= 0 && coords.top) <= (document.documentElement.clientHeight || window
-                .innerHeight) + parseInt(offset);
+        return (coords.left >= 0 && coords.left >= 0 && coords.top) <= (document.documentElement.clientHeight || window.innerHeight) + parseInt(offset);
     };
 
     function imgLoad(selector) { //获取所有需要实现懒加载图片对象引用并设置window监听事件scroll
-        _selector = selector || '.imgLazyLoad';
+        selector = selector || '.imgLazyLoad';
         let nodes = document.querySelectorAll(selector);
-        imgList = Array.apply(null, nodes);
+        imgList = Array.prototype.slice.apply(null, nodes);
         window.addEventListener('scroll', _delay, false)
     };
     imgLoad('.imgLazyLoad')

@@ -144,7 +144,7 @@ function grow() {
     setTimeout(grow,1000);
 }*/
 
-var Event = (function () {
+/*var Event = (function () {
     var Event,
         _default = 'default';
     Event = function () {
@@ -269,12 +269,12 @@ var Event = (function () {
 
     return Event;
 })();
-/************** 先发布后订阅 ********************/
+/!************** 先发布后订阅 ********************!/
 Event.trigger( 'click', 1 );
 Event.listen( 'click', function( a ){
     console.log( a ); // 输出：1
 });
-/************** 使用命名空间 ********************/
+/!************** 使用命名空间 ********************!/
 Event.create( 'namespace1' ).listen( 'click', function( a ){
     console.log( a ); // 输出：1
 });
@@ -282,4 +282,17 @@ Event.create( 'namespace1' ).trigger( 'click', 1 );
 Event.create( 'namespace2' ).listen( 'click', function( a ){
     console.log( a ); // 输出：2
 });
-Event.create( 'namespace2' ).trigger( 'click', 2 );
+Event.create( 'namespace2' ).trigger( 'click', 2 );*/
+
+var remSize = [{size: 0},{size: 1},{size: 2},{size: 3},{size: 4}],
+    remData = {size: 2},
+    remIndex;
+
+remIndex = -1; // <== Set a default if we don't find it
+remSize.some(function(entry, index) {
+    console.log(index);
+    if (entry.size === remData.size) {
+        remIndex = index;
+        return true; // <== Equivalent of break for `Array#some`
+    }
+});
