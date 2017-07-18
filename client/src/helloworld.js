@@ -284,6 +284,7 @@ Event.create( 'namespace2' ).listen( 'click', function( a ){
 });
 Event.create( 'namespace2' ).trigger( 'click', 2 );*/
 
+/*
 var remSize = [{size: 0},{size: 1},{size: 2},{size: 3},{size: 4}],
     remData = {size: 2},
     remIndex;
@@ -295,4 +296,68 @@ remSize.some(function(entry, index) {
         remIndex = index;
         return true; // <== Equivalent of break for `Array#some`
     }
-});
+});*/
+
+var set1 = new Set([1, 2, 3, 4]);
+var set2 = new Set([2, 3, 5]);
+//合集
+var union = new Set([...set1, ...set2]);
+
+//交集
+var intersection = new Set([...set1].filter(x => set2.has(x))); //Set(2){2, 3}
+
+//差集
+var difference = new Set([...set1].filter(x => !set2.has(x)));  //Set(3){1, 3, 5}
+
+//array 去重
+var arr = [1, 2, 2, 3, 3, 4];
+var set3 = new Set(arr);
+//[...set3]
+
+//array delete
+set3.delete(2);
+console.log([...set3])
+Set.prototype.isSuperset = function(subset) {
+    for (var elem of subset) {
+        if (!this.has(elem)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+Set.prototype.union = function(setB) {
+    var union = new Set(this);
+    for (var elem of setB) {
+        union.add(elem);
+    }
+    return union;
+}
+
+Set.prototype.intersection = function(setB) {
+    var intersection = new Set();
+    for (var elem of setB) {
+        if (this.has(elem)) {
+            intersection.add(elem);
+        }
+    }
+    return intersection;
+}
+
+Set.prototype.difference = function(setB) {
+    var difference = new Set(this);
+    for (var elem of setB) {
+        difference.delete(elem);
+    }
+    return difference;
+}
+
+//Examples
+var setA = new Set([1, 2, 3, 4]),
+    setB = new Set([2, 3]),
+    setC = new Set([3, 4, 5, 6]);
+
+setA.isSuperset(setB); // => true
+setA.union(setC); // => Set [1, 2, 3, 4, 5, 6]
+setA.intersection(setC); // => Set [3, 4]
+setA.difference(setC); // => Set [1, 2]

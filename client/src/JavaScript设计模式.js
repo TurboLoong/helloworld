@@ -360,6 +360,42 @@ document.getElementById( 'replay' ).onclick = function(){ // 点击播放录像
 /**
  * 发布-订阅模式；可先发布后订阅，也可先订阅后发布
  */
+event = {
+    clientList: [],
+    listen: function (key, fn) {
+        if(!this.clientList[key])
+            this.clientList[key] = [];
+        this.clientList[key].push(fn);
+    },
+    trigger: function () {
+        var key = Array.prototype.shift.call(arguments);
+        var fns = this.clientList[key];
+
+        if(!fns || fns.length === 0){
+            return false;
+        }
+
+        for(var i = 0, fn; fn=fns[i++];){
+            fn.apply(this, arguments);
+        }
+    },
+    remove: function (key, fn) {
+        var fns = this.clientList[key];
+        if(!fns){
+            return false;
+        }
+        if(!fn){
+            fns && (fns.length = 0);
+        }else{
+            for(var l = fns.length-1; l >=0; l--){
+                var _fn = fns[l];
+                if( _fn === fn){
+                    fns.splice(l, 1);
+                }
+            }
+        }
+    }
+}
 var Event = (function () {
     var Event,
         _default = 'default';
