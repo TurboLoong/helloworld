@@ -4,12 +4,6 @@
  * descriptioin:
  */
 "use strict"
-angular
-    .module('app', [])
-    .controller('AppController', function($scope) {
-      $scope.inputValue = 'fsdcscvcdda';
-
-    });
 /*var graph = new Graph();
  var myVertices = ['A','B','C','D','E','F','G','H','I'];
  for(var i = 0; i < myVertices.length; i++){
@@ -298,6 +292,7 @@ remSize.some(function(entry, index) {
     }
 });*/
 
+/*
 var set1 = new Set([1, 2, 3, 4]);
 var set2 = new Set([2, 3, 5]);
 //合集
@@ -360,4 +355,4 @@ var setA = new Set([1, 2, 3, 4]),
 setA.isSuperset(setB); // => true
 setA.union(setC); // => Set [1, 2, 3, 4, 5, 6]
 setA.intersection(setC); // => Set [3, 4]
-setA.difference(setC); // => Set [1, 2]
+setA.difference(setC); // => Set [1, 2]*/

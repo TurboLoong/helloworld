@@ -407,7 +407,7 @@ function Graph() {
    * (2)将v标注为被发现的,并将v入队列Q
    * (3)如果Q非空，则运行以下步骤：
    *  (a)将u从Q中出队列
-   *  (b)将标注u为被发现的
+   *  (b)将u标注为被发现的
    *  (c)将u所有未被访问过的邻点入队列
    *  (d)将u标注为已被探索的
    * 总结：入队，出队，置为黑
@@ -472,6 +472,7 @@ function Graph() {
       predecessors: pred
     }
   }
+    
   //深度优先
   this.dfs = function (s, callback) {
     var color = initializeColor();
@@ -528,6 +529,7 @@ function Graph() {
       color[u] = 'black';
     }
   }
+
   //dijkstra是一种贪心策略的方法
   this.dijkstra = function () {
     var color = initializeColor();
