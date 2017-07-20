@@ -23,6 +23,7 @@ function setDisabled(data) {
 }
 
 //递归实现
+console.log('------------- 递归实现 ------------------');
 var parseTreeJson = function(treeNodes){
     if (!treeNodes || !treeNodes.length) return;
 
@@ -38,70 +39,64 @@ var parseTreeJson = function(treeNodes){
     }
 };
 
-console.log('------------- 递归实现 ------------------');
+
 //parseTreeJson(data.respData[0].children);
 //console.log(data.respData[0])
 //非递归广度优先实现
-var iterator1 = function (treeNodes) {
-    if (!treeNodes || !treeNodes.length) return;
-
-    var stack = [];
-
-    //先将第一层节点放入栈
-    for (var i = 0, len = treeNodes.length; i < len; i++) {
-        stack.push(treeNodes[i]);
-    }
-
-    var item;
-
-    while (stack.length) {
-        item = stack.shift();
-        if(item.componentType == 1){
-            item.disabled = true;
-            setChildrenDiabled(item)
-        }
-
-        //如果该节点有子节点，继续添加进入栈底
-        if (item.children && item.children.length && item.componentType == 0) {
-
-            stack = stack.concat(item.children);
-        }
-    }
-};
-
 console.log('------------- 非递归广度优先实现 ------------------');
-//iterator1(data.respData[0].children);
-//console.log(data.respData[0])
-//非递归深度优先实现
-var iterator2 = function (treeNodes) {
-    if (!treeNodes || !treeNodes.length) return;
+var iterator1 = function (treeNode) {
+    if (!treeNode || !treeNode.children.length) return;
 
     var stack = [];
 
-    //先将第一层节点放入栈
-    for (var i = 0, len = treeNodes.length; i < len; i++) {
-        stack.push(treeNodes[i]);
-    }
+    var item;
+    stack.push(treeNode);
+    while (stack.length) {
+        item = stack.shift();               //出队
+        console.log(item);
+        if(item.componentType == 1){
+            item.disabled = true;
+            setChildrenDiabled(item)
+        }
+        var children = item.children;
+        if (children && children.length && item.componentType == 0) {
 
+            stack = stack.concat(children);
+        }
+    }
+};
+
+
+//iterator1(data.respData[0]);
+//console.log(data.respData[0])
+
+//非递归深度优先实现
+console.log('------------- 非递归深度优先实现 ------------------');
+var iterator2 = function (treeNode) {
+    if (!treeNode || !treeNode.children.length) return;
+
+    var stack = [];
+
+    stack.push(treeNode);
     var item;
 
     while (stack.length) {
-        item = stack.shift();
-
+        item = stack.pop();             //出栈
+        //console.log(item);
+        var children = item.children;
         if(item.componentType == 1){
             item.disabled = true;
             setChildrenDiabled(item)
         }
 
-        //如果该节点有子节点，继续添加进入栈顶
-        if (item.children && item.children.length&& item.componentType == 0) {
-            stack = item.children.concat(stack);
+        if (children && children.length&& item.componentType == 0) {
+            stack = stack.concat(children);         //如果该节点有子节点，继续添加进入栈顶
         }
     }
 };
 
-console.log('------------- 非递归深度优先实现 ------------------');
-iterator2(data.respData[0].children);
+
+iterator2(data.respData[0]);
 console.log(data.respData[0])
 
 function setChildrenDiabled(data){

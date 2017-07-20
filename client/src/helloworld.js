@@ -302,7 +302,7 @@ var union = new Set([...set1, ...set2]);
 var intersection = new Set([...set1].filter(x => set2.has(x))); //Set(2){2, 3}
 
 //差集
-var difference = new Set([...set1].filter(x => !set2.has(x)));  //Set(3){1, 3, 5}
+var difference = new Set([...set1].filter(x => !set2.has(x)));  //Set(2){1, 4}
 
 //array 去重
 var arr = [1, 2, 2, 3, 3, 4];
