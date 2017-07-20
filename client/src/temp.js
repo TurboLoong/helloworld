@@ -10,7 +10,7 @@ function setDisabled(data) {
         if(data.children.length){
             setChildrenDiabled(data);
         }
-        data.checkbox = false;
+        data.disabled = false;
     } else if(data.children.length&& data.componentType==0){
         data.children.forEach(function (value) {
             setDisabled(value);
@@ -21,24 +21,6 @@ function setDisabled(data) {
 
 
 }
-
-//递归实现
-console.log('------------- 递归实现 ------------------');
-var parseTreeJson = function(treeNodes){
-    if (!treeNodes || !treeNodes.length) return;
-
-    for (var i = 0, len = treeNodes.length; i < len; i++) {
-
-        var childs = treeNodes[i].children;
-
-        console.log(treeNodes[i].id);
-
-        if(childs && childs.length > 0){
-            parseTreeJson(childs);
-        }
-    }
-};
-
 
 //parseTreeJson(data.respData[0].children);
 //console.log(data.respData[0])
@@ -53,14 +35,13 @@ var iterator1 = function (treeNode) {
     stack.push(treeNode);
     while (stack.length) {
         item = stack.shift();               //出队
-        console.log(item);
+        //console.log(item);
         if(item.componentType == 1){
             item.disabled = true;
             setChildrenDiabled(item)
         }
         var children = item.children;
         if (children && children.length && item.componentType == 0) {
-
             stack = stack.concat(children);
         }
     }
@@ -96,8 +77,8 @@ var iterator2 = function (treeNode) {
 };
 
 
-iterator2(data.respData[0]);
-console.log(data.respData[0])
+//iterator2(data.respData[0]);
+//console.log(data.respData[0])
 
 function setChildrenDiabled(data){
     if(data.children.length){
@@ -107,4 +88,22 @@ function setChildrenDiabled(data){
         })
     }else
         return
+}
+
+function deepClone(source){
+    if(!source && typeof source !== 'object'){
+        throw new Error('error arguments', 'shallowClone');
+    }
+    var targetObj = source.constructor === Array ? [] : {};
+    for(var keys in source){
+        if(source.hasOwnProperty(keys)){
+            if(source[keys] && typeof source[keys] === 'object'){
+                targetObj[keys] = source[keys].constructor === Array ? [] : {};
+                targetObj[keys] = deepClone(source[keys]);
+            }else{
+                targetObj[keys] = source[keys];
+            }
+        }
+    }
+    return targetObj;
 }
