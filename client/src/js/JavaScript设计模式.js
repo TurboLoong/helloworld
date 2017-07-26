@@ -52,36 +52,6 @@ var mult = (function () {
     }
 })();
 
-/**
- *@author: TurboLoong
- *@date: 2017/1/8
- *@des: AOP
- */
-//高阶函数实现AOP
-Function.prototype.before = function (beforeFn) {
-    var _self = this;
-    return function () {
-        beforeFn.apply(this, arguments);
-        return _self.apply(this, arguments);
-    }
-};
-
-Function.prototype.after = function (afterFun) {
-    var _self = this;
-    return function () {
-        afterFun.apply(this, arguments);
-        return _self.apply(this, arguments);
-    }
-};
-
-var func = function () {
-    console.log(2);
-};
-func = func.before(function () {
-    console.log(1);
-}).after(function () {
-    console.log(3);
-});
 //func();
 
 /**
@@ -186,43 +156,35 @@ function beforeFunction() {
 
 /**
  *@author: TurboLoong
- *@date: 2017/1/17
- *@des: 发布订阅模式，此模式可以广泛应用于异步编程中，
+ *@date: 2017/1/8
+ *@des: AOP
  */
-var event = {
-    clientList: [],
-    listen: function (key, fun) {
-        if(!this.clientList[key]){              //添加某类型的消息订阅
-            this.clientList[key] = [];
-        }
-        this.clientList[key].push(fun);         //订阅的消息放进缓存列表
-    },
-    trigger: function(){
-        var key = Array.prototype.shift.call(arguments),
-            fns = this.clientList[key];
-        if(!fns||fns.length === 0){
-            return false;
-        }
-        for(var i=0,fn; fn = fns[i++];){
-            fn.apply(this, arguments);
-        }
-    },
-    remove: function (key, fn) {
-        var fns = this.clientList[key];
-        if(!fns)
-            return false;
-        if(!fn)
-            fns && (fns.length=0)                   //如果没有传入具体回调函数，表示需要取消key对应消息的所有订阅
-        else{
-            for( var l = fns.length-1; l >= 0; l--){ //反向遍历订阅的回调函数列表
-                var _fn = fns[l];
-                if( _fn === fn){
-                    fns.splice(l, 1);
-                }
-            }
-        }
+//高阶函数实现AOP
+Function.prototype.before = function (beforeFn) {
+    var _self = this;
+    return function () {
+        beforeFn.apply(this, arguments);
+        return _self.apply(this, arguments);
     }
-}
+};
+
+Function.prototype.after = function (afterFun) {
+    var _self = this;
+    return function () {
+        afterFun.apply(this, arguments);
+        return _self.apply(this, arguments);
+    }
+};
+
+var func = function () {
+    console.log(2);
+};
+func = func.before(function () {
+    console.log(1);
+}).after(function () {
+    console.log(3);
+});
+
 
 //给所有对象动态安装发布-订阅功能
 var installEvent = function (obj) {
@@ -574,4 +536,21 @@ var iteratorUploadObj = function(){
     }
 };
 var uploadObj = iteratorUploadObj( getActiveUploadObj, getWebkitUploadObj,
-    getFlashUploadObj, getHtml5UploadObj, getFormUpladObj );
+    getFlashUploadObj, getHtml5UploadObj, getFormUpladObj )
+
+/**
+ *@author: TurboLoong
+ *@date: 2017/7/27
+ *@des: 职责链模式
+ */
+//用AOP实现职责链
+Function.prototype.after = function( fn ){
+    var self = this;
+    return function(){
+        var ret = self.apply( this, arguments );
+        if ( ret === 'nextSuccessor' ){
+            return fn.apply( this, arguments );
+        }
+        return ret;
+    }
+};

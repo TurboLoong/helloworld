@@ -35,21 +35,21 @@ var iterator1 = function (treeNode) {
     stack.push(treeNode);
     while (stack.length) {
         item = stack.shift();               //出队
-        //console.log(item);
+        console.log(item);
         if(item.componentType == 1){
             item.disabled = true;
             setChildrenDiabled(item)
         }
         var children = item.children;
         if (children && children.length && item.componentType == 0) {
-            stack = stack.concat(children);
+            stack = stack.concat(children); 
         }
     }
 };
 
 
-//iterator1(data.respData[0]);
-//console.log(data.respData[0])
+iterator1(data.respData[0]);
+console.log(data.respData[0])
 
 //非递归深度优先实现
 console.log('------------- 非递归深度优先实现 ------------------');
