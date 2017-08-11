@@ -33,39 +33,13 @@ main
     footer
 </div>
 <!--lib -->
-<!--<script type="text/javascript" src="client/lib/jquery.min.js"></script>
-<script type="text/javascript" src="client/lib/jquery-ui.min.js"></script>
-<script type="text/javascript" src="client/lib/underscore.js"></script>-->
-<!--src-->
+<script type="text/javascript" src="client/lib/jquery.min.js"></script>
+<script type="text/javascript" src="client/lib/underscore.js"></script>
+<script src="client/lib/bootstrap/alert.js"></script>
 <!--<script type="text/javascript" src="client/src/algorithm/JavaScriptConstructorAndAlgorithm.js"></script>-->
 <script type="text/javascript" src="client/src/helloworld.js"></script>
 <script type="text/javascript">
-    var inputLock = false;
-    var inputElement = document.getElementById('tempInput');
-    function doSomething(inputElement) {
-        /*var regex = /[^1-9a-zA-Z]/g;
-        inputElement.value = inputElement.value.replace(regex, '');*/
-        console.log(inputElement.value)
-    }
 
-    inputElement.addEventListener('compositionstart', function () {
-        inputLock = true;
-    });
-
-
-    inputElement.addEventListener('compositionend', function (event) {
-        inputLock = false;
-        doSomething(event.target);
-    })
-
-
-    inputElement.addEventListener('input', function (event) {
-        console.log('input' + event.target.value);
-        /*if (!inputLock) {
-            doSomething(event.target);
-            event.returnValue = false;
-        }*/
-    });
 </script>
 </body>
 </html>

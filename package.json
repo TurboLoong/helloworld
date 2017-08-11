@@ -1,25 +1,29 @@
 {
-  "name": "gulp-demo",
+  "name": "hellow-world",
   "version": "1.0.0",
   "description": "gulp demos",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "gulp "
+    "start": "webpack-dev-server --config webpack.config.js --colors --open"
   },
-  "author": "hunger@jirengu.com",
+  "author": "",
   "license": "ISC",
-  "dependencies": {
-
-  },
+  "dependencies": {},
   "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-es2015": "^6.24.1",
     "browser-sync": "^2.18.8",
+    "clean-webpack-plugin": "^0.1.16",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-jshint": "^2.0.4",
     "gulp-json-minify": "^1.0.5",
     "gulp-minify": "0.0.14",
     "gulp-sourcemaps": "^1.9.1",
-    "gulp-uglify": "^2.0.0"
-
+    "gulp-uglify": "^2.0.0",
+    "html-webpack-plugin": "^2.30.1",
+    "webpack": "^2.7.0",
+    "webpack-dev-server": "^2.7.1"
   }
 }
