@@ -1,4 +1,3 @@
 /.idea
 /node_modules
-/demo/websocket/node_modules/
-/demo/ES6buildJSmodule/node_modules/
+package-lock.json
