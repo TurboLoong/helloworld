@@ -3,26 +3,17 @@
  * date: 2017/8/11
  * descriptioin:
  */
-import zrender from 'zrender';
-var zr = zrender.init(document.getElementById('main'));
-zr.clear();
+let deviceWidth = document.documentElement.offsetWidth;
+deviceWidth = deviceWidth > 720 ? 720 : deviceWidth;
+document.documentElement.style.fontSize = deviceWidth / 7.2 + 'px';
 
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
 function render(r, n, count) {
     let m = 1;
     for (var i = 0; i < n; i++) {
         m++;
-        zr.add(new zrender.Circle({
-            shape: {
-                cx: 250 + r * Math.cos(2*Math.PI*(i) / n).toFixed(2),
-                cy: 250 + r * Math.sin(2*Math.PI*(i) / n).toFixed(2),
-                r: 5
-            },
-            style: {
-                fill: 'none',
-                stroke: '#F00'
-            }
-        }));
-
+        draw(ctx, r, n, i);
         if(count == m){
             break;
         }
@@ -31,9 +22,10 @@ function render(r, n, count) {
 let defaultR = 60, defaultCount = 12, d = 20;
 let count = 0;
 let m = 0; //第几圈
-const total = 317;
+const total = 200;
 let currentR = defaultR, currentCount = defaultCount;
 let lastCount = 0;
+ctx.translate(canvas.height/2, canvas.width/2);
 while (count < total)
 {
     lastCount = count;
@@ -43,6 +35,23 @@ while (count < total)
     currentCount = defaultCount*currentR/defaultR;
     m++;
     count += currentCount;
+}
+
+function draw(ctx, radius, count, num) {
+    var angle = num * 2 * Math.PI/count;
+    ctx.rotate(angle);
+    ctx.translate(0, -radius);
+    ctx.rotate(-angle);
+    drawCircle(ctx);
+    ctx.rotate(angle);
+    ctx.translate(0, radius);
+    ctx.rotate(-angle);
+}
+function drawCircle(ctx) {
+    ctx.beginPath();
+    ctx.arc(0, 0, 5, 0, Math.PI*2);
+    ctx.fillStyle='#333';
+    ctx.fill();
 }
 
 
