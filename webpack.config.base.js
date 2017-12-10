@@ -38,7 +38,7 @@ export default {
                     options: {
                         modules: true,
                         importLoaders: 2,
-                        localIdentName: '[local]__[hash:base64:5]'
+                        localIdentName: '[local]'
                     }
                 },
                 'postcss-loader',
@@ -63,6 +63,7 @@ export default {
         }, {
             test: /\.(png|jpg|jpeg|gif|svg)$/,
             exclude: path.join(__dirname, 'client/fonts'),
+            include: path.join(__dirname, 'client/image'),
             use: [{
                 loader: 'url-loader',
                 options: {
