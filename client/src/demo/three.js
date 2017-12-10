@@ -3,35 +3,37 @@
  * date: 2017/8/11
  * descriptioin:
  */
-
-import style from '../../index.scss';
 import {
     Scene,
     WebGLRenderer,
     MeshNormalMaterial,
     OrthographicCamera,
+    PerspectiveCamera,
     Mesh,
-    CubeGeometry
-
+    CubeGeometry,
+    MeshBasicMaterial
 } from '../../lib/three/three.min';
 
-var renderer, camera, scene, light, object;
+var renderer, camera, scene, object;
 var width, height;
 function initRenderer() {
-    width = document.getElementById('three_canvas').clientWidth;
-    height = document.getElementById('three_canvas').clientHeight;
+    let ele = document.getElementById('canvas');
+    width = ele.clientWidth;
+    height = ele.clientHeight;
     renderer = new WebGLRenderer({
-        canvas: document.getElementById('three_canvas')
+        canvas: ele
     });
     renderer.setSize(width, height);
-    renderer.setClearColor(0xFFFFFF, 1.0);
+    renderer.setClearColor(0x000000, 1.0);
+}
+
+function initScene() {
+    scene = new Scene();
 }
 
 function initCamera() {
-    camera = new OrthographicCamera(width / -2, width / 2, height / 2, height / -2, 1, 1000);
-    camera.position.x = 0;
-    camera.position.y = 0;
-    camera.position.z = 200;
+    camera = new PerspectiveCamera(45, width/height, 1, 10);
+    camera.position.set(0, 0, 200);
     camera.up.x = 0;
     camera.up.y = 1;
     camera.up.z = 0;
@@ -40,10 +42,9 @@ function initCamera() {
         y: 0,
         z: 0
     });
+    scene.add(camera);
 }
-function initScene() {
-    scene = new Scene();
-}
+
 function initObject() {
     var geometry = new CubeGeometry(100, 100, 100);
     object = new Mesh(geometry, new MeshNormalMaterial());
@@ -57,9 +58,9 @@ function render() {
 }
 function threeStart() {
     initRenderer();
-    initCamera();
     initScene();
+    initCamera();
     initObject();
     render();
 }
-window.onload = threeStart();
+threeStart();
