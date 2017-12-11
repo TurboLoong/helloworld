@@ -3,10 +3,6 @@ import expand from '../../image/expand.png';
 import risk from '../../image/risk.png';
 import zrender from 'zrender';
 export default class Shape {
-    constructor() {
-
-    }
-
     initLine(start, end) {
         let line = new zrender.Line({
             shape: {

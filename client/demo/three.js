@@ -7,7 +7,6 @@ import {
     Scene,
     WebGLRenderer,
     MeshNormalMaterial,
-    OrthographicCamera,
     PerspectiveCamera,
     Mesh,
     CubeGeometry,
@@ -17,7 +16,7 @@ import {
 var renderer, camera, scene, object;
 var width, height;
 function initRenderer() {
-    let ele = document.getElementById('canvas');
+    let ele = document.getElementById('container');
     width = ele.clientWidth;
     height = ele.clientHeight;
     renderer = new WebGLRenderer({

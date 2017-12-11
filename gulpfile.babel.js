@@ -11,7 +11,7 @@ const PACKAGE_NAME = config.packageName;        // 打包生成的文件名, 如
 
 // 清除dist目录
 gulp.task('clean', () => {
-    return del([DIST_PATH]);
+    return del([DIST_PATH, BUILD_PATH]);
 });
 // 文件打包
 gulp.task('package', ['clean'], () => {
