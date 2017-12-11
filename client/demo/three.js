@@ -12,7 +12,7 @@ import {
     Mesh,
     CubeGeometry,
     MeshBasicMaterial
-} from '../../lib/three/three.min';
+} from '../lib/three/three.min';
 
 var renderer, camera, scene, object;
 var width, height;

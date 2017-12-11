@@ -1,5 +1,5 @@
-import {init} from '../../lib/zrender/zrender';
-import {Circle} from '../../lib/zrender/export';
+import {init} from '../lib/zrender/zrender';
+import {Circle} from '../lib/zrender/export';
 var zr = init(document.getElementById('container'));
 
 var circle1 = new Circle({

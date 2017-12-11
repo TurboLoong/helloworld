@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import webpackMerge from 'webpack-merge';
-import baseConfig from './webpack.config.base';
+import baseConfig from './webpack.config';
 
 const env = process.env;
 const HOST = env.HOST || env.npm_package_config_host;

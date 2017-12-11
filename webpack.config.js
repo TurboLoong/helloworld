@@ -3,11 +3,13 @@ import webpack from 'webpack';
 import precss from 'precss';
 import autoprefixer from 'autoprefixer';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import CleanWebpackPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const DIST_PATH = 'dist';
 const extractVendor = new ExtractTextPlugin(`${DIST_PATH}/css/[contenthash].vendor.css`);
 const extractStyle = new ExtractTextPlugin(`${DIST_PATH}/css/[contenthash].style.css`);
+
 export default {
     entry: {
         main: ['babel-polyfill', './client/index.js']
@@ -71,11 +73,18 @@ export default {
                     name: `${DIST_PATH}/images/[hash].[ext]`
                 }
             }]
+        }, {
+            test: /\.json$/,
+            include: path.join(__dirname, 'client'),
+            use: [{
+                loader: 'json-loader'
+            }]
         }]
     },
     plugins: [
         extractVendor,
         extractStyle, // 生成单独的CSS文件
+        new CleanWebpackPlugin(['build']),
         new webpack.optimize.CommonsChunkPlugin('vendor'), // 清除编译目录
         new HtmlWebpackPlugin({
             filename: 'index.html', // 生成到build目录的index.html

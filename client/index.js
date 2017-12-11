@@ -1,3 +1,4 @@
 import './index.scss';
 // import './src/demo/zrender';
-import './src/demo/three';
+// import './demo/three';
+import './demo/area';
