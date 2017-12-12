@@ -79,7 +79,15 @@ export default {
             use: [{
                 loader: 'json-loader'
             }]
-        }]
+        }
+        // , {
+        //     test: /\.jade/,
+        //     include: path.join(__dirname, 'client'),
+        //     use: [{
+        //         loader: 'jade-loader'
+        //     }]
+        // }
+        ]
     },
     plugins: [
         extractVendor,

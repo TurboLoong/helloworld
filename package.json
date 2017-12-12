@@ -7,7 +7,7 @@
     "package": "npm run build:prod && gulp zip",
     "build:prod": "webpack --config webpack.config.prod.babel.js --progress --display-error-details",
     "lint": "eslint -c .eslintrc.prod.json --ext .js,.jsx client/src/",
-    "start": "webpack-dev-server --config webpack.config.dev.babel.js --progress --color",
+    "start": "webpack-dev-server --config webpack.config.dev.babel.js --color",
     "start:mock": "concurrently \"cross-env NODE_ENV=mock npm start\" \"node ./mock/server.js\""
   },
   "repository": {
@@ -39,6 +39,9 @@
     "gulp": "^3.9.1",
     "gulp-zip": "^4.0.0",
     "html-webpack-plugin": "^2.28.0",
+    "jade-loader": "^0.8.0",
+    "json-loader": "^0.5.7",
+    "node-sass": "^4.7.2",
     "postcss-loader": "^1.2.2",
     "pre-commit": "^1.2.2",
     "precss": "^1.4.0",
@@ -57,10 +60,7 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "jquery": "^3.2.1",
-    "json-loader": "^0.5.7",
-    "node-sass": "^4.7.2",
-    "underscore": "^1.8.3",
-    "zrender": "^3.7.4"
+    "underscore": "^1.8.3"
   },
   "packageName": "helloworld"
 }
