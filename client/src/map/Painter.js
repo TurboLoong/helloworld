@@ -1,47 +1,57 @@
 import Shape from './Shape';
 import expandData from '../../json/locals1.json';
+import { getPixel, isInContainer } from './utils';
 export default class painter {
     constructor(map, zr, storage) {
         this._map = map;
         this._zr = zr;
         this._storage = storage;
         this.shape = new Shape();
-    }
-
-    getPixel(local) {
-        const lngLat = new AMap.LngLat(...local);
-        return this._map.lngLatToContainer(lngLat);
+        let offset = 150;
+        this.groupCenter = { x: this._zr.getWidth() - offset, y: this._zr.getHeight() - offset, r: 100 };
+        this.container = {width: this._zr.getWidth(), height: this._zr.getHeight()};
     }
 
     drawLocals() {
-        let localsMap = this._storage.getLocalsMap();
+        // 如果有经纬度
+        let localsMap = this._storage.getLocalsMapDisplay();
         localsMap.forEach((value) => {
-            this.drawImage(value);
+            let pixel = getPixel(value.lngLat, this._map);
+            this.drawImage(value, pixel);
         });
+        // 如果没有经纬度
+        // let notLocalsMap = this._storage.getNotLocalsMap();
+        // notLocalsMap.forEach((value) => {
+        //     this.drawImage(value, value.pixel);
+        // });
     }
 
-    drawImage(opts) {
-        let pixel = this.getPixel(opts.lngLat);
+    drawImage(opts, pixel) {
         pixel.type = opts.type || 'normal';
-        let image = this.shape.initImage(pixel);
-        image.on('click', () => {
-            let locals = expandData.data;
-            this._storage.addGoup('7d75cab1d58d441e8beeb71353488b8e', locals);
-            this.paint();
-        });
-        image.on('contextmenu', () => {
-            this._storage.deleteGroup('7d75cab1d58d441e8beeb71353488b8e');
-            this.paint();
-        });
+        // 如果在容器中
+        if(isInContainer(pixel, this.container)) {
+            let image = this.shape.initImage(pixel);
+            image.on('click', () => {
+                let locals = expandData.data;
+                this._storage.addGoup('7d75cab1d58d441e8beeb71353488b8e', locals);
+                this.paint();
+            });
+            image.on('contextmenu', () => {
+                this._storage.deleteGroup('7d75cab1d58d441e8beeb71353488b8e');
+                this.paint();
+            });
+            this._zr.add(image);
+        }
 
-        this._zr.add(image);
     }
 
     drawLine({ start, end }) {
         if (start.lngLat && end.lngLat) {
-            let startPix = this.getPixel(start.lngLat);
-            let endPix = this.getPixel(end.lngLat);
-            this._zr.add(this.shape.initLine(startPix, endPix));
+            let startPix = getPixel(start.lngLat, this._map);
+            let endPix = getPixel(end.lngLat, this._map);
+            if(isInContainer(startPix, this.container) && isInContainer(endPix, this.container)){
+                this._zr.add(this.shape.initLine(startPix, endPix));
+            }
         }
     }
 
@@ -56,10 +66,29 @@ export default class painter {
         });
     }
 
+    setFitView() {
+        let localsMap = this._storage.getLocalsMapDisplay();
+        localsMap.forEach((v) => {
+            new AMap.Marker({
+                map: this._map,
+                icon: '',
+                position: v.lngLat,
+                offset: new AMap.Pixel(-12, -36)
+            });
+        });
+        this._map.setFitView();
+        this._map.clearMap();
+    }
+
+    drawGroup() {
+        let group = this.shape.initGroup(this.groupCenter);
+        this._zr.add(group);
+    }
+
     paint() {
         this._zr.clear();
         this.drawLocals();
         this.drawLines();
-        this._map.setFitView();
+        // this.drawGroup();
     }
 }

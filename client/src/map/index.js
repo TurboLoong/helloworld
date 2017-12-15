@@ -1,6 +1,6 @@
 import Storage from './Storage';
 import Painter from './Painter';
-import zrender from 'zrender';
+import {init} from '../../lib/zrender/zrender';
 export default class Area {
     constructor(container) {
         this.initMap(container);
@@ -11,27 +11,33 @@ export default class Area {
         const map = new AMap.Map(container, {
             resizeEnable: true,
             zoom: 14,
-            center: center
+            center: center,
+            features: ['bg', 'point'],
+            mapStyle: "amap://styles/darkblue"
         });
         this.map = map;
-        let zrenderApp = document.getElementsByClassName('amap-layers')[0];
-        this.initChart(zrenderApp);
+        this.initChart();
         this.mapEvent();
-        var storage = new Storage();
-        this.storage = storage;
-        this.painter = new Painter(map, this.zr, storage);
     }
 
-    initChart(container) {
-        this.zr = zrender.init(container);
-        container.firstChild.style.zIndex = 115;
+    initChart() {
+        this.map.on('complete', () => {
+            let zrenderApp = document.getElementsByClassName('amap-layers')[0];
+            this.zr = init(zrenderApp);
+            zrenderApp.firstChild.style.zIndex = 115;
+            let storage = new Storage();
+            this.storage = storage;
+            this.painter = new Painter(this.map, this.zr, storage);
+            this.storage.setPainter(this.painter);
+        });
+
     }
 
     mapEvent() {
-        this.map.on('movestart', (clickEvent = window.event) => {
+        this.map.on('movestart', () => {
             this.zr.clear();
         });
-        this.map.on('moveend', (clickEvent = window.event) => {
+        this.map.on('moveend', () => {
             this.painter.paint();
         });
     }
@@ -39,22 +45,8 @@ export default class Area {
     add(companyId, data) {
         this.storage.addGoup(companyId, data);
     }
-
-    setFitView() {
-        let localsMap = this.storage.getLocalsMap();
-        localsMap.forEach((v) => {
-            new AMap.Marker({
-                map: this.map,
-                icon: '',
-                position: v.lngLat,
-                offset: new AMap.Pixel(-12, -36)
-            });
-        });
-        this.map.setFitView();
-        this.map.clearMap();
-    }
-
     refresh() {
         this.painter.paint();
+        this.painter.setFitView();
     }
 }

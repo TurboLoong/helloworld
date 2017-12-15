@@ -18,7 +18,11 @@ import {
     OrthographicCamera,
     Group,
     SphereBufferGeometry,
-    MeshBasicMaterial
+    MeshBasicMaterial,
+    Geometry,
+    Vector3,
+    Math,
+    PointsMaterial
 } from '../lib/three/three.min';
 
 var scene, camera, render, cube, plane, sphere, spotLight;
@@ -81,6 +85,28 @@ function initObject() {
         new MeshBasicMaterial({ color: 0x00ff00, wireframe: true })
     );
     mesh2.position.y = 150;
+    mesh.add(mesh2);
+
+    let mesh3 = new Mesh(
+        new SphereBufferGeometry(5, 16, 8),
+        new MeshBasicMaterial({color: 0x0000ff, wireframe: true})
+    );
+    mesh3.position.z = 150;
+    cameraRig.add(mesh3);
+}
+
+function initPoints() {
+    let geometry = new Geometry();
+    let i;
+    for(i = 0; i < 10000; i++) {
+        let vertex = new Vector3();
+        vertex.x = Math.randFloatSpread(2000);
+        vertex.y = Math.randFloatSpread(2000);
+        vertex.z = Math.randFloatSpread(2000);
+        geometry.vertices.push(vertex);
+    }
+    let particles = new Points(geometry, new PointsMaterial({color: 0x888888}));
+    scene.add(particles);
 }
 
 function start() {
@@ -97,4 +123,6 @@ function start() {
 initRender();
 initScene();
 initCamera();
+initObject();
+initPoints();
 start();
