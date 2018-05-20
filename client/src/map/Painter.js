@@ -79,12 +79,6 @@ export default class painter {
         this._map.setFitView();
         this._map.clearMap();
     }
-
-    drawGroup() {
-        let group = this.shape.initGroup(this.groupCenter);
-        this._zr.add(group);
-    }
-
     paint() {
         this._zr.clear();
         this.drawLocals();

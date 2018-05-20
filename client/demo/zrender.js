@@ -1,20 +1,19 @@
-import {init} from '../lib/zrender/zrender';
-import {Circle} from '../lib/zrender/export';
-var zr = init(document.getElementById('container'));
+import rect from '../image/rect.svg';
+import zrender from 'zrender';
+var zr = zrender.init(document.getElementById('container'));
 
-var circle1 = new Circle({
-    shape: {
-        cx: 100,
-        cy: 100,
-        r: 30
-    },
+var img = new Image();
+img.src = rect;
+var image = new zrender.Image({
     style: {
-        fill: 'blue'
-    },
-    draggable: true
+        image: rect,
+        x: 0,
+        y: 0,
+        width: 200,
+        height: 200
+    }
 });
-
-zr.add(circle1);
-zr.on('click', function(e) {
-    console.log(e);
-});
+zr.add(image);
+// img.onload = function() {
+//
+// }

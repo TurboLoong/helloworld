@@ -1,6 +1,6 @@
 import Storage from './Storage';
 import Painter from './Painter';
-import {init} from '../../lib/zrender/zrender';
+import { init } from '../../lib/zrender/zrender';
 export default class Area {
     constructor(container) {
         this.initMap(container);
@@ -45,6 +45,7 @@ export default class Area {
     add(companyId, data) {
         this.storage.addGoup(companyId, data);
     }
+
     refresh() {
         this.painter.paint();
         this.painter.setFitView();

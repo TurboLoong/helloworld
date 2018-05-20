@@ -29,8 +29,8 @@ export default class Storage {
         if (Array.isArray(data.nodes)) {
             this.setNodes(data.nodes);
             this.setLinks(data.links);
-            this._painter.paint();
             this._painter.setFitView();
+            this._painter.paint();
         }
     }
 
@@ -74,8 +74,7 @@ export default class Storage {
                     let newLocation = Object.assign(oldLocation, v);
                     this.localsMapDisplay.set(v.bbdQyxxId, newLocation);
                 }
-            } else if( v.address !== '-' && !_.isEmpty(v.address)){
-                //没有经纬度，进行解析
+            } else if (v.address !== '-' && !_.isEmpty(v.address)) {
                 parseAddress(v).then(data => {
                     let result = data.result;
                     let local = data.local;
@@ -94,40 +93,39 @@ export default class Storage {
                         local.type = !v.riskCount ? 'risk' : 'normal';
                         local.pixel = getNoLocationPixel(this._painter.groupCenter);
                         this.notLocalsMap.set(local.bbdQyxxId, local);
+                        // 存入无法解析的地址
                     }
                 });
             } else {
                 v.type = !v.riskCount ? 'risk' : 'normal';
                 v.pixel = getNoLocationPixel(this._painter.groupCenter);
                 this.notLocalsMap.set(v.bbdQyxxId, v);
+                // 存入无法解析的地址
             }
         });
     }
 
     setLinks(links) {
         this.linesMap.clear();
+        let notLocalNum = 0;
         Array.isArray(links) && links.forEach(v => {
             let startPoint = this.localsMapDisplay.get(v.startId);
             let endPoint = this.localsMapDisplay.get(v.endId);
             // 如果展现数据里面有
             if (startPoint && endPoint) {
-                if (startPoint.lngLat && endPoint.lngLat) {
-                    this.linesMap.set({
-                        startId: v.startId,
-                        endId: v.endId
-                    }, {
-                        start: {
-                            id: v.startId,
-                            lngLat: startPoint.lngLat
-                        },
-                        end: {
-                            id: v.endId,
-                            lngLat: endPoint.lngLat
-                        }
-                    });
-                } else {
-                    console.log('noLngLat', v);
-                }
+                this.linesMap.set({
+                    startId: v.startId,
+                    endId: v.endId
+                }, {
+                    start: {
+                        id: v.startId,
+                        lngLat: startPoint.lngLat
+                    },
+                    end: {
+                        id: v.endId,
+                        lngLat: endPoint.lngLat
+                    }
+                });
             } else { // 如果展现数据里面没有，就从原始数据里面拿之后解析
                 startPoint = this.locals.get(v.startId);
                 endPoint = this.locals.get(v.endId);
@@ -148,15 +146,17 @@ export default class Storage {
                                 id: startLocal.bbdQyxxId,
                                 lngLat: [startResult.location.lng, startResult.location.lat]
                             },
-                                end: {
+                            end: {
                                 id: v.endId,
                                 lngLat: [endResult.location.lng, endResult.location.lat]
                             }
                         });
                     } else {
-                        console.log('notLocalMap');
-                        console.log(startPoint);
-                        console.log(endPoint);
+                        notLocalNum++;
+                        //console.log('notLocalMap');
+                        // console.log(startPoint);
+                        // console.log(endPoint);
+                        console.log(notLocalNum);
                     }
                 });
             }
