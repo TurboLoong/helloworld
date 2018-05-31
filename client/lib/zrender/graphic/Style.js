@@ -9,9 +9,8 @@ var STYLE_COMMON_PROPS = [
 // var SHADOW_PROPS = STYLE_COMMON_PROPS.slice(0, 4);
 // var LINE_PROPS = STYLE_COMMON_PROPS.slice(4);
 
-var Style = function (opts, host) {
+var Style = function (opts) {
     this.extendFrom(opts, false);
-    this.host = host;
 };
 
 function createLinearGradient(ctx, obj, rect) {
@@ -26,6 +25,12 @@ function createLinearGradient(ctx, obj, rect) {
         y = y * rect.height + rect.y;
         y2 = y2 * rect.height + rect.y;
     }
+
+    // Fix NaN when rect is Infinity
+    x = isNaN(x) ? 0 : x;
+    x2 = isNaN(x2) ? 1 : x2;
+    y = isNaN(y) ? 0 : y;
+    y2 = isNaN(y2) ? 0 : y2;
 
     var canvasGradient = ctx.createLinearGradient(x, y, x2, y2);
 
@@ -55,11 +60,6 @@ function createRadialGradient(ctx, obj, rect) {
 Style.prototype = {
 
     constructor: Style,
-
-    /**
-     * @type {module:zrender/graphic/Displayable}
-     */
-    host: null,
 
     /**
      * @type {string}

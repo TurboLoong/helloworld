@@ -11,11 +11,13 @@ import * as zrUtil from '../../core/util';
  *
  * @class
  * @extends Definable
+ * @param   {number}     zrId    zrender instance id
  * @param   {SVGElement} svgRoot root of SVG document
  */
-function ShadowManager(svgRoot) {
+function ShadowManager(zrId, svgRoot) {
     Definable.call(
         this,
+        zrId,
         svgRoot,
         ['filter'],
         '__filter_in_use__',
@@ -82,7 +84,8 @@ ShadowManager.prototype.add = function (displayable) {
     // id should remain the same, and other attributes should be
     // updated.
     style._shadowDomId = style._shadowDomId || this.nextId++;
-    dom.setAttribute('id', 'zr-shadow-' + style._shadowDomId);
+    dom.setAttribute('id', 'zr' + this._zrId
+        + '-shadow-' + style._shadowDomId);
 
     this.updateDom(displayable, dom);
     this.addDom(dom);
@@ -144,14 +147,14 @@ ShadowManager.prototype.updateDom = function (displayable, dom) {
     // TODO: textBoxShadowBlur is not supported yet
     var offsetX, offsetY, blur, color;
     if (style.shadowBlur || style.shadowOffsetX || style.shadowOffsetY) {
-        offsetX = style.shadowOffsetX;
-        offsetY = style.shadowOffsetY;
+        offsetX = style.shadowOffsetX || 0;
+        offsetY = style.shadowOffsetY || 0;
         blur = style.shadowBlur;
         color = style.shadowColor;
     }
     else if (style.textShadowBlur) {
-        offsetX = style.textShadowOffsetX;
-        offsetY = style.textShadowOffsetY;
+        offsetX = style.textShadowOffsetX || 0;
+        offsetY = style.textShadowOffsetY || 0;
         blur = style.textShadowBlur;
         color = style.textShadowColor;
     }

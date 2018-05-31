@@ -137,9 +137,16 @@ Displayable.prototype = {
     /**
      * Render the element progressively when the value >= 0,
      * usefull for large data.
-     * @type {number}
+     * @type {boolean}
      */
-    progressive: -1,
+    progressive: false,
+
+    /**
+     * @type {boolean}
+     */
+    incremental: false,
+    // inplace is used with incremental
+    inplace: false,
 
     beforeBrush: function (ctx) {},
 
@@ -202,6 +209,7 @@ Displayable.prototype = {
 
         this.__zr && this.__zr.refresh();
     },
+
     /**
      * 图形是否会触发事件
      * If displayable object binded any event

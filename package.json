@@ -61,6 +61,7 @@
     "bootstrap": "^3.3.7",
     "echarts": "^3.5.4",
     "jquery": "^3.2.1",
+    "three": "^0.92.0",
     "underscore": "^1.8.3",
     "zrender": "^4.0.1"
   },

@@ -3,61 +3,181 @@
  * date: 2017/8/11
  * descriptioin:
  */
-import * as THREE from '../lib/three/three.min';
+import '../lib/three/jquery-1.9.0'
+import * as THREE from  'three';
+import mapUrl from '../image/moon_1024.jpg';
+import bumpMapUrl from '../image/cloud.png';
 
-// once everything is loaded, we run our Three.js stuff.
-function init() {
-    // create a scene, that will hold all our elements such as objects, cameras and lights.
-    var scene = new THREE.Scene();
-    // create a camera, which defines where we're looking at.
-    var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    // create a render and set the size
-    var renderer = new THREE.WebGLRenderer();
-    renderer.setClearColorHex();
-    renderer.setClearColor(new THREE.Color(0xEEEEEE));
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    // show axes in the screen
-    var axes = new THREE.AxisHelper(20);
-    scene.add(axes);
-    // create the ground plane
-    var planeGeometry = new THREE.PlaneGeometry(60, 20);
-    var planeMaterial = new THREE.MeshBasicMaterial({color: 0xcccccc});
-    var plane = new THREE.Mesh(planeGeometry, planeMaterial);
-    // rotate and position the plane
-    plane.rotation.x = -0.5 * Math.PI;
-    plane.position.x = 15;
-    plane.position.y = 0;
-    plane.position.z = 0;
-    // add the plane to the scene
-    scene.add(plane);
-    // create a cube
-    var cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
-    var cubeMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});
-    var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-    // position the cube
-    cube.position.x = -4;
-    cube.position.y = 3;
-    cube.position.z = 0;
-    // add the cube to the scene
-    scene.add(cube);
-    // create a sphere
-    var sphereGeometry = new THREE.SphereGeometry(4, 20, 20);
-    var sphereMaterial = new THREE.MeshBasicMaterial({color: 0x7777ff, wireframe: true});
-    var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-    // position the sphere
-    sphere.position.x = 20;
-    sphere.position.y = 4;
-    sphere.position.z = 2;
-    // add the sphere to the scene
-    scene.add(sphere);
-    // position and point the camera to the center of the scene
-    camera.position.x = -30;
-    camera.position.y = 40;
-    camera.position.z = 30;
-    camera.lookAt(scene.position);
-    // add the output of the renderer to the html element
-    document.getElementById("WebGL-output").appendChild(renderer.domElement);
-    // render the scene
-    renderer.render(scene, camera);
+var renderer = null,
+    scene = null,
+    camera = null,
+    cube = null,
+    root = null,
+    group = null,
+    sphere = null,
+    sphereTextured = null,
+    geometry = null;
+
+var duration = 10000;
+var currentTime = Date.now();
+function animate() {
+    var now = Date.now();
+    var deltat = now - currentTime;
+    currentTime = now;
+    var fract = deltat / duration;
+    var angle = Math.PI * 2 * fract;
+    group.rotation.y += angle;
 }
-window.onload = init;
+
+function run() {
+    requestAnimationFrame(run);
+    renderer.render(scene, camera);
+    animate();
+}
+
+var materials = {};
+// var mapUrl = '';
+var map = null;
+// var bumpMapUrl = '../images/cloud.png';
+var bumpMap = null;
+
+function createMaterials() {
+    map = THREE.ImageUtils.loadTexture(mapUrl);
+    bumpMap = THREE.ImageUtils.loadTexture(bumpMapUrl);
+    materials['phong'] = new THREE.MeshPhongMaterial({ bumpMap: bumpMap });
+    materials['phong-textured'] = new THREE.MeshPhongMaterial({ map: map, bumpMap: bumpMap });
+}
+
+function setMaterialSpecular(r, g, b) {
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    materials['phong'].specular.setRGB(r, g, b);
+    materials['phong-textured'].specular.setRGB(r, g, b);
+}
+
+var materialName = "phong-textured";
+var textureOn = true;
+function setMaterial(name) {
+    materialName = name;
+    if (textureOn) {
+        sphere.visible = false;
+        sphereTextured.visible = true;
+        sphereTextured.material = materials[name];
+    } else {
+        sphere.visible = true;
+        sphereTextured.visible = false;
+        sphere.materials = materials[name];
+    }
+}
+
+function toggleTexture() {
+    textureOn = !textureOn;
+    var names = materialName.split('-');
+    if (!textureOn) {
+        setMaterial(names[0]);
+    } else {
+        setMaterial(names[0] + '-textured');
+    }
+}
+
+function createScene(canvas) {
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+
+    renderer.setSize(canvas.width, canvas.height);
+
+    scene = new THREE.Scene();
+
+    camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 4000);
+
+    camera.position.z = 10;
+
+    scene.add(camera);
+
+    root = new THREE.Object3D;
+
+    var light = new THREE.DirectionalLight(0xffffff, 2);
+
+    light.position.set(.5, 0, 1);
+    scene.add(light);
+    // root.add(light);
+
+    group = new THREE.Object3D;
+
+    root.add(group);
+
+    createMaterials();
+
+    geometry = new THREE.SphereGeometry(2, 20, 20);
+
+    sphere = new THREE.Mesh(geometry, materials['phong']);
+
+    sphere.visible = false;
+
+    geometry = new THREE.SphereGeometry(2, 20, 20);
+
+    sphereTextured = new THREE.Mesh(geometry, materials['phong-textured']);
+    sphereTextured.visible = true;
+    setMaterial('phong-textured');
+
+    group.add(sphere);
+    group.add(sphereTextured);
+    scene.add(root);
+}
+
+function rotateScene(deltax) {
+    root.rotation.y += deltax / 100;
+}
+
+function scaleScene(scale) {
+    root.scale.set(scale, scale, scale);
+}
+
+var mouseDown = false, pageX = 0;
+
+function onMouseMove(evt) {
+    if (!mouseDown) {
+        return;
+    }
+
+    evt.preventDefault();
+
+    var deltax = evt.pageX - pageX;
+
+    pageX = evt.pageX - pageX;
+
+    pageX = evt.pageX;
+    rotateScene(deltax);
+}
+
+function onMouseDown(evt) {
+    evt.preventDefault();
+    mouseDown = true;
+    pageX = evt.pageX;
+}
+
+function onMouseUp(evt) {
+    evt.preventDefault();
+
+    mouseDown = false;
+}
+
+function addMouseHandler(canvas) {
+    canvas.addEventListener('mousemove', function(e) {
+        onMouseMove(e)
+    }, false)
+    canvas.addEventListener('mousedown', function(e) {
+        onMouseDown(e)
+    }, false)
+    canvas.addEventListener('mouseup', function(e) {
+        onMouseUp(e)
+    }, false)
+}
+$(document).ready(
+    function() {
+        var canvas = document.getElementById('container');
+        createScene(canvas);
+        addMouseHandler(canvas);
+        run();
+    }
+)
