@@ -105,6 +105,9 @@ export default {
                     return [precss, autoprefixer];
                 }
             }
+        }),
+        new webpack.ProvidePlugin({
+            THREE: "three"
         })
     ]
 };
