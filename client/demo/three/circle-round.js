@@ -1,4 +1,5 @@
 import * as THREE from  'three';
+import './lib/Lensflare';
 import P2P from '../../image/P2P.png';
 import building from '../../image/building.png';
 import company from '../../image/company.png';
@@ -8,7 +9,12 @@ import round1 from '../../image/round1.png';
 import round2 from '../../image/round2.png';
 import round3 from '../../image/round3.png';
 import round4 from '../../image/round4.png';
-import { clothFunction, cloth } from './Cloth';
+import round2Line from '../../image/round2Line.png';
+import bg from '../../image/bg.png';
+import lensflare0 from '../../image/lensflare0.png';
+import lensflare3 from '../../image/lensflare3.png';
+import fontJson from '../../json/Benmo Wuyu_Regular.json';
+const targets = [P2P, building, company];
 function init() {
     var canvas = document.getElementById('container');
 
@@ -22,7 +28,7 @@ function init() {
     var ambientLight = new THREE.AmbientLight("#0c0c0c");
     scene.add(ambientLight);
 
-    addAxis();
+    // addAxis();
 
     renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
     renderer.setClearColor(new THREE.Color(0xEEEEEE));
@@ -37,6 +43,12 @@ function init() {
     addCircle2();
     addCircle3();
     addCircle4();
+
+    addBackground();
+
+    // createSun(0.995, 0.5, 0.9, -2785, 1000, 50);
+
+    createDirectionLight();
     render();
 
     function render() {
@@ -64,19 +76,26 @@ function init() {
         camera.position.x = 2000;
         camera.position.y = 1000;
         camera.position.z = 2000;
-        camera.lookAt(new THREE.Vector3(0, 100, 0));
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
         scene.add(camera);
     }
 
     // 画圈层
     function addCenter() {
-        center = addImageRow(P2P, {x: 52, y: 52});
-        center.scale.set(20, 20, 20);
-        scene.add(center);
+        let target = addImageRow(P2P, { x: 52, y: 52 });
+        target.scale.set(20, 20, 20);
+        let star = addImageRow(startPng, {x: 200, y: 200});
+        star.position.x = 4;
+        star.position.z = 4;
+        center.star = star;
+        center.target = target;
+        scene.add(star);
+        scene.add(target);
     }
+
     function addCircle0() {
         circle0 = createPlaneGeo(round0, { x: 1401, y: 1401 });
-        circle0.position.set(0, 500, 0);
+        circle0.position.set(0, 200, 0);
         scene.add(circle0);
     }
 
@@ -107,26 +126,34 @@ function init() {
         circle2.plane = plane;
         scene.add(plane);
 
+        circle2.lines = [];
+        // for(let i = 0; i < 2; i++) {
+        let line = createPlaneGeo(round2Line, { x: 64, y: 222 });
+        // line.rotation.x = Math.PI/2;
+        line.position.x = circle2.radius + 300;
+        circle2.lines.push(line);
+        scene.add(line);
+        // }
+
         let star = addImageRow(startPng, { x: 52, y: 52 });
         star.position.y = height;
         circle2.star = star;
         scene.add(star);
 
         circle2.targets = [];
-        let target0 = addImageRow(P2P, {x: 450, y: 543});
-        target0.position.y = height;
-        circle2.targets.push(target0);
-        scene.add(target0);
+        for (let i = 0; i < 3; i++) {
+            let target = addImageRow(targets[i], { x: 450, y: 557 });
+            target.position.y = height;
+            circle2.targets.push(target);
+            scene.add(target);
+        }
 
-        let target1 = addImageRow(building, {x: 450, y: 543});
-        target1.position.y = height;
-        circle2.targets.push(target1);
-        scene.add(target1);
-
-        let target2 = addImageRow(company, {x: 450, y: 543});
-        target2.position.y = height;
-        circle2.targets.push(target2);
-        scene.add(target2);
+        circle2.texts = [];
+        ['房地产', '上市公司', 'P2P'].forEach(value => {
+            let text = addText(value);
+            circle2.texts.push(text);
+            scene.add(text);
+        });
     }
 
     function addCircle3() {
@@ -154,7 +181,8 @@ function init() {
     }
 
     function centerMovement(step) {
-        center.position.y = 200 * Math.sin(step*2 + Math.PI * 6 / 3);
+        center.target.position.y = 200 * Math.sin(step * 2 + Math.PI * 6 / 3);
+        center.star.position.y = 200 * Math.sin(step * 2 + Math.PI * 6 / 3) + 400;
     }
 
     function circle0Movement(step) {
@@ -179,7 +207,7 @@ function init() {
         circle2.star.position.z = radius * (Math.sin(rate + Math.PI / 3));
 
         let targets = circle2.targets;
-        targets[0].position.x = radius * (Math.cos(step  + Math.PI * 2 / 3));
+        targets[0].position.x = radius * (Math.cos(step + Math.PI * 2 / 3));
         targets[0].position.z = radius * (Math.sin(step + Math.PI * 2 / 3));
 
         targets[1].position.x = radius * (Math.cos(step + Math.PI * 4 / 3));
@@ -187,6 +215,22 @@ function init() {
 
         targets[2].position.x = radius * (Math.cos(step + Math.PI * 6 / 3));
         targets[2].position.z = radius * (Math.sin(step + Math.PI * 6 / 3));
+
+        let lines = circle2.lines;
+        let lineRadius = radius * 1.3;
+        lines[0].rotation.y = -(step + Math.PI);
+        lines[0].position.x = lineRadius * (Math.cos(step));
+        lines[0].position.z = lineRadius * (Math.sin(step));
+
+        let texts = circle2.texts;
+        texts[0].position.x = radius * (Math.cos(step + Math.PI * 2 / 3));
+        texts[0].position.z = radius * (Math.sin(step + Math.PI * 2 / 3));
+
+        texts[1].position.x = radius * (Math.cos(step + Math.PI * 4 / 3));
+        texts[1].position.z = radius * (Math.sin(step + Math.PI * 4 / 3));
+
+        texts[2].position.x = radius * (Math.cos(step + Math.PI * 6 / 3));
+        texts[2].position.z = radius * (Math.sin(step + Math.PI * 6 / 3));
     }
 
     function circle3Movement(step) {
@@ -200,27 +244,24 @@ function init() {
     }
 
     function circle4Movement(step) {
-        circle4.rotation.z = -(step + Math.PI);
+        circle4.rotation.z = -(step*2 + Math.PI);
     }
 
     function addImageRow(img, size) {
         var plane = new THREE.PlaneBufferGeometry(size.x, size.y);
         var map = textureLoader.load(img);
-        var material = new THREE.MeshBasicMaterial({ map: map});
-        material.transparent = true;
+        var material = new THREE.MeshBasicMaterial({ map: map, transparent: true, alphaTest: 0.05 });
         var mesh = new THREE.Mesh(plane, material);
         mesh.rotation.y = Math.PI / 4;
         return mesh;
     }
 
     function addBackground() {
-        var geometry = new THREE.PlaneBufferGeometry(10000, 10000);
-        var material = new THREE.MeshPhongMaterial({ color: 0x000066, shininess: 150 });
-        var background = new THREE.Mesh(geometry, material);
-        background.receiveShadow = true;
-        background.position.set(-2000, 0, -2000);
-        background.rotation.y = Math.PI / 4;
-        scene.add(background);
+        let mesh = addImageRow(bg, { x: 1820, y: 720 });
+        mesh.receiveShadow = true;
+        mesh.position.set(-2000, -800, -2000);
+        mesh.scale.set(9, 9, 9);
+        scene.add(mesh);
     }
 
     function addAxis() {
@@ -231,24 +272,80 @@ function init() {
     function createPlaneGeo(png, size) {
         var geo = new THREE.PlaneBufferGeometry(size.x, size.y);
         var map = textureLoader.load(png);
-        var material = new THREE.MeshBasicMaterial({ map: map});
-        material.transparent = true;
+        var material = new THREE.MeshBasicMaterial({ map: map, transparent: true, alphaTest: 0.05 });
         var mesh = new THREE.Mesh(geo, material);
         mesh.rotation.x = -Math.PI / 2;
         return mesh;
     }
 
-    document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+    function createDirectionLight() {
+        let directionalLight = new THREE.DirectionalLight('#5620C4', 2);
+        directionalLight.position.set(2, 1.2, 10).normalize();
+        scene.add(directionalLight);
+    }
+
+    function createSun(h, s, l, x, y, z) {
+        let light = new THREE.PointLight(0xffffff, 1.5, 2000);
+        light.color.setHSL(h, s, l);
+        light.position.set(x, y, z);
+        scene.add(light);
+        let lensflare = new THREE.Lensflare();
+        const textureFlare0 = textureLoader.load(lensflare0);
+        const textureFlare3 = textureLoader.load(lensflare3);
+        lensflare.addElement(new THREE.LensflareElement(textureFlare0, 200, 0, light.color));
+        lensflare.addElement(new THREE.LensflareElement(textureFlare3, 60, 0.2));
+        lensflare.addElement(new THREE.LensflareElement(textureFlare3, 70, 0.25));
+        lensflare.addElement(new THREE.LensflareElement(textureFlare3, 120, 0.3));
+        lensflare.addElement(new THREE.LensflareElement(textureFlare3, 70, 0.35));
+        light.add(lensflare);
+    }
+
+    function addText(text) {
+        const font = new THREE.Font( fontJson );
+        const geometry = new THREE.TextGeometry(text, {
+            font,
+            size: 30,
+            height: 1,
+            curveSegments: 12,
+            bevelEnabled: false
+        });
+        const material = new THREE.MeshBasicMaterial({color: '#8B94FF'});
+        let mesh = new THREE.Mesh( geometry, material );
+        mesh.rotation.y = Math.PI / 4;
+        mesh.position.y = 100;
+        return mesh;
+    }
+
+    function createVedio() {
+        let video = document.getElementById('video');
+        let texture = new THREE.VideoTexture(video);
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+        texture.format = THREE.RGBFormat;
+        var parameters = { color: 0xffffff, map: texture };
+        let material = new THREE.MeshBasicMaterial(parameters);
+
+        let geometry = new THREE.PlaneBufferGeometry(1280, 720, 4, 4);
+        let mesh = new THREE.Mesh(geometry, material);
+        // mesh.scale.set(5, 5, 3);
+        mesh.rotation.x = -Math.PI / 12;
+        mesh.position.z = -3000;
+        mesh.position.z = 3000;
+        mesh.position.y = 800;
+        scene.add(mesh);
+    }
+
+    document.addEventListener('mousedown', onDocumentMouseDown, false);
 
     function onDocumentMouseDown(event) {
         let raycaster = new THREE.Raycaster();
         let mouse = new THREE.Vector2();
         event.preventDefault();
         mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-        mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
-        raycaster.setFromCamera( mouse, camera );
-        var intersects = raycaster.intersectObjects( circle2.targets );
-        if ( intersects.length > 0 ) {
+        mouse.y = -( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+        raycaster.setFromCamera(mouse, camera);
+        var intersects = raycaster.intersectObjects(circle2.targets);
+        if (intersects.length > 0) {
             scene.remove(center);
             center = intersects[0].object.clone();
             center.position.x = 0;

@@ -5,7 +5,7 @@ import autoprefixer from 'autoprefixer';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 const DIST_PATH = 'dist';
 const extractVendor = new ExtractTextPlugin(`${DIST_PATH}/css/[contenthash].vendor.css`);
 const extractStyle = new ExtractTextPlugin(`${DIST_PATH}/css/[contenthash].style.css`);
@@ -79,14 +79,19 @@ export default {
             use: [{
                 loader: 'json-loader'
             }]
-        }
-        // , {
-        //     test: /\.jade/,
-        //     include: path.join(__dirname, 'client'),
-        //     use: [{
-        //         loader: 'jade-loader'
-        //     }]
-        // }
+        }, {
+            test: /\.html$/,
+            loader: 'html-loader?attrs[]=source:src'
+        }, {
+            test: /\.(webm|mp4)$/, loader: 'url-loader'
+        },
+            // , {
+            //     test: /\.jade/,
+            //     include: path.join(__dirname, 'client'),
+            //     use: [{
+            //         loader: 'jade-loader'
+            //     }]
+            // }
         ]
     },
     plugins: [
