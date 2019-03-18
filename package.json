@@ -59,10 +59,13 @@
     "port": 8001
   },
   "dependencies": {
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
     "bootstrap": "^3.3.7",
     "echarts": "^3.5.4",
     "html-loader": "^0.5.5",
     "jquery": "^3.2.1",
+    "react-pdf": "^3.0.5",
     "three": "^0.92.0",
     "underscore": "^1.8.3",
     "zrender": "^4.0.1"

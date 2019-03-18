@@ -1,0 +1,116 @@
+{
+    "mobileResources": {
+        "children": [
+            {
+                "children": [
+                    {
+                        "children": [
+                            {
+                                "children": null,
+                                "id": 2040404,
+                                "name": "查询",
+                                "resType": 1,
+                                "type": 1
+                            }
+                        ],
+                        "id": 2040400,
+                        "name": "全球销量分析",
+                        "resType": 0,
+                        "type": 1
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": null,
+                                "id": 2040804,
+                                "name": "查询",
+                                "resType": 1,
+                                "type": 1
+                            }
+                        ],
+                        "id": 2040800,
+                        "name": "城市销量分析",
+                        "resType": 0,
+                        "type": 1
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": null,
+                                "id": 2041204,
+                                "name": "查询",
+                                "resType": 1,
+                                "type": 1
+                            }
+                        ],
+                        "id": 2041200,
+                        "name": "品牌销量分析",
+                        "resType": 0,
+                        "type": 1
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": null,
+                                "id": 2041604,
+                                "name": "查询",
+                                "resType": 1,
+                                "type": 1
+                            }
+                        ],
+                        "id": 2041600,
+                        "name": "三电数据分析",
+                        "resType": 0,
+                        "type": 1
+                    }
+                ],
+                "id": 2040000,
+                "name": "可视化页面",
+                "resType": 0,
+                "type": 1
+            },
+            {
+                "children": [
+                    {
+                        "children": [
+                            {
+                                "children": null,
+                                "id": 2080404,
+                                "name": "查询",
+                                "resType": 1,
+                                "type": 1
+                            }
+                        ],
+                        "id": 2080400,
+                        "name": "全球销量查询",
+                        "resType": 0,
+                        "type": 1
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": null,
+                                "id": 2080804,
+                                "name": "查询",
+                                "resType": 1,
+                                "type": 1
+                            }
+                        ],
+                        "id": 2080800,
+                        "name": "中国销量查询",
+                        "resType": 0,
+                        "type": 1
+                    }
+                ],
+                "id": 2080000,
+                "name": "数据查询",
+                "resType": 0,
+                "type": 1
+            }
+        ],
+        "id": 2000000,
+        "name": "（根节点，不展示）",
+        "resType": 0,
+        "type": 1
+    }
+}

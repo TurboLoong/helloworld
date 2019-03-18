@@ -44,7 +44,7 @@ function init() {
     addCircle3();
     addCircle4();
 
-    addBackground();
+    // addBackground();
 
     // createSun(0.995, 0.5, 0.9, -2785, 1000, 50);
 
@@ -95,7 +95,7 @@ function init() {
 
     function addCircle0() {
         circle0 = createPlaneGeo(round0, { x: 1401, y: 1401 });
-        circle0.position.set(0, 200, 0);
+        circle0.position.set(0, 300, 0);
         scene.add(circle0);
     }
 
