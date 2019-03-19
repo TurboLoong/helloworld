@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "webpack-dev-server --config webpack.config.dev.babel.js --color",
     "package": "npm run build:prod && gulp zip",
     "build:prod": "webpack --config webpack.config.prod.babel.js --progress --display-error-details",
     "lint": "eslint -c .eslintrc.prod.json --ext .js,.jsx client/src/",
-    "start": "webpack-dev-server --config webpack.config.dev.babel.js --color",
     "start:mock": "concurrently \"cross-env NODE_ENV=mock npm start\" \"node ./mock/server.js\""
   },
   "repository": {

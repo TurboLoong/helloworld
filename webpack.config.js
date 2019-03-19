@@ -11,6 +11,7 @@ const extractVendor = new ExtractTextPlugin(`${DIST_PATH}/css/[contenthash].vend
 const extractStyle = new ExtractTextPlugin(`${DIST_PATH}/css/[contenthash].style.css`);
 
 export default {
+    cache: true,
     entry: {
         main: ['babel-polyfill', './client/index.js']
     },
@@ -84,7 +85,7 @@ export default {
             loader: 'html-loader?attrs[]=source:src'
         }, {
             test: /\.(webm|mp4)$/, loader: 'url-loader'
-        },
+        }
             // , {
             //     test: /\.jade/,
             //     include: path.join(__dirname, 'client'),
@@ -112,7 +113,7 @@ export default {
             }
         }),
         new webpack.ProvidePlugin({
-            THREE: "three"
+            THREE: 'three'
         })
     ]
 };
