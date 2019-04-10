@@ -4,7 +4,7 @@
  * todo:  
  * //: jkfdf
  */
-import * as d3 from 'd3';
+import * as d3 from '../lib/d3.v3.min';
 var width = 600;
 var height = 600;
 var svg = d3.select('body').append('svg').attr('width', width).attr('height', height);
