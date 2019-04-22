@@ -7,18 +7,18 @@ import './Sample.less';
 
 const options = {
     cMapUrl: 'cmaps/',
-    cMapPacked: true,
+    cMapPacked: true
 };
 
 class Sample extends Component {
     state = {
         file: './sample.pdf',
-        numPages: null,
+        numPages: null
     }
 
     onFileChange = (event) => {
         this.setState({
-            file: event.target.files[0],
+            file: event.target.files[0]
         });
     }
 

@@ -100,6 +100,9 @@ export default {
         extractStyle, // 生成单独的CSS文件
         new CleanWebpackPlugin(['build']),
         new webpack.optimize.CommonsChunkPlugin('vendor'), // 清除编译目录
+        new CopyWebpackPlugin([
+            { from: './client/data', to: 'dist' }
+        ]),
         new HtmlWebpackPlugin({
             filename: 'index.html', // 生成到build目录的index.html
             template: './client/index.html' // 当前目录下的index.html
@@ -107,7 +110,7 @@ export default {
         new webpack.LoaderOptionsPlugin({
             minimize: true, // 压缩loader读取的文件
             options: {
-                postcss: function() {
+                postcss: function () {
                     return [precss, autoprefixer];
                 }
             }
