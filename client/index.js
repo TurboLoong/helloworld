@@ -7,4 +7,4 @@ import './index.scss';
 // import './demo/zrender';
 // import './demo/drawImage';
 // import './demo/gaode';
-import './demo/d3';
+// import './demo/d3';

@@ -11,14 +11,31 @@ var svg = d3.select('body').append('svg').attr('width', width).attr('height', he
 
 var xAxisWidth = 300;
 var yAxisWidth = 300;
-var lines = [[80, 80], [200, 100], [200, 200], [100, 200]];
 var linePath = d3.line();
+
+var lines = [
+    [[10, 80], [10, 120], [250, 120]],
+    [[490, 80], [490, 120], [250, 120]],
+    [[250, 80], [250, 300]],
+    [[250, 200], [490, 200], [490, 300]],
+    [[250, 350], [250, 600]],
+    [[250, 380], [10, 380], [10, 400]],
+    [[250, 380], [490, 380], [490, 400]],
+    [[10, 560], [10, 580], [250, 580]],
+    [[490, 560], [490, 580], [250, 580]]
+];
+lines.forEach(function (line) {
+    doPath(line);
+});
 // 添加路径
-svg.append('path')
-    .attr('d', linePath(lines))
-    .attr('stroke', 'black')
-    .attr('stroke-width', '3px')
-    .attr('fill', 'none');
+function doPath(line) {
+    svg.append('path')
+        .attr('d', linePath(line))
+        .attr('stroke', 'black')
+        .attr('stroke-dasharray', '5, 5')
+        .attr('stroke-width', '3px')
+        .attr('fill', 'none');
+}
 // 散点图
 /* var center = [
     [0.5, 0.5], [0.7, 0.8], [0.4, 0.9],

@@ -4,4 +4,4 @@
  * descriptioin:
  */
 // import './three/earth';
-import './three/circle-round';
+import './three/circle';
