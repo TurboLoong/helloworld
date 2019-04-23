@@ -1,31 +1,23 @@
 export default function pack(d3, svg) {
-    var vWidth = 300;
-    var vHeight = 200;
+    let packLayout = d3.pack()
+        .size([600, 600])
+        .padding(10);
+    d3.json('/dist/city.json').then(function (cities) {
+        let rootNode = d3.hierarchy(cities);
+        rootNode.sum(function (d) {
+            return d.value;
+        });
+        packLayout(rootNode);
 
-    // Prepare our physical space
-    var g = d3.select('svg').attr('width', vWidth).attr('height', vHeight).select('g');
-
-    // Get the data from our CSV file
-    d3.csv('/dist/data.csv', function (error, vCsvData) {
-        if (error) { throw error; }
-
-        vData = d3.stratify()(vCsvData);
-        drawViz(vData);
-    });
-
-    function drawViz(vData) {
-        // Declare d3 layout
-        var vLayout = d3.pack().size([vWidth, vHeight]);
-
-        // Layout + Data
-        var vRoot = d3.hierarchy(vData).sum(function (d) { return d.data.size; });
-        var vNodes = vRoot.descendants();
-        vLayout(vRoot);
-        var vSlices = g.selectAll('circle').data(vNodes).enter().append('circle');
-
-        // Draw on screen
-        vSlices.attr('cx', function (d) { return d.x; })
+        svg.selectAll('circle')
+            .data(rootNode.descendants())
+            .enter()
+            .append('circle')
+            .attr('class', function (d) {
+                return d.children ? 'node' : 'leafnode';
+            })
+            .attr('cx', function (d) { return d.x; })
             .attr('cy', function (d) { return d.y; })
             .attr('r', function (d) { return d.r; });
-    }
+    });
 } 
