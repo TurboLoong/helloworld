@@ -8,16 +8,25 @@ export default function pack(d3, svg) {
             return d.value;
         });
         packLayout(rootNode);
-
-        svg.selectAll('circle')
+        const node = svg.selectAll('g')
             .data(rootNode.descendants())
-            .enter()
-            .append('circle')
+            .join('g')
+            .attr('transform', d => `translate(${d.x + 1},${d.y + 1})`);
+
+        node.append('circle')
             .attr('class', function (d) {
                 return d.children ? 'node' : 'leafnode';
             })
-            .attr('cx', function (d) { return d.x; })
-            .attr('cy', function (d) { return d.y; })
+            // .attr('cx', function (d) { return d.x; })
+            // .attr('cy', function (d) { return d.y; })
             .attr('r', function (d) { return d.r; });
+
+        node.append('text')
+            .attr('class', 'nodeText')
+            .style('fill-opacity', function (d) {
+                return d.data.children ? 0 : 1;
+            })
+            .attr('text-anchor', 'middle')
+            .text(function (d) { return d.data.children ? '' : d.data.name; });
     });
 } 
