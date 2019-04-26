@@ -7,7 +7,8 @@
 // import pie from './pie';
 // import line from './line';
 // import pack from './pack';
-import tree from './tree';
+// import tree from './tree';
+import cluster from './cluster';
 import * as d3 from '../../lib/d3.v5.min';
 import '../../lib/d3-hierarchy.min';
 var width = 900;
@@ -15,7 +16,7 @@ var height = 900;
 // var svg = d3.select('body').append('svg').attr('width', width).attr('height', height);
 // pie(d3, svg);
 // line(d3, svg);
-tree(d3);
+cluster(d3);
 // var xAxisWidth = 300;
 // var yAxisWidth = 300;
 // var lines = [[80, 80], [200, 100], [200, 200], [100, 200]];

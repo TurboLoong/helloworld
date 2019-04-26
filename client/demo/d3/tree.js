@@ -3,13 +3,15 @@ export default function tree(d3) {
     const width = 900;
     const height = width;
     const margin = ({ top: 10, right: 120, bottom: 10, left: 40 });
-    const dx = 10;
+    const dx = 20;
     const dy = width / 6;
+    let depth = 0;
     let tree = d3.tree()
-        .size([width, height])
+        // .size([width, height])
         .separation(function (a, b) {
             return a.parent === b.parent ? 1 : 2;
-        });
+        })
+        .nodeSize([dx, dy]);
 
     // 对角线
     const diagonal = d3.linkHorizontal().x(d => d.y).y(d => d.x);
@@ -76,8 +78,8 @@ export default function tree(d3) {
             });
 
         nodeEnter.append('circle')
-            .attr('r', 2.5)
-            .attr('fill', d => d._children ? '#555' : '#999');
+            .attr('r', 5)
+            .attr('fill', d => d._children ? 'green' : 'red');
 
         nodeEnter.append('text')
             .attr('dy', '0.31em')
@@ -130,5 +132,4 @@ export default function tree(d3) {
         });
     }
     update(root);
-
 }

@@ -18,15 +18,15 @@ function rebelBombermanGame() {
                 var sum = 0;
                 x = i;
                 y = j;
-                //向上统计可以消灭的敌人数
+                // 向上统计可以消灭的敌人数
                 while (a[x][y] !== '#') {
                     if (a[x][y] === 'G') {
                         sum++;
                     }
-                    //继续向上
+                    // 继续向上
                     x--;
                 }
-                //想下统计可以消灭的敌人数
+                // 想下统计可以消灭的敌人数
                 x = i;
                 y = j;
                 while (a[x][y] !== '#') {
@@ -35,7 +35,7 @@ function rebelBombermanGame() {
                     }
                     x++;
                 }
-                //想左统计可以消灭的敌人数
+                // 想左统计可以消灭的敌人数
                 x = i;
                 y = j;
                 while (a[x][y] !== '#') {
@@ -44,7 +44,7 @@ function rebelBombermanGame() {
                     }
                     y++;
                 }
-                //想右统计可以消灭的敌人数
+                // 想右统计可以消灭的敌人数
                 x = i;
                 y = j;
                 while (a[x][y] !== '#') {
@@ -55,11 +55,11 @@ function rebelBombermanGame() {
                 }
 
                 if (sum > map) {
-                    //如果当前点所能消灭的敌人总数大于map，则更新map
+                    // 如果当前点所能消灭的敌人总数大于map，则更新map
                     map = sum;
-                    //并用p和q记录当前点的坐标
+                    // 并用p和q记录当前点的坐标
                     p = i;
-                    q = j
+                    q = j;
                 }
             }
         }
@@ -74,13 +74,13 @@ function rebelBombermanGame() {
  */
 function calculateMatch(x) {
     var num = 0;
-    var f = [6, 2, 5, 5, 4, 5, 6, 3, 7, 6]; //0-9每个数字用的火柴根数
-    while (parseInt(x / 10) != 0) { //如果x/10不等于0， 则说明这个数至少有两位
-        //获得x的末尾数字并将此数需要用到的火柴棍累加到Num中
+    var f = [6, 2, 5, 5, 4, 5, 6, 3, 7, 6]; // 0-9每个数字用的火柴根数
+    while (parseInt(x / 10) != 0) { // 如果x/10不等于0， 则说明这个数至少有两位
+        // 获得x的末尾数字并将此数需要用到的火柴棍累加到Num中
         num += f[x % 10];
         x = parseInt(x / 10);
     }
-    num += f[x]; //最后加上此时x所需要用到的火柴棍的根数
+    num += f[x]; // 最后加上此时x所需要用到的火柴棍的根数
     return num;
 }
 
@@ -97,18 +97,18 @@ function playMatch(m) {
     }
     console.log(sum);
 }
-//playMatch(18);
+// playMatch(18);
 
-//深度优先搜索,关键在于解决“当下该如何做”
-/*var total = 0;
+// 深度优先搜索,关键在于解决“当下该如何做”
+/* var total = 0;
  var a= new Array(9);
  var book = {};
  //当前桌面上的牌出现的次数，0表示没出现过，1表示已经出现
  for(var i = 1; i <= 9; i++){
  book[i] = 0;
  }*/
-//模型
-/*function dfs(step) {
+// 模型
+/* function dfs(step) {
  //判断边界
  //尝试每一种可能
  for(var i = 0; i < n; i++){
@@ -118,8 +118,8 @@ function playMatch(m) {
  //返回
  }*/
 
-//全排列
-/*var n = 3;
+// 全排列
+/* var n = 3;
  function dfs(step){ //当你在第step个盒子的时候是把每一种可能都去尝试一遍。
  "use strict";
  if(step == n){ //如果站在第n+1个盒子面前，则表示前n个盒子已经放好扑克牌
@@ -146,7 +146,7 @@ function playMatch(m) {
  return;
  }*/
 
-/*function dfs(step) {
+/* function dfs(step) {
  if(step == 9){//判断边界条件
  if(a[0]*100 + a[1]*10 + a[2] + a[3]*100 + a[4]*10 + a[5] == a[6]*100 + a[7]*10 + a[8]){
  total++;
@@ -165,8 +165,8 @@ function playMatch(m) {
  return;
  }*/
 
-//迷宫寻宝
-/*var next = [[0, 1], [1, 0], [0, -1], [-1, 0]]; //向四个方向走一步
+// 迷宫寻宝
+/* var next = [[0, 1], [1, 0], [0, -1], [-1, 0]]; //向四个方向走一步
  var p = 4, q = 3, min = 20;//p, q即宝藏的坐标
  var n = 5, m = 4;
  book[0][0] =1;
@@ -196,8 +196,8 @@ function playMatch(m) {
  return;
  }*/
 
-//dfs(0);
-//console.log(total/2);
+// dfs(0);
+// console.log(total/2);
 
 /**
  *@author: TurboLoong
@@ -205,28 +205,28 @@ function playMatch(m) {
  *@param:
  *@des:广度优先搜索
  */
-//顺时针走的四个方向
+// 顺时针走的四个方向
 var next = [[0, 1], [1, 0], [0, -1], [-1, 0]];
 
 var p = 3, q = 2;
-//初始化所有的点，0-表示没有走过，1-表示已经走过
+// 初始化所有的点，0-表示没有走过，1-表示已经走过
 var book = [];
 for (var i = 0; i < 5; i++) {
     book.push([]);
 }
-book.forEach(function(value, index) {
+book.forEach(function (value, index) {
     for (var i = 0; i < 4; i++) {
         value.push(0);
     }
 });
 book[0][0] = 1;
 
-//初始化地图
+// 初始化地图
 var a = [];
 for (var i = 0; i < 5; i++) {
     a.push([]);
 }
-a.forEach(function(value, index) {
+a.forEach(function (value, index) {
     for (var i = 0; i < 4; i++) {
         value.push(0);
     }
@@ -236,7 +236,7 @@ a[2][2] = 1;
 a[3][1] = 1;
 a[4][3] = 1;
 
-//队列初始化
+// 队列初始化
 var head = 0, tail = 0;
 var que = [];
 for (var i = 0; i < 50; i++) {
@@ -247,30 +247,30 @@ que[tail].y = 0;
 que[tail].s = 0;
 tail++;
 
-var flag = 0; //用来标记是否到达目标点，
+var flag = 0; // 用来标记是否到达目标点，
 function bfs() {
     var tx, ty;
     while (head < tail) {
-        //枚举四个方向
+        // 枚举四个方向
         for (var k = 0; k < 4; k++) {
-            //计算下一个点的坐标
+            // 计算下一个点的坐标
             tx = que[head].x + next[k][0];
             ty = que[head].y + next[k][1];
-            //判断是否越界
+            // 判断是否越界
             if (tx < 0 || tx > 4 || ty < 0 || ty > 3) {
                 continue;
             }
-            //判断是否是障碍物或者已经在路径中
+            // 判断是否是障碍物或者已经在路径中
             if (a[tx][ty] == 0 && book[tx][ty] == 0) {
-                //把这个点标记为已经走过
+                // 把这个点标记为已经走过
                 book[tx][ty] = 1;
-                //插入新的点到队列中
+                // 插入新的点到队列中
                 que[tail].x = tx;
                 que[tail].y = ty;
                 que[tail].s = que[head].s + 1;
                 tail++;
             }
-            //已经到达目的地
+            // 已经到达目的地
             if (tx == p && ty == q) {
                 flag = 1;
                 break;
@@ -279,7 +279,7 @@ function bfs() {
         if (flag == 1) {
             break;
         }
-        head++; //当一个点扩展结束后，head++才能对后面的点再进行扩展
+        head++; // 当一个点扩展结束后，head++才能对后面的点再进行扩展
     }
     console.log(que[tail - 1].s);
 }
