@@ -60,12 +60,14 @@
         "port": 8001
     },
     "dependencies": {
-        "react": "^16.4.2",
-        "react-dom": "^16.4.2",
         "bootstrap": "^3.3.7",
         "echarts": "^3.5.4",
         "jquery": "^3.2.1",
-        "underscore": "^1.8.3"
+        "react": "^16.4.2",
+        "react-dom": "^16.4.2",
+        "three": "^0.104.0",
+        "underscore": "^1.8.3",
+        "uuid": "^3.3.2"
     },
     "packageName": "helloworld"
 }
