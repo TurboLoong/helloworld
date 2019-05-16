@@ -1,17 +1,22 @@
 import * as THREE from 'three';
-var canvas = document.getElementById('container');
+import * as dat from './lib/dat.gui.min';
 
 // create a scene, that will hold all our elements such as objects, cameras and lights.
 var scene = new THREE.Scene();
 
 // create a camera, which defines where we're looking at.
-var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+var camera = new THREE.PerspectiveCamera(
+  45,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
+);
 scene.add(camera);
 
 // create a render and set the size
-var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+var renderer = new THREE.WebGLRenderer();
 
-renderer.setClearColor(new THREE.Color(0xEEEEEE, 1.0));
+renderer.setClearColor(new THREE.Color(0xeeeeee, 1.0));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMapEnabled = true;
 
@@ -45,16 +50,41 @@ var spotLight = new THREE.SpotLight(0xffffff);
 spotLight.position.set(-40, 60, -10);
 spotLight.castShadow = true;
 scene.add(spotLight);
-
+document.getElementById('WebGL-output').appendChild(renderer.domElement);
 // call the render function
 var step = 0;
+var controls = new (function() {
+  this.rotationSpeed = 0.02;
+  this.bouncingSpeed = 0.03;
+  this.addCube = function() {
+    var cubeSize = Math.ceil(Math.random() * 3);
+    var cubeGeometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
+    var cubeMeterial = new THREE.MeshLambertMaterial({
+      color: Math.random() * 0xffffff
+    });
+    var cube = new THREE.Mesh(cubeGeometry, cubeMeterial);
+    cube.castShadow = true;
+    cube.name = 'cube-' + scene.children.length;
+    cube.position.x =
+      -30 + Math.round(Math.random() * planeGeometry.parameters.width);
+    cube.position.y = Math.round(Math.random() * 5);
+    cube.position.z =
+      -20 + Math.round(Math.random() * planeGeometry.parameters.height);
+    scene.add(cube);
+    this.numberOfObjects = scene.children.length;
+  };
+})();
+
+var gui = new dat.GUI();
+gui.add(controls, 'rotationSpeed', 0, 0.5);
+gui.add(controls, 'bouncingSpeed', 0, 0.5);
+gui.add(controls, 'addCube');
 render();
 
 function render() {
   // rotate the cubes around its axes
-  scene.traverse(function (e) {
+  scene.traverse(function(e) {
     if (e instanceof THREE.Mesh && e != plane) {
-
       e.rotation.x += controls.rotationSpeed;
       e.rotation.y += controls.rotationSpeed;
       e.rotation.z += controls.rotationSpeed;
