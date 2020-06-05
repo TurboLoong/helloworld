@@ -1,24 +1,39 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head>
-    <meta charset="utf-8"/>
+  <head>
+    <meta charset="utf-8" />
     <title>helloworld</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="http://webapi.amap.com/maps?v=1.4.1&key=7204908ad016f6c6aae99fcd0f4e8412&plugin=AMap.Geocoder"></script>
     <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-        }
+      body {
+        /* set margin to 0 and overflow to hidden, to go fullscreen */
+        margin: 0;
+        overflow: hidden;
+      }
+      .node {
+        fill: indianred;
+        opacity: 0.3;
+        stroke: white;
+      }
+
+      .leafnode {
+        fill: steelblue;
+        opacity: 0.3;
+        stroke: white;
+      }
     </style>
-</head>
-<body>
-<!--<canvas id="canvas1" width="400" height="400"></canvas>-->
-<!--<div id="container">-->
-<!--</div>-->
-<!--<div id="map">-->
+  </head>
+
+  <body>
+    <!--<canvas id="canvas1" width="400" height="400"></canvas>-->
+    <!-- <div id="container">
+  </div> -->
+    <!--<div id="map">-->
+
+    <!--</div>-->
 
 <!--</div>-->
 <div id="WebGL-output">dfdfdfdfdf</div>
