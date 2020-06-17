@@ -3,7 +3,3 @@
 /dist/
 /*.js
 /src/public/
-/src/pages/algorithm/
-/src/pages/framework-learning/
-/src/pages/map/
-/src/pages/others/

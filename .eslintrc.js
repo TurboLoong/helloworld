@@ -34,6 +34,8 @@ module.exports = {
     // "allowShortCircuit": false, 
     "allowTernary": false,
     "allowShortCircuit": true,
-    "treatUndefinedAsUnspecified": true 
+    "treatUndefinedAsUnspecified": true,
+    "no-console": "off",
+    "no-underscore-dangle": "off" 
 	}
 };
